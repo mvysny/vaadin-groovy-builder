@@ -4,7 +4,7 @@ import org.jetbrains.dokka.gradle.DokkaTask
 import java.util.*
 
 plugins {
-    `groovy`
+    groovy
     id("org.gretty") version "3.0.1"
     id("com.jfrog.bintray") version "1.8.3"
     `maven-publish`

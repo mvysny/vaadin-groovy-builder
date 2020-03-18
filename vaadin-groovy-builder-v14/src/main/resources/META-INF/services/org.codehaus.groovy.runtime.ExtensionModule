@@ -1,3 +1,7 @@
 moduleName = vaadin-builder-module
 moduleVersion = 0.0.1
-extensionClasses = com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl, com.github.mvysny.vaadingroovybuilder.v14.VaadinUtils, com.github.mvysny.vaadingroovybuilder.v14.VaadinComponents
+extensionClasses = com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl,\
+  com.github.mvysny.vaadingroovybuilder.v14.VaadinUtils,\
+  com.github.mvysny.vaadingroovybuilder.v14.VaadinComponents,\
+  com.github.mvysny.vaadingroovybuilder.v14.IconUtils,\
+  com.github.mvysny.vaadingroovybuilder.v14.Layouts

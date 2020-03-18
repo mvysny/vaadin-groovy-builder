@@ -21,11 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertNull
  */
 @CompileStatic
 class VaadinUtilsTest {
-    @BeforeEach
-    void setup() { MockVaadin.setup() }
+    @BeforeEach void setup() { MockVaadin.setup() }
 
-    @AfterEach
-    void tearDown() { MockVaadin.tearDown() }
+    @AfterEach void tearDown() { MockVaadin.tearDown() }
 
     @Test
     void serverClick() {
