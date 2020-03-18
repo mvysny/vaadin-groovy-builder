@@ -7,10 +7,17 @@ import com.vaadin.flow.component.ComponentEvent
 import com.vaadin.flow.component.ComponentUtil
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.Text
+import com.vaadin.flow.dom.ClassList
+import com.vaadin.flow.dom.DomEventListener
+import com.vaadin.flow.dom.DomListenerRegistration
 import com.vaadin.flow.dom.Element
 import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
+
+import java.util.function.Predicate
+
+import static com.github.mvysny.vaadingroovybuilder.v14.Utils.require
 
 /**
  * A collection of basic Vaadin utility extension functions.
@@ -68,5 +75,91 @@ class VaadinUtils {
         } else {
             self.setAttribute(attribute, value)
         }
+    }
+
+    /**
+     * Gets the <code>title</code> attribute on component's element.
+     */
+    @Nullable
+    static String getTooltip(Component self) { self.element.getAttribute("title") }
+
+    /**
+     * Sets or removes the <code>title</code> attribute on component's element.
+     */
+    static void setTooltip(Component self, @Nullable String tooltip) { setOrRemoveAttribute(self.element, "title", tooltip) }
+
+    /**
+     * Makes the client-side listener call [Event.preventDefault()](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault)
+     * on the event.
+     *
+     * @return this
+     */
+    @NotNull
+    static DomListenerRegistration preventDefault(DomListenerRegistration self) { self.addEventData("event.preventDefault()"); self }
+
+    /**
+     * Adds the right-click (context-menu) listener to the component. Also causes the right-click browser
+     * menu not to be shown on this component (see {@link #preventDefault}).
+     */
+    @NotNull
+    static DomListenerRegistration addContextMenuListener(Component self, @NotNull DomEventListener listener) {
+        preventDefault(self.element.addEventListener("contextmenu", listener))
+    }
+
+    /**
+     * Removes the component from its parent. Does nothing if the component is not attached to a parent.
+     */
+    static void removeFromParent(Component self) {
+        (self.parent.orElse(null) as HasComponents)?.remove(self)
+    }
+
+    static boolean containsWhitespace(String self) {
+        for (int i = 0; i < self.length(); i++) {
+            if (Character.isWhitespace(self.charAt(i))) {
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
+     * Toggles className - removes it if it was there, or adds it if it wasn't there.
+     * @param className the class name to toggle, cannot contain spaces.
+     */
+    static void toggle(ClassList self, @NotNull String className) {
+        require(!containsWhitespace(className)) { "'$className' cannot contain whitespace" }
+        self.set(className, !self.contains(className))
+    }
+
+    /**
+     * Finds component's parent, parent's parent (etc) which satisfies given predicate.
+     * Returns null if there is no such parent.
+     */
+    @Nullable
+    static Component findAncestor(Component self, @NotNull Predicate<Component> predicate) {
+        findAncestorOrSelf(self) { it != self && predicate.test(it) }
+    }
+
+    /**
+     * Finds component, component's parent, parent's parent (etc) which satisfies given (predicate).
+     * Returns null if no component on the ancestor-or-self axis satisfies.
+     */
+    @Nullable
+    static Component findAncestorOrSelf(Component self, @NotNull Predicate<Component> predicate) {
+        if (predicate.test(self)) {
+            return self
+        }
+        Component p = self.parent.orElse(null)
+        if (p == null) {
+            return null
+        }
+        return findAncestorOrSelf(p, predicate)
+    }
+
+    /**
+     * Checks if this component is nested in <code>potentialAncestor</code>.
+     */
+    static boolean isNestedIn(Component self, @NotNull Component potentialAncestor) {
+        findAncestor(self) { it == potentialAncestor } != null
     }
 }
