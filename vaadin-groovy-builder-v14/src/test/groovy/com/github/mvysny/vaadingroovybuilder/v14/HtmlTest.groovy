@@ -26,38 +26,38 @@ class HtmlTest {
             }
         }
         UI.getCurrent().flexLayout {
-            div()
-            h1()
-            h2()
-            h3()
-            h4()
-            h5()
-            h6()
-            hr()
-            p()
-            em()
-            span()
-            anchor("")
-            anchor(new StreamResource("foo.txt", isf), null)
-            image()
-            image(new StreamResource("foo.txt", isf))
-            label()
-            input()
-            nativeButton()
-            strong()
-            br()
-            ol()
-            li()
-            iframe()
-            article()
-            aside()
-            dl()
-            dd()
-            dt()
-            footer()
-            header()
-            pre()
-            ul()
+            div{}
+            h1{}
+            h2{}
+            h3{}
+            h4{}
+            h5{}
+            h6{}
+            hr{}
+            p{}
+            em{}
+            span{}
+            anchor("") {}
+            anchor(new StreamResource("foo.txt", isf), null) {}
+            image{}
+            image(new StreamResource("foo.txt", isf)) {}
+            label{}
+            input{}
+            nativeButton{}
+            strong{}
+            br{}
+            ol{}
+            li{}
+            iframe{}
+            article{}
+            aside{}
+            dl{}
+            dd{}
+            dt{}
+            footer{}
+            header{}
+            pre{}
+            ul{}
         }
     }
 }

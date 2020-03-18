@@ -15,6 +15,7 @@ import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
+import java.util.function.Function
 import java.util.function.Predicate
 
 import static com.github.mvysny.vaadingroovybuilder.v14.Utils.require
@@ -161,5 +162,24 @@ class VaadinUtils {
      */
     static boolean isNestedIn(Component self, @NotNull Component potentialAncestor) {
         findAncestor(self) { it == potentialAncestor } != null
+    }
+
+    /**
+     * Walks over this component and all descendants of this component, breadth-first.
+     * @return iterable which iteratively walks over this component and all of its descendants.
+     */
+    @NotNull
+    static Iterable<Component> walk(final Component self) {
+        return new Iterable<Component>() {
+            @Override
+            Iterator<Component> iterator() {
+                return new TreeIterator<Component>(self, new Function<Component, Iterator<Component>>() {
+                    @Override
+                    Iterator<Component> apply(Component t) {
+                        return t.children.iterator()
+                    }
+                })
+            }
+        }
     }
 }

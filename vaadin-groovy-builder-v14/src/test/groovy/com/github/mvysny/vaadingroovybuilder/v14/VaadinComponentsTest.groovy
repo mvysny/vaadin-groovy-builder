@@ -25,27 +25,27 @@ class VaadinComponentsTest {
             iconButton(VaadinIcon.LEVEL_LEFT.create()) {
                 addClickListener {  }
             }
-            checkBox()
+            checkBox{}
             comboBox(null) {
                 setItems(["foo", "bar"])
             }
-            select()
-            datePicker()
-            dialog()
+            select{}
+            datePicker{}
+            dialog{}
             icon(VaadinIcon.TRASH)
-            passwordField()
-            splitLayout()
-            textField()
-            emailField()
-            numberField()
-            textArea()
+            passwordField{}
+            splitLayout{}
+            textField{}
+            emailField{}
+            numberField{}
+            textArea{}
             tabs {
-                tab()
+                tab{}
             }
-            checkboxGroup()
-            timePicker()
-            integerField()
-            bigDecimalField()
+            checkboxGroup{}
+            timePicker{}
+            integerField{}
+            bigDecimalField{}
         }
     }
 }

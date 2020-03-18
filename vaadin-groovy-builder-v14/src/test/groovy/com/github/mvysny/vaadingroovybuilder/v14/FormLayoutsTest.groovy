@@ -21,7 +21,7 @@ class FormLayoutsTest {
     @Test
     void formItems() {
         def layout = UI.current.formLayout {
-            formItem("Name:") { textField() }
+            formItem("Name:") { textField{} }
         }
         expect("""└── FormLayout[]
     └── GFormItem[]

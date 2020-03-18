@@ -25,8 +25,6 @@ import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
-import javax.validation.constraints.Null
-
 import static com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl.init
 
 /**
@@ -45,7 +43,7 @@ class VaadinComponents {
      */
     @NotNull
     static Button button(HasComponents self, @Nullable String text = null, @Nullable Component icon = null,
-                         @DelegatesTo(value = Button, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                         @DelegatesTo(value = Button, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new Button(text, icon), block)
     }
 
@@ -60,7 +58,7 @@ class VaadinComponents {
      */
     @NotNull
     static Button iconButton(HasComponents self, @NotNull Component icon,
-                             @DelegatesTo(value = Button, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                             @DelegatesTo(value = Button, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         button(self, null, icon) {
             addThemeVariants(ButtonVariant.LUMO_ICON)
             block.delegate = delegate
@@ -82,7 +80,7 @@ class VaadinComponents {
      */
     @NotNull
     static Checkbox checkBox(HasComponents self, @Nullable String label = null,
-                             @DelegatesTo(value = Checkbox, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                             @DelegatesTo(value = Checkbox, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new Checkbox(label), block)
     }
 
@@ -92,7 +90,7 @@ class VaadinComponents {
      */
     @NotNull
     static <T> ComboBox<T> comboBox(HasComponents self, @Nullable String label = null,
-                                    @DelegatesTo(value = ComboBox, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                                    @DelegatesTo(value = ComboBox, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new ComboBox<T>(label), block)
     }
 
@@ -105,13 +103,10 @@ class VaadinComponents {
      */
     @NotNull
     static <T> Select<T> select(HasComponents self, @Nullable String label = null,
-                                @DelegatesTo(type = "com.vaadin.flow.component.select.Select<T>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
-        init(self, new Select<T>()) {
-            if (label != null) setLabel(label)
-            block.delegate = delegate
-            block.resolveStrategy = Closure.DELEGATE_FIRST
-            block()
-        }
+                                @DelegatesTo(type = "com.vaadin.flow.component.select.Select<T>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        def select = new Select<T>()
+        if (label != null) select.setLabel(label)
+        init(self, select, block)
     }
 
     /**
@@ -120,7 +115,7 @@ class VaadinComponents {
      */
     @NotNull
     static DatePicker datePicker(HasComponents self, @Nullable String label = null,
-                                 @DelegatesTo(value = DatePicker, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                                 @DelegatesTo(value = DatePicker, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new DatePicker(label), block)
     }
 
@@ -130,7 +125,7 @@ class VaadinComponents {
      */
     @NotNull
     static Dialog dialog(HasComponents self,
-                         @DelegatesTo(value = Dialog, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                         @DelegatesTo(value = Dialog, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new Dialog(), block)
     }
 
@@ -140,7 +135,7 @@ class VaadinComponents {
      */
     @NotNull
     static PasswordField passwordField(HasComponents self, @Nullable String label = null,
-                                       @DelegatesTo(value = PasswordField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                                       @DelegatesTo(value = PasswordField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new PasswordField(label), block)
     }
 
@@ -150,7 +145,7 @@ class VaadinComponents {
      */
     @NotNull
     static SplitLayout splitLayout(HasComponents self,
-                                   @DelegatesTo(value = SplitLayout, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                                   @DelegatesTo(value = SplitLayout, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new SplitLayout(), block)
     }
 
@@ -160,7 +155,7 @@ class VaadinComponents {
      */
     @NotNull
     static TextField textField(HasComponents self, @Nullable String label = null,
-                               @DelegatesTo(value = TextField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                               @DelegatesTo(value = TextField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new TextField(label), block)
     }
 
@@ -170,7 +165,7 @@ class VaadinComponents {
      */
     @NotNull
     static EmailField emailField(HasComponents self, @Nullable String label = null,
-                                 @DelegatesTo(value = EmailField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                                 @DelegatesTo(value = EmailField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new EmailField(label), block)
     }
 
@@ -181,31 +176,31 @@ class VaadinComponents {
      */
     @NotNull
     static NumberField numberField(HasComponents self, @Nullable String label = null,
-                                   @DelegatesTo(value = NumberField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                                   @DelegatesTo(value = NumberField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new NumberField(label), block)
     }
 
     @NotNull
     static TextArea textArea(HasComponents self, @Nullable String label = null,
-                             @DelegatesTo(value = TextArea, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                             @DelegatesTo(value = TextArea, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new TextArea(label), block)
     }
 
     @NotNull
     static Tabs tabs(HasComponents self,
-                     @DelegatesTo(value = Tabs, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                     @DelegatesTo(value = Tabs, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new Tabs(), block)
     }
 
     @NotNull
     static Tab tab(Tabs self, @Nullable String label = null,
-                    @DelegatesTo(value = Tab, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                    @DelegatesTo(value = Tab, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new Tab(label), block)
     }
 
     @NotNull
     static <T> CheckboxGroup<T> checkboxGroup(HasComponents self,
-                                              @DelegatesTo(type = "com.vaadin.flow.component.checkbox.CheckboxGroup<T>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                                              @DelegatesTo(type = "com.vaadin.flow.component.checkbox.CheckboxGroup<T>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new CheckboxGroup<T>(), block)
     }
 
@@ -214,7 +209,7 @@ class VaadinComponents {
      */
     @NotNull
     static TimePicker timePicker(HasComponents self, @Nullable String label = null,
-                                 @DelegatesTo(value = TimePicker, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                                 @DelegatesTo(value = TimePicker, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new TimePicker(label), block)
     }
 
@@ -227,7 +222,7 @@ class VaadinComponents {
      */
     @NotNull
     static IntegerField integerField(HasComponents self, @Nullable String label = null,
-                                     @DelegatesTo(value = IntegerField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                                     @DelegatesTo(value = IntegerField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new IntegerField(label), block)
     }
 
@@ -240,7 +235,7 @@ class VaadinComponents {
      */
     @NotNull
     static BigDecimalField bigDecimalField(HasComponents self, @Nullable String label = null,
-                                           @DelegatesTo(value = BigDecimalField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                                           @DelegatesTo(value = BigDecimalField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new BigDecimalField(label), block)
     }
 }

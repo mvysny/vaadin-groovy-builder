@@ -108,17 +108,17 @@ class VaadinUtilsTest {
 
     @Test
     void "findAncestor - null on no acceptance"() {
-        expect(null) { UI.getCurrent().button().findAncestor { false } }
+        expect(null) { UI.getCurrent().button{}.findAncestor { false } }
     }
 
     @Test
     void "findAncestor - finds UI"() {
-        expect(UI.getCurrent()) { UI.getCurrent().button().findAncestor { it instanceof UI } }
+        expect(UI.getCurrent()) { UI.getCurrent().button{}.findAncestor { it instanceof UI } }
     }
 
     @Test
     void "findAncestor - doesn't find self"() {
-        expect(UI.getCurrent()) { UI.getCurrent().button().findAncestor { true } }
+        expect(UI.getCurrent()) { UI.getCurrent().button{}.findAncestor { true } }
     }
 
     @Test
@@ -128,18 +128,18 @@ class VaadinUtilsTest {
 
     @Test
     void "findAncestorOrSelf - null on no acceptance"() {
-        expect(null) { UI.getCurrent().button().findAncestorOrSelf { false } }
+        expect(null) { UI.getCurrent().button{}.findAncestorOrSelf { false } }
     }
 
     @Test
     void "findAncestorOrSelf - finds self"() {
-        def button = UI.getCurrent().button()
+        def button = UI.getCurrent().button{}
         expect(button) { button.findAncestorOrSelf { true } }
     }
 
     @Test
     void isNestedIn() {
         expect(false) { new Button().isNestedIn(UI.getCurrent()) }
-        expect(true) { UI.getCurrent().button().isNestedIn(UI.getCurrent()) }
+        expect(true) { UI.getCurrent().button{}.isNestedIn(UI.getCurrent()) }
     }
 }
