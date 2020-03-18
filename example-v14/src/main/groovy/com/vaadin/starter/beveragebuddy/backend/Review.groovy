@@ -18,25 +18,25 @@ import java.time.LocalDate
 class Review {
     Long id = null
 
-    @NotNull
-    @Min(1L)
-    @Max(5L)
+//    @NotNull
+//    @Min(1L)
+//    @Max(5L)
     int score = 1
 
-    @NotBlank
-    @Size(min = 3)
+//    @NotBlank
+//    @Size(min = 3)
     String name = ""
 
-    @NotNull
-    @PastOrPresent
+//    @NotNull
+//    @PastOrPresent
     LocalDate date = LocalDate.now()
 
-    @NotNull
+//    @NotNull
     Category category = null
 
-    @NotNull
-    @Min(1L)
-    @Max(99L)
+//    @NotNull
+//    @Min(1L)
+//    @Max(99L)
     int count = 1
 
     Review copy() {

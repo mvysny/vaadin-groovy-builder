@@ -45,9 +45,9 @@ class ReviewService {
      * @return          the list of matching reviews
      */
     List<Review> findReviews(String filter) {
-        def normalizedFilter = filter.trim().toLowerCase()
+        String normalizedFilter = filter.trim().toLowerCase()
         return reviews.values()
-                .findAll { review -> filterTextOf(review).any { it.containsIgnoreCase(normalizedFilter) } }
+                .findAll { Review review -> filterTextOf(review).any { String it -> it.toLowerCase().contains(normalizedFilter) } }
                 .toSorted { it.id }
     }
 

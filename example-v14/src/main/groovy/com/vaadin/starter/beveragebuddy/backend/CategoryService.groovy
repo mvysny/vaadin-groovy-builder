@@ -45,8 +45,8 @@ class CategoryService {
     }
 
     static boolean categoryMatchesFilter(Category category, String filter) {
-        def normalizedFilter = filter.trim()
-        return category.name.containsIgnoreCase(normalizedFilter)
+        String normalizedFilter = filter.trim().toLowerCase()
+        return category.name.toLowerCase().contains(normalizedFilter)
     }
 
     /**
