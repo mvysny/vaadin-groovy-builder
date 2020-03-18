@@ -92,7 +92,7 @@ class VaadinComponents {
      */
     @NotNull
     static <T> ComboBox<T> comboBox(HasComponents self, @Nullable String label = null,
-                                    @DelegatesTo(type = "com.vaadin.flow.component.combobox.ComboBox<T>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+                                    @DelegatesTo(value = ComboBox, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
         init(self, new ComboBox<T>(label), block)
     }
 

@@ -20,7 +20,7 @@ class VaadinComponentsTest {
     @Test
     void smoke() {
         UI.getCurrent().flexLayout {
-            button("Foo") {
+            button("Foo", null) {
                 setPrimary()
             }
             iconButton(VaadinIcon.LEVEL_LEFT.create()) {
@@ -28,7 +28,7 @@ class VaadinComponentsTest {
             }
             checkBox()
             comboBox(null) {
-                delegate.setItems("foo")
+                setItems(["foo", "bar"])
             }
             select()
             datePicker()
