@@ -14,6 +14,7 @@ import java.util.concurrent.atomic.AtomicLong
 class ReviewService {
     private final ConcurrentMap<Long, Review> reviews = new ConcurrentHashMap<Long, Review>()
     private final AtomicLong nextId = new AtomicLong(0)
+    public static final ReviewService INSTANCE = new ReviewService()
     private ReviewService() {
         def r = new Random()
         def reviewCount = 20 + r.nextInt(30)

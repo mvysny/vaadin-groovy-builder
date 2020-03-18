@@ -13,6 +13,7 @@ import com.vaadin.flow.server.InitialPageSettings
 import com.vaadin.flow.server.PageConfigurator
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.lumo.Lumo
+import com.vaadin.starter.beveragebuddy.ui.categories.CategoriesList
 import groovy.transform.CompileStatic
 
 /**
