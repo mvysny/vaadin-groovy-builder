@@ -1,0 +1,12 @@
+.idea
+build
+.gradle
+classes
+local.properties
+*.iml
+out
+
+target
+node_modules
+webpack.generated.js
+example-v10/node
