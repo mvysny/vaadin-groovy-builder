@@ -15,11 +15,8 @@ import static kotlin.test.AssertionsKt.expect
  */
 @CompileStatic
 class FormLayoutsTest {
-    @BeforeEach
-    void setup() { MockVaadin.setup() }
-
-    @AfterEach
-    void tearDown() { MockVaadin.tearDown() }
+    @BeforeEach void setup() { MockVaadin.setup() }
+    @AfterEach void tearDown() { MockVaadin.tearDown() }
 
     @Test
     void formItems() {

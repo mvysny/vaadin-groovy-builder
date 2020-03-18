@@ -59,6 +59,7 @@ class FormLayouts {
 /**
  * Makes {@link #addToLabel} public so that we can call it.
  */
+@CompileStatic
 class GFormItem extends FormLayout.FormItem {
     @Override
     void addToLabel(Component... components) {
