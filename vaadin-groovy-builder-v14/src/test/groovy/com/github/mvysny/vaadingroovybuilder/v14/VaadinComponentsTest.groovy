@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test
 @CompileStatic
 class VaadinComponentsTest {
     @BeforeEach void setup() { MockVaadin.setup() }
-
     @AfterEach void tearDown() { MockVaadin.tearDown() }
 
     @Test
