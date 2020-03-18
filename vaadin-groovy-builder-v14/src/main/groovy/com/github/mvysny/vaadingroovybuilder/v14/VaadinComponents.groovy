@@ -16,11 +16,11 @@ import static com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl.init
 @CompileStatic
 class VaadinComponents {
     /**
-     * Creates a Vaadin Button https://vaadin.com/elements/vaadin-button with an optional [text] and an [icon], and adds it to the parent.
+     * Creates a <a href="https://vaadin.com/elements/vaadin-button">Vaadin Button</a> with an optional [text] and an [icon], and adds it to the parent.
      * <p></p>
-     * See https://vaadin.com/elements/vaadin-button/html-examples/button-lumo-theme-demos for a list
+     * See <a href="https://vaadin.com/elements/vaadin-button/html-examples/button-lumo-theme-demos">Vaadin Button Demos</a> for a list
      * of possible alternative themes for the button.
-     * @param icon the icon, to use icons provided by Lumo. Just use `VaadinIcon.TRASH.create()` or `new Icon("lumo", "plus")`
+     * @param icon the icon, to use icons provided by Lumo. Just use <code>VaadinIcon.TRASH.create()</code> or <code>new Icon("lumo", "plus")</code>
      * @param block runs the block with the button as a receiver.
      */
     @NotNull
