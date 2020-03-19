@@ -1,16 +1,25 @@
 package com.github.mvysny.vaadingroovybuilder.v14.binder
 
+import com.github.mvysny.vaadingroovybuilder.v14.TimeZoneUtils
+import com.vaadin.flow.component.HasValue
 import com.vaadin.flow.data.binder.Binder
 import com.vaadin.flow.data.binder.Result
 import com.vaadin.flow.data.binder.ValueContext
 import com.vaadin.flow.data.converter.Converter
+import com.vaadin.flow.data.converter.LocalDateTimeToDateConverter
+import com.vaadin.flow.data.converter.LocalDateToDateConverter
 import com.vaadin.flow.data.converter.StringToBigDecimalConverter
 import com.vaadin.flow.data.converter.StringToBigIntegerConverter
 import com.vaadin.flow.data.converter.StringToDoubleConverter
 import com.vaadin.flow.data.converter.StringToIntegerConverter
 import com.vaadin.flow.data.converter.StringToLongConverter
+import com.vaadin.flow.data.validator.EmailValidator
 import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
+
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 import static com.github.mvysny.vaadingroovybuilder.v14.Utils.karibuDslI18n
 
@@ -99,5 +108,63 @@ class BinderUtils {
         self.withConverter(new DoubleToBigIntegerConverter())
     }
 
-    // @todo mavi more, plus tests
+    @NotNull
+    static <BEAN> Binder.BindingBuilder<BEAN, Date> toDate(Binder.BindingBuilder<BEAN, LocalDate> self) {
+        self.withConverter(new LocalDateToDateConverter(TimeZoneUtils.getBrowserTimeZone()))
+    }
+
+    @NotNull
+    static <BEAN> Binder.BindingBuilder<BEAN, Date> toDate2(Binder.BindingBuilder<BEAN, LocalDateTime> self) {
+        self.withConverter(new LocalDateTimeToDateConverter(TimeZoneUtils.getBrowserTimeZone()))
+    }
+
+    @NotNull
+    static <BEAN> Binder.BindingBuilder<BEAN, Instant> toInstant(Binder.BindingBuilder<BEAN, LocalDate> self) {
+        self.withConverter(new LocalDateToInstantConverter())
+    }
+
+    @NotNull
+    static <BEAN> Binder.BindingBuilder<BEAN, Instant> toInstant2(Binder.BindingBuilder<BEAN, LocalDateTime> self) {
+        self.withConverter(new LocalDateTimeToInstantConverter())
+    }
+
+    /**
+     * Allows you to bind the component directly in the component's definition. E.g.
+     * ```
+     * textField("Name:") {
+     *   bind(binder).trimmingConverter().bind("name")
+     * }
+     * ```
+     */
+    static <BEAN, FIELDVALUE> Binder.BindingBuilder<BEAN, FIELDVALUE> bind(
+            final HasValue<? extends HasValue.ValueChangeEvent<FIELDVALUE>, FIELDVALUE> self,
+            @NotNull Binder<BEAN> binder
+    ) {
+        binder.forField(self)
+    }
+
+    @NotNull
+    static <BEAN> Binder.BindingBuilder<BEAN, String> validateNotBlank(
+            Binder.BindingBuilder<BEAN, String> self,
+            @NotNull String errorMessage = "must not be blank"
+    ) {
+        self.withValidator(new StringNotBlankValidator(errorMessage))
+    }
+
+    @NotNull
+    static <BEAN> Binder.BindingBuilder<BEAN, String> validEmail(
+            Binder.BindingBuilder<BEAN, String> self,
+            @NotNull String errorMessage = "must be a valid email address"
+    ) {
+        self.withValidator(new EmailValidator(errorMessage))
+    }
+
+    @NotNull
+    static <T extends Comparable, BEAN> Binder.BindingBuilder<BEAN, T> inRange(
+            Binder.BindingBuilder<BEAN, T> self,
+            @NotNull Range<T> range,
+            @NotNull String errorMessage = "must be in $range"
+    ) {
+        self.withValidator(new GroovyRangeValidator(range, errorMessage))
+    }
 }

@@ -1,5 +1,7 @@
 dependencies {
-    compile("org.codehaus.groovy:groovy:2.4.5")
+    // use Groovy 2.5.0+ otherwise compiling classes with javax.validation annotations will fail with
+    // BUG! exception in phase 'class generation' in source unit '*' unsupported Target TYPE_USE
+    compile("org.codehaus.groovy:groovy:2.5.0")
 
     // testing
     testImplementation("org.junit.jupiter:junit-jupiter:5.6.0")
