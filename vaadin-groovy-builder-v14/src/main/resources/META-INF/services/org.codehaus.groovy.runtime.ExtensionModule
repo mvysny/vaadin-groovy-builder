@@ -7,4 +7,6 @@ extensionClasses = com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl,\
   com.github.mvysny.vaadingroovybuilder.v14.Layouts,\
   com.github.mvysny.vaadingroovybuilder.v14.FormLayouts,\
   com.github.mvysny.vaadingroovybuilder.v14.HtmlUtils,\
-  com.github.mvysny.vaadingroovybuilder.v14.RouterUtils
+  com.github.mvysny.vaadingroovybuilder.v14.RouterUtils,\
+  com.github.mvysny.vaadingroovybuilder.v14.binder.BinderUtils,\
+  com.github.mvysny.vaadingroovybuilder.v14.TimeZoneExtensionMethods
