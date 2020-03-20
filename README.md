@@ -1,6 +1,5 @@
 [![GitHub tag](https://img.shields.io/github/tag/mvysny/vaadin-groovy-builder.svg)](https://github.com/mvysny/vaadin-groovy-builder/tags)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.mvysny.vaadin-groovy-builder/vaadin-groovy-builder-v14/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mvysny.vaadin-groovy-builder/vaadin-groovy-builder-v14)
-[![Heroku](https://heroku-badge.herokuapp.com/?app=karibu-uitest&style=flat&svg=1)](https://vaadin-groovy-builder.herokuapp.com/)
 
 # Vaadin Groovy Builder (Vaadin Groovy Extensions)
 
