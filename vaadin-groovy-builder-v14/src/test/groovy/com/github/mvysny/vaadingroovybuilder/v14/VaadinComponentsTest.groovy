@@ -26,10 +26,12 @@ class VaadinComponentsTest {
                 addClickListener {  }
             }
             checkBox{}
-            comboBox(null) {
+            comboBox(String, null) {
                 setItems(["foo", "bar"])
             }
-            select{}
+            select(String) {
+                setItems(["foo", "bar"])
+            }
             datePicker{}
             dialog{}
             icon(VaadinIcon.TRASH)

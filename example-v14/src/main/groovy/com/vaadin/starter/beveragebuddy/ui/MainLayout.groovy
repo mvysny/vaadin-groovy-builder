@@ -14,6 +14,7 @@ import com.vaadin.flow.server.PageConfigurator
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.lumo.Lumo
 import com.vaadin.starter.beveragebuddy.ui.categories.CategoriesList
+import com.vaadin.starter.beveragebuddy.ui.reviews.ReviewsList
 import groovy.transform.CompileStatic
 
 /**
@@ -41,12 +42,10 @@ class MainLayout extends VerticalLayout implements RouterLayout, PageConfigurato
             div {
                 // navigation
                 addClassName("main-layout__nav")
-/*
                 routerLink(VaadinIcon.LIST, "Reviews", ReviewsList) {
                     addClassName("main-layout__nav-item")
                     highlightCondition = HighlightConditions.sameLocation()
                 }
-*/
                 routerLink(VaadinIcon.ARCHIVES, "Categories", CategoriesList) {
                     addClassName("main-layout__nav-item")
                     highlightCondition = HighlightConditions.sameLocation()

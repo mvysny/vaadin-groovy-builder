@@ -89,9 +89,11 @@ class VaadinComponents {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static <T> ComboBox<T> comboBox(HasComponents self, @Nullable String label = null,
-                                    @DelegatesTo(value = ComboBox, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        init(self, new ComboBox<T>(label), block)
+    static <ITEM> ComboBox<ITEM> comboBox(HasComponents self,
+                                    @NotNull Class<ITEM> itemClass,
+                                    @Nullable String label = null,
+                                    @DelegatesTo(type = "com.vaadin.flow.component.combobox.ComboBox<ITEM>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        init(self, new ComboBox<ITEM>(label), block)
     }
 
     /**
@@ -102,9 +104,11 @@ class VaadinComponents {
      * and it will appear in the popup.
      */
     @NotNull
-    static <T> Select<T> select(HasComponents self, @Nullable String label = null,
-                                @DelegatesTo(type = "com.vaadin.flow.component.select.Select<T>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        def select = new Select<T>()
+    static <ITEM> Select<ITEM> select(HasComponents self,
+                                @NotNull Class<ITEM> itemClass,
+                                @Nullable String label = null,
+                                @DelegatesTo(type = "com.vaadin.flow.component.select.Select<ITEM>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        def select = new Select<ITEM>()
         if (label != null) select.setLabel(label)
         init(self, select, block)
     }
@@ -114,7 +118,8 @@ class VaadinComponents {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static DatePicker datePicker(HasComponents self, @Nullable String label = null,
+    static DatePicker datePicker(HasComponents self,
+                                 @Nullable String label = null,
                                  @DelegatesTo(value = DatePicker, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new DatePicker(label), block)
     }
@@ -164,7 +169,8 @@ class VaadinComponents {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static EmailField emailField(HasComponents self, @Nullable String label = null,
+    static EmailField emailField(HasComponents self,
+                                 @Nullable String label = null,
                                  @DelegatesTo(value = EmailField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new EmailField(label), block)
     }
@@ -175,13 +181,15 @@ class VaadinComponents {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static NumberField numberField(HasComponents self, @Nullable String label = null,
+    static NumberField numberField(HasComponents self,
+                                   @Nullable String label = null,
                                    @DelegatesTo(value = NumberField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new NumberField(label), block)
     }
 
     @NotNull
-    static TextArea textArea(HasComponents self, @Nullable String label = null,
+    static TextArea textArea(HasComponents self,
+                             @Nullable String label = null,
                              @DelegatesTo(value = TextArea, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new TextArea(label), block)
     }

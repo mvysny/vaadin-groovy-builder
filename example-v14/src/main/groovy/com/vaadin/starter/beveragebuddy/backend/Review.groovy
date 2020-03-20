@@ -15,7 +15,7 @@ import java.time.LocalDate
 @TupleConstructor
 @EqualsAndHashCode(includes = ["id"])
 @ToString
-class Review {
+class Review implements Serializable {
     Long id = null
 
     @NotNull

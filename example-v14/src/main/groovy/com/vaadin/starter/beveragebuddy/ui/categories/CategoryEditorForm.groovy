@@ -27,9 +27,11 @@ class CategoryEditorForm implements EditorForm<Category> {
         return "Category"
     }
 
+    private final Binder<Category> binder = new BeanValidationBinder<Category>(Category)
+
     @Override
     Binder<Category> getBinder() {
-        return new BeanValidationBinder<Category>(Category)
+        return binder
     }
 
     @Override
