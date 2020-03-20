@@ -1,5 +1,6 @@
 package com.vaadin.starter.beveragebuddy.ui.categories
 
+import com.github.mvysny.vaadingroovybuilder.v14.GridUtils
 import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.button.ButtonVariant
 import com.vaadin.flow.component.grid.Grid
@@ -34,7 +35,7 @@ class CategoriesList extends VerticalLayout {
 
     private H3 header
     private Toolbar toolbar
-    private Grid<Category> grid
+    private Grid categoryGrid
     // can't retrieve GridContextMenu from Grid: https://github.com/vaadin/vaadin-grid-flow/issues/523
     GridContextMenu<Object> gridContextMenu
 
@@ -52,51 +53,52 @@ class CategoriesList extends VerticalLayout {
     })
 
     CategoriesList() {
-            setPadding(false); setJustifyContentMode(JustifyContentMode.START); setDefaultHorizontalComponentAlignment(Alignment.STRETCH)
-            toolbar = new Toolbar("New category")
-            add(toolbar)
-            toolbar.with {
-                onSearch = new SerializableConsumer<String>(){
-                    @Override
-                    void accept(String category) {
-                        updateView()
-                    }
-                }
-                onCreate = new SerializableRunnable() {
-                    @Override
-                    void run() {
-                        editorDialog.createNew()
-                    }
+        setPadding(false); setJustifyContentMode(JustifyContentMode.START);
+        setDefaultHorizontalComponentAlignment(Alignment.STRETCH)
+        toolbar = new Toolbar("New category")
+        add(toolbar)
+        toolbar.with {
+            onSearch = new SerializableConsumer<String>() {
+                @Override
+                void accept(String category) {
+                    updateView()
                 }
             }
-            header = h3{}
-            grid = grid(Category) {
-                setExpand(true)
-                addColumnForProperty("name") {
-                    setHeader("Category")
+            onCreate = new SerializableRunnable() {
+                @Override
+                void run() {
+                    editorDialog.createNew()
                 }
-                addColumn(new ValueProvider<Category, String>() {
-                    @Override
-                    String apply(Category o) {
-                        return getReviewCount(o)
-                    }
-                }).setHeader("Beverages")
-                addColumn(new ComponentRenderer<Button, Category>(new SerializableFunction<Category, Button>(){
-                    @Override
-                    Button apply(Category category) {
-                        return createEditButton(category)
-                    }
-                })).with {
-                    flexGrow = 0; key = "edit"
+            }
+        }
+        header = h3 {}
+        categoryGrid = grid(Category) {
+            setExpand(true)
+            addColumnForProperty("name") {
+                setHeader("Category")
+            }
+            addColumn(new ValueProvider<Category, String>() {
+                @Override
+                String apply(Category o) {
+                    return getReviewCount(o)
                 }
-                element.themeList.add("row-dividers")
+            }).setHeader("Beverages")
+            addColumn(new ComponentRenderer<Button, Category>(new SerializableFunction<Category, Button>() {
+                @Override
+                Button apply(Category category) {
+                    return createEditButton(category)
+                }
+            })).with {
+                flexGrow = 0; key = "edit"
+            }
+            element.themeList.add("row-dividers")
 
-                this.gridContextMenu = gridContextMenu {
-                    item("New", { _ -> editorDialog.createNew() }) {}
-                    item("Edit (Alt+E)", { cat -> if (cat != null) edit(cat as Category) }) {}
-                    item("Delete", { cat -> if (cat != null) deleteCategory(cat as Category) }) {}
-                }
+            this.gridContextMenu = gridContextMenu {
+                item("New", { _ -> editorDialog.createNew() }) {}
+                item("Edit (Alt+E)", { cat -> if (cat != null) edit(cat as Category) }) {}
+                item("Delete", { cat -> if (cat != null) deleteCategory(cat as Category) }) {}
             }
+        }
 
         updateView()
     }
@@ -127,7 +129,7 @@ class CategoriesList extends VerticalLayout {
         } else {
             header.text = "Categories"
         }
-        grid.setItems(categories)
+        categoryGrid.setItems(categories)
     }
 
     private void saveCategory(Category category) {

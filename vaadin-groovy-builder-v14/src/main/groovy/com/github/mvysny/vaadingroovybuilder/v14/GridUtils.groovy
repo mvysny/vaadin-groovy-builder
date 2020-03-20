@@ -31,7 +31,7 @@ import static com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl.init
 class GridUtils {
     @NotNull
     static <T> Grid<T> grid(@NotNull HasComponents self,
-            @NotNull Class<T> beanType,
+                            @NotNull Class<T> beanType,
                             @Nullable DataProvider<T, ?> dataProvider = null,
                             @DelegatesTo(value = Grid, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         def grid = new Grid<T>(beanType, false)

@@ -114,7 +114,8 @@ class ReviewService {
      * @return the total sum, 0 or greater.
      */
     int getTotalCountForReviewsInCategory(long categoryId) {
-        reviews.values().findAll { it.category?.id == categoryId } .sum { Review it -> it.count } as int
+        def result = reviews.values().findAll { it.category?.id == categoryId } .sum { Review it -> it.count } as Integer
+        return result == null ? 0 : result
     }
 
     def deleteAll() {

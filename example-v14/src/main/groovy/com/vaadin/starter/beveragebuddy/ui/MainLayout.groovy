@@ -41,10 +41,12 @@ class MainLayout extends VerticalLayout implements RouterLayout, PageConfigurato
             div {
                 // navigation
                 addClassName("main-layout__nav")
+/*
                 routerLink(VaadinIcon.LIST, "Reviews", ReviewsList) {
                     addClassName("main-layout__nav-item")
                     highlightCondition = HighlightConditions.sameLocation()
                 }
+*/
                 routerLink(VaadinIcon.ARCHIVES, "Categories", CategoriesList) {
                     addClassName("main-layout__nav-item")
                     highlightCondition = HighlightConditions.sameLocation()
