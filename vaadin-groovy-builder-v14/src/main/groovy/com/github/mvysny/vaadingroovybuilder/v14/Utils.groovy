@@ -1,19 +1,31 @@
 package com.github.mvysny.vaadingroovybuilder.v14
 
+import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
 
 import java.util.function.Function
 import java.util.function.Supplier
 
+@CompileStatic
 class Utils {
 
     /**
-     * Throws an IllegalArgumentException with the result of calling lazyMessage if the value is false.
+     * Throws an {@link IllegalArgumentException} with the result of calling lazyMessage if the value is false.
      */
     static void require(boolean value, @NotNull Supplier<Object> lazyMessage) {
         if (!value) {
-            def message = lazyMessage()
+            def message = lazyMessage.get()
             throw new IllegalArgumentException(message.toString())
+        }
+    }
+
+    /**
+     * Throws an {@link IllegalStateException} with the result of calling lazyMessage if the value is false.
+     */
+    static void check(boolean value, @NotNull Supplier<Object> lazyMessage) {
+        if (!value) {
+            def message = lazyMessage.get()
+            throw new IllegalStateException(message.toString())
         }
     }
 

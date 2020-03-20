@@ -17,6 +17,8 @@ import org.jetbrains.annotations.Nullable
 
 import java.util.function.Function
 import java.util.function.Predicate
+import java.util.stream.Collectors
+import java.util.stream.Stream
 
 import static com.github.mvysny.vaadingroovybuilder.v14.Utils.require
 
@@ -181,5 +183,26 @@ class VaadinUtils {
                 })
             }
         }
+    }
+
+    @NotNull
+    static <T> List<T> toList(@NotNull Stream<T> self) {
+        self.collect(Collectors.toList())
+    }
+
+    @NotNull
+    static <T> T[] toArray(@NotNull Stream<T> self, @NotNull T[] emptyArray) {
+        toList(self).toArray(emptyArray)
+    }
+
+    @Nullable
+    static <T> T firstOrNull(@NotNull Iterable<T> iterable) {
+        def iterator = iterable.iterator()
+        (iterator.hasNext() ? iterator.next() : null) as T
+    }
+
+    @Nullable
+    static <T> T firstOrNull(@NotNull List<T> list) {
+        list.isEmpty() ? null : list.get(0)
     }
 }
