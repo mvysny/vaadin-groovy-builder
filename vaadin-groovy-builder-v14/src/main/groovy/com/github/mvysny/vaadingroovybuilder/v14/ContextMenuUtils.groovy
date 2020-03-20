@@ -44,7 +44,7 @@ class ContextMenuUtils {
 
     @NotNull
     static MenuItem item(@NotNull HasMenuItems self, @NotNull String text,
-    @NotNull @ClosureParams(value= SimpleType.class,options="com.vaadin.flow.component.ClickEvent<MenuItem>") Closure clickListener = {},
+                         @Nullable @ClosureParams(value = SimpleType.class, options = "com.vaadin.flow.component.ClickEvent<MenuItem>") Closure clickListener,
                          @DelegatesTo(value = MenuItem, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         def item = self.addItem(text, clickListener)
         block.resolveStrategy = Closure.DELEGATE_FIRST
@@ -55,14 +55,14 @@ class ContextMenuUtils {
 
     @NotNull
     static MenuItem item(@NotNull MenuItem self, @NotNull String text,
-                         @NotNull @ClosureParams(value= SimpleType.class,options="com.vaadin.flow.component.ClickEvent<MenuItem>") Closure clickListener = {},
+                         @Nullable @ClosureParams(value = SimpleType.class,options="com.vaadin.flow.component.ClickEvent<MenuItem>") Closure clickListener,
                          @DelegatesTo(value = MenuItem, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         item(self.subMenu, text, clickListener, block)
     }
 
     @NotNull
     static MenuItem item(@NotNull HasMenuItems self, @NotNull Component component,
-                         @NotNull @ClosureParams(value= SimpleType.class,options="com.vaadin.flow.component.ClickEvent<MenuItem>") Closure clickListener = {},
+                         @Nullable @ClosureParams(value = SimpleType.class,options="com.vaadin.flow.component.ClickEvent<MenuItem>") Closure clickListener,
                          @DelegatesTo(value = MenuItem, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         def item = self.addItem(component, clickListener)
         block.resolveStrategy = Closure.DELEGATE_FIRST
@@ -73,7 +73,7 @@ class ContextMenuUtils {
 
     @NotNull
     static MenuItem item(@NotNull MenuItem self, @NotNull Component component,
-                         @NotNull @ClosureParams(value= SimpleType.class,options="com.vaadin.flow.component.ClickEvent<MenuItem>") Closure clickListener = {},
+                         @Nullable @ClosureParams(value= SimpleType.class,options="com.vaadin.flow.component.ClickEvent<MenuItem>") Closure clickListener,
                          @DelegatesTo(value = MenuItem, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         item(self.subMenu, component, clickListener, block)
     }
@@ -118,7 +118,7 @@ class ContextMenuUtils {
     @NotNull
     static <T> GridMenuItem<T> item(@NotNull GridContextMenu<T> self,
                                     @NotNull String text,
-                                    @Nullable @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener = null,
+                                    @Nullable @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener,
                                     @DelegatesTo(value = GridMenuItem, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         def item = self.addItem(text, adaptClickListener(clickListener))
         block.delegate = item
@@ -130,7 +130,7 @@ class ContextMenuUtils {
     @NotNull
     static <T> GridMenuItem<T> item(@NotNull GridMenuItem<T> self,
                                     @NotNull String text,
-                                    @Nullable @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener = null,
+                                    @Nullable @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener,
                                     @DelegatesTo(value = GridMenuItem, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         def item = self.subMenu.addItem(text, adaptClickListener(clickListener))
         block.delegate = item
@@ -142,7 +142,7 @@ class ContextMenuUtils {
     @NotNull
     static <T> GridMenuItem<T> item(@NotNull GridContextMenu<T> self,
                                     @NotNull Component component,
-                                    @Nullable @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener = null,
+                                    @Nullable @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener,
                                     @DelegatesTo(value = GridMenuItem, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         def item = self.addItem(component, adaptClickListener(clickListener))
         block.delegate = item
@@ -154,7 +154,7 @@ class ContextMenuUtils {
     @NotNull
     static <T> GridMenuItem<T> item(@NotNull GridMenuItem<T> self,
                                     @NotNull Component component,
-                                    @Nullable @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener = null,
+                                    @Nullable @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener,
                                     @DelegatesTo(value = GridMenuItem, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         def item = self.subMenu.addItem(component, adaptClickListener(clickListener))
         block.delegate = item

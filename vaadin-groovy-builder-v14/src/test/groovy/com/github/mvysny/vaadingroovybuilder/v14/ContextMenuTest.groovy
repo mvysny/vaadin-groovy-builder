@@ -19,12 +19,12 @@ class ContextMenuTest {
     void "smoke"() {
         UI.getCurrent().button {
             contextMenu {
-                item("save", { _ -> println("saved") })
-                item("style") {
-                    item("bold", { _ -> println("bold") })
-                    item("italic", { _ -> println("italic") })
+                item("save", { _ -> println("saved") }) {}
+                item("style", null) {
+                    item("bold", { _ -> println("bold") }) {}
+                    item("italic", { _ -> println("italic") }) {}
                 }
-                item("clear", { _ -> println("clear") })
+                item("clear", { _ -> println("clear") }) {}
             }
         }
     }
@@ -33,12 +33,12 @@ class ContextMenuTest {
     void "grid - smoke"() {
         UI.getCurrent().grid(String) {
             gridContextMenu {
-                item("save", { _ -> println("saved") })
-                item("style") {
-                    item("bold", { _ -> println("bold") })
-                    item("italic", { _ -> println("italic") })
+                item("save", { _ -> println("saved") }) {}
+                item("style", null) {
+                    item("bold", { _ -> println("bold") }) {}
+                    item("italic", { _ -> println("italic") }) {}
                 }
-                item("clear", { _ -> println("clear") })
+                item("clear", { _ -> println("clear") }) {}
             }
         }
     }
