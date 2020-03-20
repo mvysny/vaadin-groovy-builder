@@ -5,7 +5,7 @@ import java.util.*
 
 plugins {
     groovy
-    id("org.gretty") version "3.0.1"
+    id("org.gretty") version "3.0.1" apply(false)
     id("com.jfrog.bintray") version "1.8.3"
     `maven-publish`
     id("org.jetbrains.dokka") version "0.9.17"
