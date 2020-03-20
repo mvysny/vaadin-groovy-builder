@@ -95,7 +95,7 @@ class CategoriesList extends VerticalLayout {
 
             this.gridContextMenu = gridContextMenu {
                 item("New", { _ -> editorDialog.createNew() }) {}
-                item("Edit (Alt+E)", { cat -> if (cat != null) edit(cat as Category) }) {}
+                item("Edit", { cat -> if (cat != null) edit(cat as Category) }) {}
                 item("Delete", { cat -> if (cat != null) deleteCategory(cat as Category) }) {}
             }
         }

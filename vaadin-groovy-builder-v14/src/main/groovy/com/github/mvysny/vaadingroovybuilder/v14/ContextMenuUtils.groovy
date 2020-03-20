@@ -12,6 +12,7 @@ import groovy.transform.stc.ClosureParams
 import groovy.transform.stc.FirstParam
 import groovy.transform.stc.SimpleType
 import org.jetbrains.annotations.NotNull
+import org.jetbrains.annotations.Nullable
 
 @CompileStatic
 class ContextMenuUtils {
@@ -102,16 +103,24 @@ class ContextMenuUtils {
         menu
     }
 
+    private static Closure adaptClickListener(Closure clickListener) {
+        if (clickListener == null) return null
+        return { e ->
+            def item = (e as com.vaadin.flow.component.grid.contextmenu.GridContextMenu.GridContextMenuItemClickEvent).item.orElse(null)
+            clickListener(item)
+        }
+    }
+
     /**
      * @param clickListener may be invoked with null item if there are not enough rows in the grid and the user clicks the
      * empty space in the grid.
      */
     @NotNull
     static <T> GridMenuItem<T> item(@NotNull GridContextMenu<T> self,
-            @NotNull String text,
-                                    @NotNull @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener = {},
+                                    @NotNull String text,
+                                    @Nullable @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener = null,
                                     @DelegatesTo(value = GridMenuItem, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        def item = self.addItem(text, clickListener)
+        def item = self.addItem(text, adaptClickListener(clickListener))
         block.delegate = item
         block.resolveStrategy = Closure.DELEGATE_FIRST
         block()
@@ -121,9 +130,9 @@ class ContextMenuUtils {
     @NotNull
     static <T> GridMenuItem<T> item(@NotNull GridMenuItem<T> self,
                                     @NotNull String text,
-                                    @NotNull @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener = {},
+                                    @Nullable @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener = null,
                                     @DelegatesTo(value = GridMenuItem, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        def item = self.subMenu.addItem(text, clickListener)
+        def item = self.subMenu.addItem(text, adaptClickListener(clickListener))
         block.delegate = item
         block.resolveStrategy = Closure.DELEGATE_FIRST
         block()
@@ -133,9 +142,9 @@ class ContextMenuUtils {
     @NotNull
     static <T> GridMenuItem<T> item(@NotNull GridContextMenu<T> self,
                                     @NotNull Component component,
-                                    @NotNull @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener = {},
+                                    @Nullable @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener = null,
                                     @DelegatesTo(value = GridMenuItem, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        def item = self.addItem(component, clickListener)
+        def item = self.addItem(component, adaptClickListener(clickListener))
         block.delegate = item
         block.resolveStrategy = Closure.DELEGATE_FIRST
         block()
@@ -145,9 +154,9 @@ class ContextMenuUtils {
     @NotNull
     static <T> GridMenuItem<T> item(@NotNull GridMenuItem<T> self,
                                     @NotNull Component component,
-                                    @NotNull @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener = {},
+                                    @Nullable @ClosureParams(FirstParam.FirstGenericType.class) Closure clickListener = null,
                                     @DelegatesTo(value = GridMenuItem, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        def item = self.subMenu.addItem(component, clickListener)
+        def item = self.subMenu.addItem(component, adaptClickListener(clickListener))
         block.delegate = item
         block.resolveStrategy = Closure.DELEGATE_FIRST
         block()
