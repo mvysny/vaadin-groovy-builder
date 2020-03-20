@@ -1,5 +1,6 @@
 [![GitHub tag](https://img.shields.io/github/tag/mvysny/vaadin-groovy-builder.svg)](https://github.com/mvysny/vaadin-groovy-builder/tags)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.mvysny.vaadin-groovy-builder/vaadin-groovy-builder-v14/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.mvysny.vaadin-groovy-builder/vaadin-groovy-builder-v14)
+![Java CI](https://github.com/mvysny/vaadin-groovy-builder/workflows/Java%20CI/badge.svg)
 
 # Vaadin Groovy Builder (Vaadin Groovy Extensions)
 
