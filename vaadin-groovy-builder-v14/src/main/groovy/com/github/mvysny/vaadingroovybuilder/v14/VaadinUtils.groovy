@@ -1,12 +1,6 @@
 package com.github.mvysny.vaadingroovybuilder.v14
 
-import com.vaadin.flow.component.ClickEvent
-import com.vaadin.flow.component.ClickNotifier
-import com.vaadin.flow.component.Component
-import com.vaadin.flow.component.ComponentEvent
-import com.vaadin.flow.component.ComponentUtil
-import com.vaadin.flow.component.HasComponents
-import com.vaadin.flow.component.Text
+import com.vaadin.flow.component.*
 import com.vaadin.flow.dom.ClassList
 import com.vaadin.flow.dom.DomEventListener
 import com.vaadin.flow.dom.DomListenerRegistration
@@ -15,9 +9,6 @@ import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
-import java.beans.Introspector
-import java.beans.PropertyDescriptor
-import java.lang.reflect.Method
 import java.util.function.Function
 import java.util.function.Predicate
 import java.util.stream.Collectors
@@ -213,17 +204,32 @@ class VaadinUtils {
      * Returns the getter method for given property name; fails if there is no such getter.
      */
     @NotNull
-    static Method getGetter(@NotNull Class<?> self, @NotNull String propertyName) {
-        Objects.<Object>requireNonNull(self, "self")
-        Objects.<Object>requireNonNull(propertyName, "propertyName")
-        PropertyDescriptor[] descriptors = Introspector.getBeanInfo(self).propertyDescriptors
-        PropertyDescriptor descriptor = descriptors.find { it.name == propertyName }
-        Objects.requireNonNull(descriptor) {
-            "No such field '$propertyName' in $this; available properties: ${descriptors.collect { it.name } .join(", ")}".toString()
-        }
-        Method getter = Objects.requireNonNull(descriptor.readMethod) {
-            "The $self.$propertyName property does not have a getter: $descriptor".toString()
-        }
-        return getter
+    static Getter getGetter(@NotNull Class<?> self, @NotNull String propertyName) {
+        return new Getter(self, propertyName)
+    }
+
+    /**
+     * Clones this object by serialization and returns the deserialized clone.
+     * @return the clone of this
+     */
+    @NotNull
+    static <T extends Serializable> T cloneBySerialization(@NotNull T self) {
+        self.getClass().cast(deserialize(serializeToBytes(self))) as T
+    }
+
+    @Nullable
+    static Object deserialize(@NotNull byte[] self) {
+        new ObjectInputStream(new ByteArrayInputStream(self)).readObject()
+    }
+
+    /**
+     * Serializes the object to a byte array
+     * @return the byte array containing this object serialized form.
+     */
+    @NotNull
+    static byte[] serializeToBytes(@Nullable Serializable obj) {
+        def bout = new ByteArrayOutputStream()
+        new ObjectOutputStream(bout).writeObject(obj)
+        return bout.toByteArray()
     }
 }

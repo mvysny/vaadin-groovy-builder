@@ -2,12 +2,14 @@ package com.github.mvysny.vaadingroovybuilder.v14
 
 import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.HasComponents
+import com.vaadin.flow.component.grid.FooterRow
 import com.vaadin.flow.component.grid.Grid
-import com.vaadin.flow.component.icon.Icon
-import com.vaadin.flow.component.icon.VaadinIcon
+import com.vaadin.flow.component.grid.HeaderRow
 import com.vaadin.flow.component.treegrid.TreeGrid
 import com.vaadin.flow.data.provider.DataProvider
 import com.vaadin.flow.data.provider.hierarchy.HierarchicalDataProvider
+import com.vaadin.flow.data.renderer.ComponentRenderer
+import com.vaadin.flow.data.renderer.Renderer
 import com.vaadin.flow.data.selection.SelectionEvent
 import com.vaadin.flow.data.selection.SelectionModel
 import com.vaadin.flow.function.ValueProvider
@@ -16,6 +18,9 @@ import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
+import java.lang.reflect.Method
+
+import static com.github.mvysny.vaadingroovybuilder.v14.Utils.require
 import static com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl.init
 
 /**
@@ -89,7 +94,7 @@ class GridUtils {
         def column = self.addColumn(new ValueProvider<T, Object>() {
             @Override
             Object apply(T t) {
-                return converter(getter.invoke(t))
+                return converter(getter.get(t))
             }
         })
         column.with {
@@ -101,5 +106,101 @@ class GridUtils {
         block.resolveStrategy = Closure.DELEGATE_FIRST
         block()
         column
+    }
+
+    @NotNull
+    private static final Class<?> abstractCellClass = Class.forName("com.vaadin.flow.component.grid.AbstractRow\$AbstractCell")
+    @NotNull
+    private static final Class<?> abstractColumnClass = Class.forName("com.vaadin.flow.component.grid.AbstractColumn")
+
+    /**
+     * Returns `com.vaadin.flow.component.grid.AbstractColumn`
+     */
+    @NotNull
+    private static Object getColumn(@NotNull HeaderRow.HeaderCell cell) {
+        Method getColumn = abstractCellClass.getDeclaredMethod("getColumn")
+        getColumn.setAccessible(true)
+        return getColumn.invoke(cell)
+    }
+
+    /**
+     * Returns `com.vaadin.flow.component.grid.AbstractColumn`
+     */
+    @NotNull
+    private static Object getColumn(@NotNull FooterRow.FooterCell cell) {
+        Method getColumn = abstractCellClass.getDeclaredMethod("getColumn")
+        getColumn.setAccessible(true)
+        return getColumn.invoke(cell)
+    }
+
+    /**
+     * Retrieves the cell for given [key].
+     * @return the corresponding cell
+     * @throws IllegalArgumentException if no such column exists.
+     */
+    @NotNull
+    static HeaderRow.HeaderCell getCell(@NotNull HeaderRow self, @NotNull String key) {
+        HeaderRow.HeaderCell cell = self.cells.find { getColumnKey(getColumn(it as HeaderRow.HeaderCell)) == key }
+        require(cell != null) { "This grid has no column with key ${key}: ${self.cells}" }
+        return cell
+    }
+
+    private static String getColumnKey(Object column) {
+        abstractColumnClass.cast(column)
+        Method method = abstractColumnClass.getDeclaredMethod("getBottomLevelColumn")
+        method.setAccessible(true)
+        Grid.Column<?> gridColumn = method.invoke(column) as Grid.Column<?>
+        return gridColumn.key
+    }
+
+    /**
+     * Retrieves the cell for given [key].
+     * @return the corresponding cell
+     * @throws IllegalArgumentException if no such column exists.
+     */
+    @NotNull
+    static FooterRow.FooterCell getCell(@NotNull FooterRow self, @NotNull String key) {
+        FooterRow.FooterCell cell = self.cells.find { getColumnKey(getColumn(it as FooterRow.FooterCell)) == key }
+        require(cell != null) { "This grid has no column with key ${key}: ${self.cells}" }
+        return cell
+    }
+
+    @Nullable
+    static Renderer<?> getRenderer(@NotNull HeaderRow.HeaderCell self) {
+        Method method = abstractColumnClass.getDeclaredMethod("getHeaderRenderer")
+        method.setAccessible(true)
+        def renderer = method.invoke(getColumn(self))
+        return renderer as Renderer<?>
+    }
+
+    @Nullable
+    static Renderer<?> getRenderer(@NotNull FooterRow.FooterCell self) {
+        Method method = abstractColumnClass.getDeclaredMethod("getFooterRenderer")
+        method.setAccessible(true)
+        def renderer = method.invoke(getColumn(self))
+        return renderer as Renderer<?>
+    }
+
+    @Nullable
+    static Component getComponent(@NotNull FooterRow.FooterCell self) {
+        def renderer = getRenderer(self)
+        if (!(renderer instanceof ComponentRenderer<? extends Component, ?>)) {
+            return null
+        }
+        return (renderer as ComponentRenderer<? extends Component, ?>).createComponent(null) as Component
+    }
+
+    @NotNull
+    private static final Class<?> gridSorterComponentRendererClass = Class.forName("com.vaadin.flow.component.grid.GridSorterComponentRenderer")
+
+    @Nullable
+    static Component getComponent(@NotNull HeaderRow.HeaderCell self) {
+        def renderer = getRenderer(self)
+        if (!gridSorterComponentRendererClass.isInstance(renderer)) {
+            return null
+        }
+        def componentField = gridSorterComponentRendererClass.getDeclaredField("component")
+        componentField.setAccessible(true)
+        return componentField.get(renderer) as Component
     }
 }
