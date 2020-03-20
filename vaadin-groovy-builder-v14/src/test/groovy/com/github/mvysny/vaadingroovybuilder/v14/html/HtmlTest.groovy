@@ -1,4 +1,4 @@
-package com.github.mvysny.vaadingroovybuilder.v14
+package com.github.mvysny.vaadingroovybuilder.v14.html
 
 import com.github.mvysny.kaributesting.v10.MockVaadin
 import com.vaadin.flow.component.UI

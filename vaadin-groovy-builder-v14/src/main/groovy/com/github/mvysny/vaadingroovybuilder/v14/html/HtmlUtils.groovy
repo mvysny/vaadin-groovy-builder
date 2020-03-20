@@ -1,7 +1,6 @@
-package com.github.mvysny.vaadingroovybuilder.v14
+package com.github.mvysny.vaadingroovybuilder.v14.html
 
-import com.github.mvysny.vaadingroovybuilder.v14.html.Br
-import com.github.mvysny.vaadingroovybuilder.v14.html.Strong
+import com.github.mvysny.vaadingroovybuilder.v14.VaadinUtils
 import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.Html
@@ -16,7 +15,6 @@ import org.jsoup.nodes.Element
 import org.jsoup.nodes.TextNode
 
 import static com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl.init
-import static VaadinUtils.text
 
 /**
  * @author mavi
@@ -146,7 +144,7 @@ class HtmlUtils {
         Element doc = Jsoup.parse(html).body()
         for (childNode in doc.childNodes()) {
             if (childNode instanceof TextNode) {
-                text(self, (childNode as TextNode).text())
+                VaadinUtils.text(self, (childNode as TextNode).text())
             } else if (childNode instanceof Element) {
                 self.add(new Html((childNode as Element).outerHtml()))
             }
