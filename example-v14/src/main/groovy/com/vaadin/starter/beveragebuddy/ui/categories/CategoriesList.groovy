@@ -36,7 +36,7 @@ class CategoriesList extends VerticalLayout {
     private Toolbar toolbar
     private Grid<Category> grid
     // can't retrieve GridContextMenu from Grid: https://github.com/vaadin/vaadin-grid-flow/issues/523
-    GridContextMenu<Category> gridContextMenu
+    GridContextMenu<Object> gridContextMenu
 
     private final CategoryEditorDialog editorDialog = new CategoryEditorDialog(
             new SerializableConsumer<Category>() {
@@ -91,10 +91,10 @@ class CategoriesList extends VerticalLayout {
                 }
                 element.themeList.add("row-dividers")
 
-                gridContextMenu = gridContextMenu {
-                    item("New", { _ -> editorDialog.createNew() })
-                    item("Edit (Alt+E)", { cat -> if (cat != null) edit(cat) })
-                    item("Delete", { cat -> if (cat != null) deleteCategory(cat) })
+                this.gridContextMenu = gridContextMenu {
+                    item("New", { _ -> editorDialog.createNew() }) {}
+                    item("Edit (Alt+E)", { cat -> if (cat != null) edit(cat as Category) }) {}
+                    item("Delete", { cat -> if (cat != null) deleteCategory(cat as Category) }) {}
                 }
             }
 
