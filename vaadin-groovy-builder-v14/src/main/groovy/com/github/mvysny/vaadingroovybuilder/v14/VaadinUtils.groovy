@@ -15,6 +15,9 @@ import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
+import java.beans.Introspector
+import java.beans.PropertyDescriptor
+import java.lang.reflect.Method
 import java.util.function.Function
 import java.util.function.Predicate
 import java.util.stream.Collectors
@@ -31,7 +34,7 @@ class VaadinUtils {
     /**
      * Fires given event on the component.
      */
-    static void fireEvent(Component self, @NotNull ComponentEvent<? extends Component> event) {
+    static void fireEvent(@NotNull Component self, @NotNull ComponentEvent<? extends Component> event) {
         ComponentUtil.fireEvent(self, event)
     }
 
@@ -41,7 +44,7 @@ class VaadinUtils {
      * all click listeners, thus it avoids the roundtrip to client and back.
      * It even works with browserless testing.
      */
-    static <R extends Component & ClickNotifier<R>> void serverClick(R self) {
+    static <R extends Component & ClickNotifier<R>> void serverClick(@NotNull R self) {
         fireEvent(self, new ClickEvent<R>(self, true, -1, -1, -1, -1, 1, -1, false, false, false, false))
     }
 
@@ -49,7 +52,7 @@ class VaadinUtils {
      * Appends a text node with given <code>text</code> to the component.
      */
     @NotNull
-    static Text text(HasComponents self, String text, @DelegatesTo(value = Text, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
+    static Text text(@NotNull HasComponents self, String text, @DelegatesTo(value = Text, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
         VaadinDsl.init(self, new Text(text), block)
     }
 
@@ -57,14 +60,14 @@ class VaadinUtils {
      * Gets the alignment of the text in the component. One of <code>center</code>, <code>left</code>, <code>right</code>, <code>justify</code>.
      */
     @Nullable
-    static String getTextAlign(Component self) {
+    static String getTextAlign(@NotNull Component self) {
         self.element.style.get("textAlign")
     }
 
     /**
      * Sets the alignment of the text in the component. One of <code>center</code>, <code>left</code>, <code>right</code>, <code>justify</code>.
      */
-    static void setTextAlign(Component self, @Nullable String align) {
+    static void setTextAlign(@NotNull Component self, @Nullable String align) {
         self.element.style.set("textAlign", align)
     }
     /**
@@ -72,7 +75,7 @@ class VaadinUtils {
      * {@link Element#removeAttribute} (if the <code>value</code> is null).
      * @param attribute the name of the attribute.
      */
-    static void setOrRemoveAttribute(Element self, @NotNull String attribute, @Nullable String value) {
+    static void setOrRemoveAttribute(@NotNull Element self, @NotNull String attribute, @Nullable String value) {
         if (value == null) {
             self.removeAttribute(attribute)
         } else {
@@ -84,12 +87,12 @@ class VaadinUtils {
      * Gets the <code>title</code> attribute on component's element.
      */
     @Nullable
-    static String getTooltip(Component self) { self.element.getAttribute("title") }
+    static String getTooltip(@NotNull Component self) { self.element.getAttribute("title") }
 
     /**
      * Sets or removes the <code>title</code> attribute on component's element.
      */
-    static void setTooltip(Component self, @Nullable String tooltip) { setOrRemoveAttribute(self.element, "title", tooltip) }
+    static void setTooltip(@NotNull Component self, @Nullable String tooltip) { setOrRemoveAttribute(self.element, "title", tooltip) }
 
     /**
      * Makes the client-side listener call [Event.preventDefault()](https://developer.mozilla.org/en-US/docs/Web/API/Event/preventDefault)
@@ -98,25 +101,25 @@ class VaadinUtils {
      * @return this
      */
     @NotNull
-    static DomListenerRegistration preventDefault(DomListenerRegistration self) { self.addEventData("event.preventDefault()"); self }
+    static DomListenerRegistration preventDefault(@NotNull DomListenerRegistration self) { self.addEventData("event.preventDefault()"); self }
 
     /**
      * Adds the right-click (context-menu) listener to the component. Also causes the right-click browser
      * menu not to be shown on this component (see {@link #preventDefault}).
      */
     @NotNull
-    static DomListenerRegistration addContextMenuListener(Component self, @NotNull DomEventListener listener) {
+    static DomListenerRegistration addContextMenuListener(@NotNull Component self, @NotNull DomEventListener listener) {
         preventDefault(self.element.addEventListener("contextmenu", listener))
     }
 
     /**
      * Removes the component from its parent. Does nothing if the component is not attached to a parent.
      */
-    static void removeFromParent(Component self) {
+    static void removeFromParent(@NotNull Component self) {
         (self.parent.orElse(null) as HasComponents)?.remove(self)
     }
 
-    static boolean containsWhitespace(String self) {
+    static boolean containsWhitespace(@NotNull String self) {
         for (int i = 0; i < self.length(); i++) {
             if (Character.isWhitespace(self.charAt(i))) {
                 return true
@@ -204,5 +207,23 @@ class VaadinUtils {
     @Nullable
     static <T> T firstOrNull(@NotNull List<T> list) {
         list.isEmpty() ? null : list.get(0)
+    }
+
+    /**
+     * Returns the getter method for given property name; fails if there is no such getter.
+     */
+    @NotNull
+    static Method getGetter(@NotNull Class<?> self, @NotNull String propertyName) {
+        Objects.<Object>requireNonNull(self, "self")
+        Objects.<Object>requireNonNull(propertyName, "propertyName")
+        PropertyDescriptor[] descriptors = Introspector.getBeanInfo(self).propertyDescriptors
+        PropertyDescriptor descriptor = descriptors.find { it.name == propertyName }
+        Objects.requireNonNull(descriptor) {
+            "No such field '$propertyName' in $this; available properties: ${descriptors.collect { it.name } .join(", ")}".toString()
+        }
+        Method getter = Objects.requireNonNull(descriptor.readMethod) {
+            "The $self.$propertyName property does not have a getter: $descriptor".toString()
+        }
+        return getter
     }
 }

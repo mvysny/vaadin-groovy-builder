@@ -11,4 +11,5 @@ extensionClasses = com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl,\
   com.github.mvysny.vaadingroovybuilder.v14.binder.BinderUtils,\
   com.github.mvysny.vaadingroovybuilder.v14.TimeZoneExtensionMethods,\
   com.github.mvysny.vaadingroovybuilder.v14.AccordionUtils,\
-  com.github.mvysny.vaadingroovybuilder.v14.DetailsUtils
+  com.github.mvysny.vaadingroovybuilder.v14.DetailsUtils,\
+  com.github.mvysny.vaadingroovybuilder.v14.GridUtils

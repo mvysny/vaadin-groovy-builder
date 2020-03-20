@@ -20,19 +20,19 @@ class IconUtils {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static Icon icon(HasComponents self, @NotNull VaadinIcon icon,
+    static Icon icon(@NotNull HasComponents self, @NotNull VaadinIcon icon,
                      @DelegatesTo(value = Icon, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
         init(self, new Icon(icon), block)
     }
 
     @NotNull
-    static Icon icon(HasComponents self, @NotNull String collection, @NotNull String icon,
+    static Icon icon(@NotNull HasComponents self, @NotNull String collection, @NotNull String icon,
                      @DelegatesTo(value = Icon, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
         init(self, new Icon(collection, icon), block)
     }
 
     @NotNull
-    static IronIcon ironIcon(HasComponents self, @NotNull String collection, @NotNull String icon,
+    static IronIcon ironIcon(@NotNull HasComponents self, @NotNull String collection, @NotNull String icon,
                      @DelegatesTo(value = IronIcon, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
         init(self, new IronIcon(collection, icon), block)
     }

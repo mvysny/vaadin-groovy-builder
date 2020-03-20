@@ -9,8 +9,11 @@ import com.vaadin.flow.component.icon.Icon
 import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.component.notification.Notification
 import com.vaadin.flow.component.orderedlayout.VerticalLayout
+import com.vaadin.flow.data.renderer.ComponentRenderer
 import com.vaadin.flow.function.SerializableConsumer
+import com.vaadin.flow.function.SerializableFunction
 import com.vaadin.flow.function.SerializableRunnable
+import com.vaadin.flow.function.ValueProvider
 import com.vaadin.flow.router.PageTitle
 import com.vaadin.flow.router.Route
 import com.vaadin.starter.beveragebuddy.backend.Category
@@ -67,13 +70,23 @@ class CategoriesList extends VerticalLayout {
                 }
             }
             header = h3{}
-            grid = grid {
-                isExpand = true
-                addColumnFor(Category::name) {
+            grid = grid(Category) {
+                setExpand(true)
+                addColumnForProperty("name") {
                     setHeader("Category")
                 }
-                addColumn { it.getReviewCount() }.setHeader("Beverages")
-                addColumn(ComponentRenderer<Button, Category>({ cat -> createEditButton(cat) })).apply {
+                addColumn(new ValueProvider<Category, String>() {
+                    @Override
+                    String apply(Category o) {
+                        return getReviewCount(o)
+                    }
+                }).setHeader("Beverages")
+                addColumn(new ComponentRenderer<Button, Category>(new SerializableFunction<Category, Button>(){
+                    @Override
+                    Button apply(Category category) {
+                        return createEditButton(category)
+                    }
+                })).with {
                     flexGrow = 0; key = "edit"
                 }
                 element.themeList.add("row-dividers")

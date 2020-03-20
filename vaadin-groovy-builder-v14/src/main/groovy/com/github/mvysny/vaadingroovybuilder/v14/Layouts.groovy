@@ -21,7 +21,7 @@ class Layouts {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static FlexLayout flexLayout(HasComponents self,
+    static FlexLayout flexLayout(@NotNull HasComponents self,
                                  @DelegatesTo(value = FlexLayout, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new FlexLayout(), block)
     }
@@ -36,7 +36,7 @@ class Layouts {
      * @param isSpacing whether to have spacing between the children of the layout, defaults to true
      */
     @NotNull
-    static VerticalLayout verticalLayout(HasComponents self,
+    static VerticalLayout verticalLayout(@NotNull HasComponents self,
                                          boolean isPadding = true,
                                          boolean isSpacing = true,
                                          @DelegatesTo(value = VerticalLayout, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
@@ -53,7 +53,7 @@ class Layouts {
      * @param isSpacing whether to have spacing between the children of the layout, defaults to true
      */
     @NotNull
-    static HorizontalLayout horizontalLayout(HasComponents self,
+    static HorizontalLayout horizontalLayout(@NotNull HasComponents self,
                                            boolean isPadding = false,
                                            boolean isSpacing = true,
                                            @DelegatesTo(value = HorizontalLayout, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
@@ -82,7 +82,7 @@ class Layouts {
      * <p></p>
      * Warning: in case of {@link Grid.Column} it returns/sets the value of {@link Grid.Column#setFlexGrow(int)}.
      */
-    static void setFlexGrow(Component self, double flexGrow) {
+    static void setFlexGrow(@NotNull Component self, double flexGrow) {
         if (self instanceof Grid.Column) {
             (self as Grid.Column).flexGrow = flexGrow.toInteger()
         }
@@ -98,7 +98,7 @@ class Layouts {
     /**
      * See {@link #setFlexGrow}.
      */
-    static double getFlexGrow(Component self) {
+    static double getFlexGrow(@NotNull Component self) {
         if (self instanceof Grid.Column) {
             return (self as Grid.Column).flexGrow.toDouble()
         }
@@ -110,11 +110,11 @@ class Layouts {
      * Checks if the component expands when nested in {@link com.vaadin.flow.component.orderedlayout.FlexComponent}. Alias for
      * setting {@link #setFlexGrow} to 1.0; see {@link #setFlexGrow} for more information.
      */
-    static boolean isExpand(Component self) {
+    static boolean isExpand(@NotNull Component self) {
         return getFlexGrow(self) > 0
     }
 
-    static void setExpand(Component self, boolean isExpand) {
+    static void setExpand(@NotNull Component self, boolean isExpand) {
         setFlexGrow(self, isExpand ? 1d : 0d)
     }
 }
