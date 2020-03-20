@@ -30,11 +30,11 @@ import static com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl.init
 @CompileStatic
 class GridUtils {
     @NotNull
-    static <T> Grid<T> grid(@NotNull HasComponents self,
-                            @NotNull Class<T> beanType,
-                            @Nullable DataProvider<T, ?> dataProvider = null,
-                            @DelegatesTo(value = Grid, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        def grid = new Grid<T>(beanType, false)
+    static <ITEM> Grid<ITEM> grid(@NotNull HasComponents self,
+                            @NotNull Class<ITEM> beanType,
+                            @Nullable DataProvider<ITEM, ?> dataProvider = null,
+                            @DelegatesTo(type = "com.vaadin.flow.component.grid.Grid<ITEM>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        def grid = new Grid<ITEM>(beanType, false)
         if (dataProvider != null) {
             grid.dataProvider = dataProvider
         }
@@ -42,11 +42,11 @@ class GridUtils {
     }
 
     @NotNull
-    static <T> TreeGrid<T> treeGrid(@NotNull HasComponents self,
-                                    @NotNull Class<T> beanType,
-                                    @Nullable HierarchicalDataProvider<T, ?> dataProvider = null,
-                                    @DelegatesTo(value = TreeGrid, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        def grid = new TreeGrid<T>(beanType)
+    static <ITEM> TreeGrid<ITEM> treeGrid(@NotNull HasComponents self,
+                                    @NotNull Class<ITEM> beanType,
+                                    @Nullable HierarchicalDataProvider<ITEM, ?> dataProvider = null,
+                                    @DelegatesTo(type = "com.vaadin.flow.component.treegrid.TreeGrid<ITEM>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        def grid = new TreeGrid<ITEM>(beanType)
         grid.removeAllColumns()
         if (dataProvider != null) {
             grid.dataProvider = dataProvider

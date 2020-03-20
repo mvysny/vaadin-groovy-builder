@@ -29,7 +29,7 @@ class ReviewsList extends VerticalLayout {
 
     private Toolbar toolbar
     private H3 header
-    private Grid reviewsGrid
+    private Grid<Review> reviewsGrid
     private final ReviewEditorDialog editDialog = new ReviewEditorDialog(
             new SerializableConsumer<Review>()
             {

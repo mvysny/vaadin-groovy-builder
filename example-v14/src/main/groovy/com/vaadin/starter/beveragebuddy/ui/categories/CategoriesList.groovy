@@ -35,7 +35,7 @@ class CategoriesList extends VerticalLayout {
 
     private H3 header
     private Toolbar toolbar
-    private Grid categoryGrid
+    private Grid<Category> categoryGrid
     // can't retrieve GridContextMenu from Grid: https://github.com/vaadin/vaadin-grid-flow/issues/523
     GridContextMenu<Object> gridContextMenu
 
