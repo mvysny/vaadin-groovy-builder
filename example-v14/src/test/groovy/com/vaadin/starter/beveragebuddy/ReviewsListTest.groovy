@@ -4,6 +4,7 @@ import com.github.mvysny.kaributesting.v10.SearchSpecJ
 import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.button.Button
 import com.vaadin.starter.beveragebuddy.ui.EditorDialogFrame
+import groovy.transform.CompileStatic
 import org.junit.jupiter.api.Test
 
 import java.util.function.Consumer
@@ -12,6 +13,7 @@ import static com.github.mvysny.kaributesting.v10.LocatorJ._assertNone
 import static com.github.mvysny.kaributesting.v10.LocatorJ._click
 import static com.github.mvysny.kaributesting.v10.LocatorJ._get
 
+@CompileStatic
 class ReviewsListTest extends AbstractAppTest {
 
     @Test void "'new review' smoke test"() {
