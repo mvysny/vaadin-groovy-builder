@@ -200,6 +200,16 @@ class VaadinUtils {
         list.isEmpty() ? null : list.get(0)
     }
 
+    @Nullable
+    static <T> boolean isEmpty(@NotNull T[] self) {
+        self.size() == 0
+    }
+
+    @Nullable
+    static <T> T firstOrNull(@NotNull T[] array) {
+        isEmpty(array) ? null : array[0]
+    }
+
     /**
      * Returns the getter method for given property name; fails if there is no such getter.
      */
