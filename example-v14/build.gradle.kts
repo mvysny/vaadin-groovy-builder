@@ -26,6 +26,6 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:${properties["slf4j_version"]}")
 
     // testing
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:${properties["kaributesting_version"]}")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10-groovy:${properties["kaributesting_version"]}")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.0")
 }

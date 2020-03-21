@@ -13,11 +13,20 @@ import groovy.transform.CompileStatic
  * A form for editing [Category] objects.
  */
 @CompileStatic
-class CategoryEditorForm implements EditorForm<Category> {
+class CategoryEditorForm extends FormLayout implements EditorForm<Category> {
     Category category
 
     CategoryEditorForm(Category category) {
         this.category = category
+        textField("Category Name") {
+            bind(binder)
+                    .trimmingConverter()
+                    .withValidator(new StringLengthValidator(
+                            "Category name must contain at least 3 printable characters",
+                            3, null))
+                    .withValidator({ name -> isNameUnique(name) }, "Category name must be unique")
+                    .bind("name")
+        }
     }
 
     private boolean isEditing() { category.id != null }
@@ -36,19 +45,7 @@ class CategoryEditorForm implements EditorForm<Category> {
 
     @Override
     FormLayout getComponent() {
-        def layout = new FormLayout()
-        layout.with {
-            textField("Category Name") {
-                bind(binder)
-                        .trimmingConverter()
-                        .withValidator(new StringLengthValidator(
-                                "Category name must contain at least 3 printable characters",
-                                3, null))
-                        .withValidator({ name -> isNameUnique(name) }, "Category name must be unique")
-                        .bind("name")
-            }
-        }
-        layout
+        this
     }
 
     private boolean isNameUnique(String name) {

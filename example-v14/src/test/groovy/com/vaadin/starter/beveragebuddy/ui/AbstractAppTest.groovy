@@ -1,4 +1,4 @@
-package com.vaadin.starter.beveragebuddy
+package com.vaadin.starter.beveragebuddy.ui
 
 import com.github.mvysny.kaributesting.v10.MockVaadin
 import com.github.mvysny.kaributesting.v10.Routes

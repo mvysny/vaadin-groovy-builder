@@ -1,6 +1,7 @@
 package com.vaadin.starter.beveragebuddy.backend
 
 import groovy.transform.CompileStatic
+import org.jetbrains.annotations.NotNull
 
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
@@ -44,9 +45,10 @@ class CategoryService {
                 .toSorted { it.name }
     }
 
-    static boolean categoryMatchesFilter(Category category, String filter) {
+    static boolean categoryMatchesFilter(@NotNull Category category, @NotNull String filter) {
+        Objects.requireNonNull(category)
         String normalizedFilter = filter.trim().toLowerCase()
-        return category.name.toLowerCase().contains(normalizedFilter)
+        return category.name != null && category.name.toLowerCase().contains(normalizedFilter)
     }
 
     /**
@@ -109,6 +111,7 @@ class CategoryService {
      */
     void saveCategory(Category dto) {
         if (dto.id == null) {
+            Objects.requireNonNull(dto.name)
             // create
             // Make a copy to keep entities and DTOs separated
             def entity = dto.copy()
