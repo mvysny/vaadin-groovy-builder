@@ -19,21 +19,9 @@ The documentation differs for Vaadin 8 and for Vaadin 10:
 * Unfortunately there is no support for Vaadin 8 and lower
 * [Vaadin-Groovy-Builder Vaadin Platform (Vaadin 14+) tutorial](vaadin-groovy-builder-v14)
 
-## Why DSL?
+## Example Project
 
-TODO
-
-Just compare the Kotlin-based [CommonElementsView](example-v8/src/main/kotlin/com/example/v8/uitest/example/CommonElementsView.kt)
-with the original Java [CommonParts](https://github.com/vaadin/framework/blob/master/uitest/src/main/java/com/vaadin/tests/themes/valo/CommonParts.java).
-Both render the [Common UI Elements](https://karibu-uitest.herokuapp.com/common-elements) page, yet with Kotlin DSL:
-
-* The UI structure is immediately visible
-* The code is more readable and much shorter and concise
-* You can more easily copy parts of the UI and paste it into your project
-
-Supports:
-
-* [Vaadin Platform aka Vaadin 14+](https://vaadin.com)
+See [Vaadin Groovy Builder Example](https://github.com/mvysny/vaadin-groovy-builder-example).
 
 # License
 
