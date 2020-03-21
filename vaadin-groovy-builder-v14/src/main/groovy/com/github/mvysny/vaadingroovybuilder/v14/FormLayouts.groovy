@@ -34,14 +34,11 @@ class FormLayouts {
     @NotNull
     static GFormItem formItem(FormLayout self, @Nullable Component label = null,
                               @DelegatesTo(value = FormLayout, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
-        init(self, new GFormItem()) {
-            if (label != null) {
-                delegate.addToLabel(label)
-            }
-            block.delegate = delegate
-            block.resolveStrategy = Closure.DELEGATE_FIRST
-            block()
+        def item = new GFormItem()
+        if (label != null) {
+            item.addToLabel(label)
         }
+        init(self, item, block)
     }
 
     /**
@@ -53,16 +50,5 @@ class FormLayouts {
     static GFormItem formItem(FormLayout self, @NotNull String label,
                               @DelegatesTo(value = FormLayout, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block = {}) {
         formItem(self, new Label(label), block)
-    }
-}
-
-/**
- * Makes {@link #addToLabel} public so that we can call it.
- */
-@CompileStatic
-class GFormItem extends FormLayout.FormItem {
-    @Override
-    void addToLabel(Component... components) {
-        super.addToLabel(components)
     }
 }
