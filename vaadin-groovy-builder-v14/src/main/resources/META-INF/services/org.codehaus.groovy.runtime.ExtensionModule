@@ -14,4 +14,5 @@ extensionClasses = com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl,\
   com.github.mvysny.vaadingroovybuilder.v14.DetailsUtils,\
   com.github.mvysny.vaadingroovybuilder.v14.GridUtils,\
   com.github.mvysny.vaadingroovybuilder.v14.ContextMenuUtils,\
-  com.github.mvysny.vaadingroovybuilder.v14.AppLayoutExtensionMethods
+  com.github.mvysny.vaadingroovybuilder.v14.AppLayoutExtensionMethods,\
+  com.github.mvysny.vaadingroovybuilder.v14.DataProviderUtils

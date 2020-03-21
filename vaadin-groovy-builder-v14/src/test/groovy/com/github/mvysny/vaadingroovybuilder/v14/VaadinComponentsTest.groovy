@@ -50,4 +50,15 @@ class VaadinComponentsTest {
             bigDecimalField{}
         }
     }
+
+    @Test menuBar() {
+        UI.getCurrent().menuBar {
+            item("save", { _ -> println("saved") }) {}
+            item("style", null) {
+                item("bold", { _ -> println("bold") })  {}
+                item("italic", { _ -> println("italic") })  {}
+            }
+            item("clear", { _ -> println("clear") }) {}
+        }
+    }
 }

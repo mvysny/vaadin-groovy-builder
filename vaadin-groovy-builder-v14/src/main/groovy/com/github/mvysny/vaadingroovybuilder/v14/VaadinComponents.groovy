@@ -9,6 +9,7 @@ import com.vaadin.flow.component.checkbox.CheckboxGroup
 import com.vaadin.flow.component.combobox.ComboBox
 import com.vaadin.flow.component.datepicker.DatePicker
 import com.vaadin.flow.component.dialog.Dialog
+import com.vaadin.flow.component.menubar.MenuBar
 import com.vaadin.flow.component.select.Select
 import com.vaadin.flow.component.splitlayout.SplitLayout
 import com.vaadin.flow.component.tabs.Tab
@@ -245,5 +246,25 @@ class VaadinComponents {
     static BigDecimalField bigDecimalField(HasComponents self, @Nullable String label = null,
                                            @DelegatesTo(value = BigDecimalField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new BigDecimalField(label), block)
+    }
+
+    /**
+     * Allows you to define a menu bar as follows:
+     *
+     * <pre>
+     *   menuBar {
+     *     item("save", { _ -> println("saved") }) {}
+     *     item("style", null) {
+     *       item("bold", { _ -> println("bold") })  {}
+     *       item("italic", { _ -> println("italic") })  {}
+     *     }
+     *     item("clear", { _ -> println("clear") }) {}
+     *   }
+     * </pre>
+     */
+    @NotNull
+    static MenuBar menuBar(@NotNull HasComponents self,
+                           @DelegatesTo(value = MenuBar, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        init(self, new MenuBar(), block)
     }
 }
