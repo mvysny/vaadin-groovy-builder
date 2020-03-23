@@ -1,5 +1,6 @@
 package com.vaadin.starter.beveragebuddy.ui
 
+import com.github.mvysny.vaadingroovybuilder.v14.GComposite
 import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.HasElement
 import com.vaadin.flow.component.dependency.CssImport
@@ -26,28 +27,30 @@ import groovy.transform.CompileStatic
 @Viewport("width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes")
 @Theme(Lumo)
 @CompileStatic
-class MainLayout extends VerticalLayout implements RouterLayout, PageConfigurator {
+class MainLayout extends GComposite implements RouterLayout, PageConfigurator {
 
-    MainLayout() {
-        addClassName("main-layout"); setSizeFull(); setPadding(false)
-        content { align(stretch, top) }
+    private VerticalLayout root = ui {
+        verticalLayout {
+            addClassName("main-layout"); setSizeFull(); setPadding(false)
+            content { align(stretch, top) }
 
-        div {
-            // header
-            addClassName("main-layout__header")
-            h2("Beverage Buddy") {
-                addClassName("main-layout__title")
-            }
             div {
-                // navigation
-                addClassName("main-layout__nav")
-                routerLink(VaadinIcon.LIST, "Reviews", ReviewsList) {
-                    addClassName("main-layout__nav-item")
-                    highlightCondition = HighlightConditions.sameLocation()
+                // header
+                addClassName("main-layout__header")
+                h2("Beverage Buddy") {
+                    addClassName("main-layout__title")
                 }
-                routerLink(VaadinIcon.ARCHIVES, "Categories", CategoriesList) {
-                    addClassName("main-layout__nav-item")
-                    highlightCondition = HighlightConditions.sameLocation()
+                div {
+                    // navigation
+                    addClassName("main-layout__nav")
+                    routerLink(VaadinIcon.LIST, "Reviews", ReviewsList) {
+                        addClassName("main-layout__nav-item")
+                        highlightCondition = HighlightConditions.sameLocation()
+                    }
+                    routerLink(VaadinIcon.ARCHIVES, "Categories", CategoriesList) {
+                        addClassName("main-layout__nav-item")
+                        highlightCondition = HighlightConditions.sameLocation()
+                    }
                 }
             }
         }
@@ -55,7 +58,7 @@ class MainLayout extends VerticalLayout implements RouterLayout, PageConfigurato
 
     @Override
     void showRouterLayoutContent(HasElement content) {
-        add(content as Component)
+        root.add(content as Component)
         (content as Component).setExpand(true)
     }
 
