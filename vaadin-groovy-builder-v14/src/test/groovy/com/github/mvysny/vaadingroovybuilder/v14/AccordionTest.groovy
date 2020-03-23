@@ -23,7 +23,7 @@ class AccordionTest {
                 }
             }
             panel {
-                summary { checkBox("More Lorem Ipsum?"){} }
+                summary { checkbox("More Lorem Ipsum?"){} }
                 content {
                     label("dolor sit amet"){}
                 }

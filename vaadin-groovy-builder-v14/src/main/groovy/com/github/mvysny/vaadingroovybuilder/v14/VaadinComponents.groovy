@@ -80,7 +80,7 @@ class VaadinComponents {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static Checkbox checkBox(HasComponents self, @Nullable String label = null,
+    static Checkbox checkbox(HasComponents self, @Nullable String label = null,
                              @DelegatesTo(value = Checkbox, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new Checkbox(label), block)
     }

@@ -39,10 +39,10 @@ class Form extends VerticalLayout {
             bind(binder).bind("dateOfBirth")
             value = LocalDate.of(2010, 1, 25)
         }
-        isAlive = checkBox("Is Alive") {
+        isAlive = checkbox("Is Alive") {
             bind(binder).bind("alive")
         }
-        testBoolean = checkBox("Test Boolean:") {
+        testBoolean = checkbox("Test Boolean:") {
             bind(binder).bind("testBoolean")
         }
         comment = textArea("Comment:") {

@@ -25,7 +25,7 @@ class VaadinComponentsTest {
             iconButton(VaadinIcon.LEVEL_LEFT.create()) {
                 addClickListener {  }
             }
-            checkBox{}
+            checkbox{}
             comboBox(String, null) {
                 setItems(["foo", "bar"])
             }
