@@ -106,8 +106,6 @@ verticalLayout {
 }
 ```
 
-TODO
-
 ### VerticalLayout / HorizontalLayout
 
 Vaadin 8 layouting used to depend extensively on the usage of `VerticalLayout` and `HorizontalLayout`. However, the layouting
@@ -117,7 +115,7 @@ however they use flex layout under the hood and hence there are very important d
 
 Generally you use the new `HorizontalLayout` as follows:
 
-```
+```groovy
 horizontalLayout {
   content { align(right, middle) }
 }
@@ -150,52 +148,58 @@ use `VerticalLayout`/`HorizontalLayout`.
 
 ### Writing your own components
 
-TODO PORT TO GROOVY
-
-Usually one writes custom components by extending the `KComposite` class. Please read the [Creating a Component](https://vaadin.com/docs/v10/flow/creating-components/tutorial-component-composite.html) for more details.
+Usually one writes custom components by extending the `GComposite` class. Please read the [Creating a Component](https://vaadin.com/docs/v10/flow/creating-components/tutorial-component-composite.html) for more details.
 
 > We promote composition over inheritance, similar to [React's Composition vs Inheritance](https://reactjs.org/docs/composition-vs-inheritance.html).
-You should always extend `Composite` instead of extending e.g. `HorizontalLayout` - extending from `HorizontalLayout` makes
+You should always extend `GComposite` instead of extending e.g. `HorizontalLayout` - extending from `HorizontalLayout` makes
 it part of your class and you can't replace it with e.g. `FlowLayout` without breaking backward compatibility.
 
 An example of such a component:
 
-```kotlin
-class ButtonBar : KComposite() {
-    init {
-        ui {
-            // create the component UI here; maybe even attach very simple listeners here
-            horizontalLayout {
-                button("ok") {
-                    onLeftClick { okClicked() }
-                }
-                button("cancel") {
-                    onLeftClick { cancelClicked() }
-                }
+```groovy
+class ButtonBar extends GComposite {
+    private final root = ui {
+        // create the component UI here; maybe even attach very simple listeners here
+        horizontalLayout {
+            button("ok") {
+                addClickListener { okClicked() }
+            }
+            button("cancel") {
+                addClickListener { cancelClicked() }
             }
         }
+    }
 
+    ButtonBar() {
         // perform any further initialization here
     }
 
-    // add listener methods here
-    private fun okClicked() {}
-    private fun cancelClicked() {}
+    // listener methods here
+    private void okClicked() {}
+
+    private void cancelClicked() {}
 }
 ```
 
 To allow for your component to be inserted into other layouts, you will need to
 introduce your own extension method for your component.
-Just write the following code below your component:
+Just write the following code below your component (see
+[Groovy Extension Modules](https://mrhaki.blogspot.com/2013/01/groovy-goodness-adding-extra-methods.html)
+on how to register the extension module class to Groovy):
 
-```kotlin
-@VaadinDsl
-fun (@VaadinDsl HasComponents).buttonBar(block: (@VaadinDsl ButtonBar).()->Unit = {}) = init(ButtonBar(), block)
+```groovy
+class MyExtensionMethods {
+    @NotNull
+    static ButtonBar flexLayout(@NotNull HasComponents self,
+                                 @DelegatesTo(value = ButtonBar, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        init(self, new ButtonBar(), block)
+    }
+}
 ```
 
 This will allow you to use your component as follows:
 
-```kotlin
+```groovy
 verticalLayout {
   buttonBar {
     styleName = "black"
@@ -204,12 +208,12 @@ verticalLayout {
 }
 ```
 
-#### The `KComposite` Pattern
+#### The `GComposite` Pattern
 
-The advantage of extending from `KComposite`, instead of extending the layout (e.g. `VerticalLayout`) directly, is as follows:
+The advantage of extending from `GComposite`, instead of extending the layout (e.g. `VerticalLayout`) directly, is as follows:
 
 * The component public API is not polluted by methods coming from the `VerticalLayout`,
-  resulting in a more compact and to-the-point API. The API coming from `KComposite` is
+  resulting in a more compact and to-the-point API. The API coming from `GComposite` is
   tiny in comparison.
 * Since the `VerticalLayout` API doesn't leak into our component, we are free to
   replace the `VerticalLayout` with any other layout in the future, without breaking the API.
@@ -217,8 +221,8 @@ The advantage of extending from `KComposite`, instead of extending the layout (e
   an example: it can clearly be seen that the buttons are nested in the `HorizontalLayout`:
 
 Example 1.: ButtonBar extending KComposite with a clear UI hierarchy
-```kotlin
-class ButtonBar : KComposite() {
+```groovy
+class ButtonBar extends GComposite {
     val root = ui {
         horizontalLayout {
             button("ok")
@@ -229,9 +233,9 @@ class ButtonBar : KComposite() {
 
 Example 2.: ButtonBar extending HorizontalLayout without a clear indication that
 the button is nested in a horizontal layout:
-```kotlin
-class ButtonBar : HorizontalLayout() {
-    init {
+```groovy
+class ButtonBar extends HorizontalLayout {
+    ButtonBar() {
         button("ok")
     }
 }
@@ -239,9 +243,9 @@ class ButtonBar : HorizontalLayout() {
 
 The `root` variable will be marked by the IDE as unused. This is okay: the
 side-effect of the `ui {}` is that it runs the `horizontalLayout()` function
-which then attaches the `HorizontalLayout` to the `KComposite` itself.
+which then attaches the `HorizontalLayout` to the `GComposite` itself.
 However, you may prefer to get rid of this unused `root` variable and call the
-`ui {}` from the `init {}` Kotlin initializer. The downside is that the
+`ui {}` from the constructor. The downside is that the
 UI-creating code will be indented by two tabs instead of one.
 
 ## Launching the example project in Intellij IDEA:
