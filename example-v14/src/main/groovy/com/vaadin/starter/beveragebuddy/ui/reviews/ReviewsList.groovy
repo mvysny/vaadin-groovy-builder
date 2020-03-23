@@ -46,8 +46,8 @@ class ReviewsList extends VerticalLayout {
             })
 
     ReviewsList() {
-        setPadding(false); setJustifyContentMode(JustifyContentMode.START);
-        setDefaultHorizontalComponentAlignment(Alignment.STRETCH)
+        setPadding(false)
+        content { align(stretch, top) }
         toolbar = new Toolbar("New review")
         add(toolbar)
         toolbar.with {

@@ -30,8 +30,7 @@ class MainLayout extends VerticalLayout implements RouterLayout, PageConfigurato
 
     MainLayout() {
         addClassName("main-layout"); setSizeFull(); setPadding(false)
-        setJustifyContentMode(JustifyContentMode.START)
-        setDefaultHorizontalComponentAlignment(Alignment.STRETCH)
+        content { align(stretch, top) }
 
         div {
             // header

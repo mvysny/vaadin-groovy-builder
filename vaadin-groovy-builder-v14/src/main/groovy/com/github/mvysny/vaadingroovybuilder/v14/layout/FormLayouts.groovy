@@ -1,5 +1,6 @@
-package com.github.mvysny.vaadingroovybuilder.v14
+package com.github.mvysny.vaadingroovybuilder.v14.layout
 
+import com.github.mvysny.vaadingroovybuilder.v14.GFormItem
 import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.formlayout.FormLayout

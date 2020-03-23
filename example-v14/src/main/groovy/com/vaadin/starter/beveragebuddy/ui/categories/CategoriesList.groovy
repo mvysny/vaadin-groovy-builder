@@ -53,8 +53,8 @@ class CategoriesList extends VerticalLayout {
     })
 
     CategoriesList() {
-        setPadding(false); setJustifyContentMode(JustifyContentMode.START);
-        setDefaultHorizontalComponentAlignment(Alignment.STRETCH)
+        setPadding(false)
+        content { align(stretch, top) }
         toolbar = new Toolbar("New category")
         add(toolbar)
         toolbar.with {

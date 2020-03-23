@@ -1,4 +1,4 @@
-package com.github.mvysny.vaadingroovybuilder.v14
+package com.github.mvysny.vaadingroovybuilder.v14.layout
 
 import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.HasComponents
@@ -116,5 +116,72 @@ class Layouts {
 
     static void setExpand(@NotNull Component self, boolean isExpand) {
         setFlexGrow(self, isExpand ? 1d : 0d)
+    }
+
+    /**
+     * Configures the general rules for positioning of child components inside of this [HorizontalLayout].
+     *
+     * Example of usage:
+     * <pre>
+     * horizontalLayout {
+     *   content { align(right, middle) }
+     * }
+     * </pre>
+     * Important notes:
+     * <ul><li>[HorizontalLayout] only supports one row of components; if you have multiple rows you need to use [FlexLayout].</li>
+     * <li>Never use [com.vaadin.flow.component.HasSize.setSizeFull] nor set the [com.vaadin.flow.component.HasSize.setWidth] to `100%` - it will
+     * not work as you expect. With Vaadin 8 the child would fill the slot allocated by HorizontalLayout. However with Vaadin 10 and flex layout
+     * there are no slots; setting the width to `100%` would make the component match the width of parent - it would set it to be as wide as
+     * the HorizontalLayout is.
+     * </li></ul>
+     * To alter the layout further, call the following properties on children:
+     * <ul>
+     * <li>Most important: [flexGrow] (and its brother [isExpand]) expands that particular child to take up all of the remaining space. The child
+     * is automatically enlarged.</li>
+     * <li>[verticalAlignSelf] to align child vertically; it is not possible to align particular child horizontally</li>
+     * <li>[flexShrink] - when there is not enough room for all children then they are shrank</li>
+     * <li>[flexBasis]</li>
+     * </ul>
+     */
+    static void content(@NotNull HorizontalLayout self,
+                        @DelegatesTo(value = HorizontalLayoutContent, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        block.delegate = new HorizontalLayoutContent(self)
+        block.resolveStrategy = Closure.DELEGATE_FIRST
+        block()
+    }
+
+    /**
+     * Configures the general rules for positioning of child components inside of this [VerticalLayout].
+     *
+     * Example of usage:
+     * <pre>
+     * verticalLayout {
+     *   content { align(right, middle) }
+     * }
+     * </pre>
+     * Important notes:
+     * <ul>
+     * <li>[VerticalLayout] only supports one row of components; if you have multiple columns you need to use [FlexLayout].</li>
+     * <li>Never use [com.vaadin.flow.component.HasSize.setSizeFull] nor set the [com.vaadin.flow.component.HasSize.setHeight] to `100%` - it will
+     * not work as you expect. With Vaadin 8 the child would fill the slot allocated by VerticalLayout. However with Vaadin 10 and flex layout
+     * there are no slots; setting the height to `100%` would make the component match the height of parent - it would set it to be as tall as
+     * the VerticalLayout is.</li>
+     * </ul>
+     * To alter the layout further, call the following properties on children:
+     * <ul>
+     * <li>Most important: [flexGrow] (and its brother [isExpand]) expands that particular child to take up all of the remaining space. The child
+     * is automatically enlarged.</li>
+     * <li>[verticalAlignSelf] to align child vertically; it is not possible to align particular child horizontally</li>
+     * <li>[flexShrink] - when there is not enough room for all children then they are shrank</li>
+     * <li>[flexBasis]</li>
+     * </ul>
+     */
+    static void content(@NotNull VerticalLayout self,
+                        @DelegatesTo(value = VerticalLayoutContent, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        // the only reason why this is done as a builder, is that the VerticalLayoutContent.* constants are constrained to the block
+        // and not defined as global variables.
+        block.delegate = new VerticalLayoutContent(self)
+        block.resolveStrategy = Closure.DELEGATE_FIRST
+        block()
     }
 }

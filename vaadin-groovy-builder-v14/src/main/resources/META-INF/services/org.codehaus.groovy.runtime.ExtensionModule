@@ -4,8 +4,8 @@ extensionClasses = com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl,\
   com.github.mvysny.vaadingroovybuilder.v14.VaadinUtils,\
   com.github.mvysny.vaadingroovybuilder.v14.VaadinComponents,\
   com.github.mvysny.vaadingroovybuilder.v14.IconUtils,\
-  com.github.mvysny.vaadingroovybuilder.v14.Layouts,\
-  com.github.mvysny.vaadingroovybuilder.v14.FormLayouts,\
+  com.github.mvysny.vaadingroovybuilder.v14.layout.Layouts,\
+  com.github.mvysny.vaadingroovybuilder.v14.layout.FormLayouts,\
   com.github.mvysny.vaadingroovybuilder.v14.html.HtmlUtils,\
   com.github.mvysny.vaadingroovybuilder.v14.RouterUtils,\
   com.github.mvysny.vaadingroovybuilder.v14.binder.BinderUtils,\
