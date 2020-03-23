@@ -202,7 +202,7 @@ class VaadinUtils {
 
     @Nullable
     static <T> boolean isEmpty(@NotNull T[] self) {
-        self.size() == 0
+        self.length == 0
     }
 
     @Nullable

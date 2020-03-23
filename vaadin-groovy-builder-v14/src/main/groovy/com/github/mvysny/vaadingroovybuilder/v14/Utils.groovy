@@ -2,6 +2,7 @@ package com.github.mvysny.vaadingroovybuilder.v14
 
 import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
+import org.jetbrains.annotations.Nullable
 
 import java.util.function.Function
 import java.util.function.Supplier
@@ -27,6 +28,18 @@ class Utils {
             def message = lazyMessage.get()
             throw new IllegalStateException(message.toString())
         }
+    }
+
+    /**
+     * Throws an {@link IllegalStateException} with the result of calling lazyMessage if the value is null.
+     */
+    @NotNull
+    static <T> T checkNotNull(@Nullable T value, @NotNull Supplier<Object> lazyMessage = { "value must not be null" }) {
+        if (value == null) {
+            def message = lazyMessage.get()
+            throw new IllegalStateException(message.toString())
+        }
+        value
     }
 
     private static final Map<String, String> messages = ["cantConvertToInteger": "Can't convert to integer",
