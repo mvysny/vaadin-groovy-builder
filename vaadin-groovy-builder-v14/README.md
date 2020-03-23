@@ -66,7 +66,7 @@ details on development.
 
 ### The "Beverage Buddy" Example Application
 
-The [example-v10](../example-v10) is the Beverage Buddy app
+The [example-v14](../example-v14) is the Beverage Buddy app
 backed by a dummy data (no database).
 Quickly run the bundled example application from the command-line:
 
@@ -220,7 +220,7 @@ The advantage of extending from `GComposite`, instead of extending the layout (e
 * The UI structure is more clearly visible. Take the `ButtonBar` class below as
   an example: it can clearly be seen that the buttons are nested in the `HorizontalLayout`:
 
-Example 1.: ButtonBar extending KComposite with a clear UI hierarchy
+Example 1.: ButtonBar extending `GComposite` with a clear UI hierarchy
 ```groovy
 class ButtonBar extends GComposite {
     val root = ui {
