@@ -14,12 +14,30 @@ This library:
   The general DSL idea is explained in [Kotlin Type-Safe Builders](https://kotlinlang.org/docs/reference/type-safe-builders.html).
 * Additional useful methods which Vaadin lacks
 
-The documentation differs for Vaadin 8 and for Vaadin 10:
+The full documentation:
 
 * Unfortunately there is no support for Vaadin 8 and lower
 * [Vaadin-Groovy-Builder Vaadin Platform (Vaadin 14+) tutorial](vaadin-groovy-builder-v14)
 
 ## Example Project
+
+Code example:
+
+```groovy
+@Route("")
+@CompileStatic
+class MainView extends VerticalLayout {
+    MainView() {
+        def textField = textField("Your name") {}
+
+        button("Say hello") {
+            addClickListener {
+                Notification.show("Hello, ${textField.value}")
+            }
+        }
+    }
+}
+```
 
 See [Vaadin Groovy Builder Example](https://github.com/mvysny/vaadin-groovy-builder-example).
 
