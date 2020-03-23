@@ -242,4 +242,17 @@ class VaadinUtils {
         new ObjectOutputStream(bout).writeObject(obj)
         return bout.toByteArray()
     }
+
+    /**
+     * Adds the given components as children of this component.
+     * <p>
+     * In case the any of the specified components has already been added to
+     * another parent, it will be removed from there and added to this one.
+     */
+    static void add(@NotNull HasComponents self, @NotNull Component component) {
+        // a workaround for some crazy Groovy compiler bug:
+        // `new VerticalLayout().add(new Button())` wouldn't compile for some reason in older Groovy version
+        Component[] a = [component]
+        self.add(a)
+    }
 }

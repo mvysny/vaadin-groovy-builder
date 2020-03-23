@@ -7,6 +7,7 @@ import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.html.Div
 import com.vaadin.flow.component.html.Label
 import com.vaadin.flow.component.orderedlayout.FlexLayout
+import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import groovy.transform.CompileStatic
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -141,5 +142,10 @@ class VaadinUtilsTest {
     void isNestedIn() {
         expect(false) { new Button().isNestedIn(UI.getCurrent()) }
         expect(true) { UI.getCurrent().button{}.isNestedIn(UI.getCurrent()) }
+    }
+
+    @Test
+    void add() {
+        new VerticalLayout().add(new Button())
     }
 }
