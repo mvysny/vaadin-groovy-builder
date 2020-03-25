@@ -45,6 +45,10 @@ Maven: since Vaadin-Groovy-Builder is in Maven-Central, it's very simple, just a
 However, to quickly test out Vaadin Groovy Builder you can simply start with one
 of the example applications below.
 
+> Note: If you're using Vaadin 14.2, please use the following artifact instead:
+> `vaadin-groovy-builder-v14.2`. It contains support for additional components
+> like Scroller and DateTimePicker.
+
 ### UI Base Application
 
 A very simple Gradle-based application archetype is located here: [Vaadin Groovy Builder Example](https://github.com/mvysny/vaadin-groovy-builder-example).
