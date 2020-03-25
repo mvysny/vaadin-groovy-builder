@@ -26,14 +26,18 @@ Code example:
 ```groovy
 @Route("")
 @CompileStatic
-class MainView extends VerticalLayout {
+class MainView extends GComposite {
+    private TextField name
+    private Button sayHello
+    private def root = ui {
+        verticalLayout {
+            name = textField("Your name") {}
+            sayHello = button("Say hello") {}
+        }
+    }
     MainView() {
-        def textField = textField("Your name") {}
-
-        button("Say hello") {
-            addClickListener {
-                Notification.show("Hello, ${textField.value}")
-            }
+        sayHello.addClickListener {
+            Notification.show("Hello, ${name.value}")
         }
     }
 }
