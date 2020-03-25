@@ -15,7 +15,7 @@ gretty {
 dependencies {
     implementation(project(":vaadin-groovy-builder-v14"))
     // Vaadin 14
-    implementation("com.vaadin:vaadin-core:${properties["vaadin10_version"]}") {
+    implementation("com.vaadin:vaadin-core:${properties["vaadin14_1_version"]}") {
         // Webjars are only needed when running in Vaadin 13 compatibility mode
         listOf("com.vaadin.webjar", "org.webjars.bowergithub.insites",
                 "org.webjars.bowergithub.polymer", "org.webjars.bowergithub.polymerelements",
@@ -27,5 +27,5 @@ dependencies {
 
     // testing
     testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10-groovy:${properties["kaributesting_version"]}")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.0")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:${properties["junit_version"]}")
 }

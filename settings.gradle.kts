@@ -1,1 +1,3 @@
-include("vaadin-groovy-builder-v14", "example-v14")
+include("vaadin-groovy-builder-v14",
+        "vaadin-groovy-builder-v14.2",
+        "example-v14")
