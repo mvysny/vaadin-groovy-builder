@@ -53,17 +53,17 @@ class VaadinComponents14_2 {
                 throw new UnsupportedOperationException("Not expected to be called")
             }
             @Override void add(Component... components) {
-                Utils.require(components.length < 2) { "Too many components to add - scroller can only host one! ${components.toList()}" }
+                require(components.length < 2) { "Too many components to add - scroller can only host one! ${components.toList()}" }
                 Component component = VaadinUtils.firstOrNull(components)
                 if (component != null) {
-                    Utils.check(self.element.childCount == 0) { "The scroller can only host one component at most" }
+                    check(self.element.childCount == 0) { "The scroller can only host one component at most" }
                     self.content = component
                 }
             }
         }
         block.resolveStrategy = Closure.DELEGATE_FIRST
         T result = block()
-        Utils.checkNotNull(self.content) { "`block` must add exactly one component to the scroller" }
+        checkNotNull(self.content) { "`block` must add exactly one component to the scroller" }
         return result
     }
 }
