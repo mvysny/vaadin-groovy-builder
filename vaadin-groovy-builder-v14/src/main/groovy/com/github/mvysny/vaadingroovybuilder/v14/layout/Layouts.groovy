@@ -3,11 +3,13 @@ package com.github.mvysny.vaadingroovybuilder.v14.layout
 import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.grid.Grid
+import com.vaadin.flow.component.orderedlayout.FlexComponent
 import com.vaadin.flow.component.orderedlayout.FlexLayout
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout
 import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
+import org.jetbrains.annotations.Nullable
 
 import static com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl.init
 
@@ -115,6 +117,57 @@ class Layouts {
 
     static void setExpand(@NotNull Component self, boolean isExpand) {
         setFlexGrow(self, isExpand ? 1d : 0d)
+    }
+
+    /**
+     * The `flex-shrink` CSS property specifies the flex shrink factor of a flex item.
+     * Flex items will shrink to fill the container according
+     * to the `flex-shrink` number, when the default size of flex items is larger than the flex container.
+     * <p>
+     * Get more information at <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink">[flex-shrink]</a>
+     */
+    static void setFlexShrink(@NotNull Component self, double flexShrink) {
+        if (flexShrink == 1.0d) {
+            self.element.style.remove("flexShrink")
+        } else {
+            self.element.style.set("flexShrink", flexShrink.toString())
+        }
+    }
+
+    static double getFlexShrink(@NotNull Component self) {
+        Double flexShrink = self.element.style.get("flexShrink")?.toDouble()
+        return flexShrink == null ? 1.0d : flexShrink
+    }
+
+    /**
+     * This defines the default size of an element before the remaining space is distributed. It can be a length (e.g. `20%`, `5rem`, etc.) or a keyword.
+     * The `auto` keyword means "look at my width or height property".
+     * The `content` keyword means "size it based on the item's content" - this keyword isn't well supported yet, so it's hard to test and harder
+     * to know what its brethren `max-content`, `min-content`, and `fit-content` do.
+     * <p>
+     * If set to `0`, the extra space around content isn't factored in. If set to `auto`, the extra space is distributed based on its flex-grow value.
+     */
+    static void setFlexBasis(@NotNull Component self, @Nullable String value) {
+        self.element.style.set("flexBasis", value)
+    }
+
+    @Nullable
+    static String getFlexBasis(@NotNull Component self) {
+        self.element.style.get("flexBasis")
+    }
+
+    /**
+     * This allows the default alignment (or the one specified by [FlexComponent.getAlignItems] to be overridden for individual flex items.
+     * <p></p>
+     * Please see the [FlexComponent.getAlignItems] explanation to understand the available values.
+     */
+    static void setAlignSelf(@NotNull Component self, @Nullable FlexComponent.Alignment value) {
+        (self.parent.get() as FlexComponent).setAlignSelf(value, self)
+    }
+
+    @NotNull
+    static FlexComponent.Alignment getAlignSelf(@NotNull Component self) {
+        (self.parent.get() as FlexComponent).getAlignSelf(self)
     }
 
     /**
