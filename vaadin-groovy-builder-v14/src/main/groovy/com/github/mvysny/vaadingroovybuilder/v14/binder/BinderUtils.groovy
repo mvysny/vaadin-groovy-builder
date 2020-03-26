@@ -2,6 +2,7 @@ package com.github.mvysny.vaadingroovybuilder.v14.binder
 
 import com.github.mvysny.vaadingroovybuilder.v14.TimeZoneUtils
 import com.vaadin.flow.component.HasValue
+import com.vaadin.flow.component.textfield.EmailField
 import com.vaadin.flow.component.textfield.TextArea
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.data.binder.Binder
@@ -143,7 +144,7 @@ class BinderUtils {
             @NotNull Binder<BEAN> binder
     ) {
         def builder = binder.forField(self)
-        if (self instanceof TextField || self instanceof TextArea) {
+        if (self instanceof TextField || self instanceof TextArea || self instanceof EmailField) {
             builder = builder.withNullRepresentation("" as FIELDVALUE)
         }
         builder
