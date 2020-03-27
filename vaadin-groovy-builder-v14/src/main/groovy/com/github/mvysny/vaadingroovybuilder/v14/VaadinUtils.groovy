@@ -255,4 +255,12 @@ class VaadinUtils {
         Component[] a = [component]
         self.add(a)
     }
+
+    /**
+     * Checks whether this component is currently attached to an [UI].
+     */
+    static boolean isAttached(@NotNull Component self) {
+        // see https://github.com/vaadin/flow/issues/7911
+        self instanceof UI || self.getUI().isPresent()
+    }
 }
