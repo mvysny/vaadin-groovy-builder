@@ -15,8 +15,7 @@ import java.lang.reflect.Method
  * @author mavi
  */
 @CompileStatic
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(includes = ["self", "propertyName"])
 class Getter implements Serializable {
     @NotNull final Class<?> self
     @NotNull final String propertyName
@@ -37,7 +36,7 @@ class Getter implements Serializable {
             PropertyDescriptor[] descriptors = Introspector.getBeanInfo(self).propertyDescriptors
             PropertyDescriptor descriptor = descriptors.find { it.name == propertyName }
             Objects.requireNonNull(descriptor) {
-                "No such field '$propertyName' in $this; available properties: ${descriptors.collect { it.name } .join(", ")}".toString()
+                "No such field '$propertyName' in $self; available properties: ${descriptors.collect { it.name } .join(", ")}".toString()
             }
             getter = Objects.requireNonNull(descriptor.readMethod) {
                 "The $self.$propertyName property does not have a getter: $descriptor".toString()
@@ -49,5 +48,10 @@ class Getter implements Serializable {
     @Nullable
     Object get(@NotNull Object bean) {
         getGetter().invoke(bean)
+    }
+
+    @Override
+    String toString() {
+        return "Getter{$getter}"
     }
 }
