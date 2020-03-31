@@ -1,6 +1,8 @@
 package com.github.mvysny.vaadingroovybuilder.v14
 
 import com.vaadin.flow.component.*
+import com.vaadin.flow.component.tabs.Tab
+import com.vaadin.flow.component.tabs.Tabs
 import com.vaadin.flow.dom.ClassList
 import com.vaadin.flow.dom.DomEventListener
 import com.vaadin.flow.dom.DomListenerRegistration
@@ -14,6 +16,7 @@ import java.util.function.Predicate
 import java.util.stream.Collectors
 import java.util.stream.Stream
 
+import static com.github.mvysny.vaadingroovybuilder.v14.Utils.checkNotNull
 import static com.github.mvysny.vaadingroovybuilder.v14.Utils.require
 
 /**
@@ -262,5 +265,37 @@ class VaadinUtils {
     static boolean isAttached(@NotNull Component self) {
         // see https://github.com/vaadin/flow/issues/7911
         self instanceof UI || self.getUI().isPresent()
+    }
+
+    /**
+     * Returns the current index of a tab within its [Tabs] container.
+     */
+    static int getIndex(@NotNull Tab self) {
+        getOwner(self).indexOf(self)
+    }
+
+    /**
+     * Returns the owner [Tabs] of this tab. Fails if the tab is not attached to any [Tabs] owner.
+     */
+    @NotNull
+    static Tabs getOwner(@NotNull Tab self) {
+        checkNotNull((self.parent.orElse(null)) as Tabs) { "tab $this is not attached to a parent" }
+    }
+
+    @NotNull
+    static TabSheet getOwnerTabSheet(@NotNull Tab self) {
+        checkNotNull(findAncestor(self) { it instanceof TabSheet }) { "tab $this is not attached to a TabSheet" } as TabSheet
+    }
+
+    /**
+     * Returns or sets this tab contents in the [TabSheet]. Works only for tabs nested in a [TabSheet].
+     */
+    @Nullable
+    static Component getContents(@NotNull Tab self) {
+        getOwnerTabSheet(self).getTabContents(self)
+    }
+
+    static void setContents(@NotNull Tab self, @Nullable Component contents) {
+        getOwnerTabSheet(self).setTabContents(self, contents)
     }
 }

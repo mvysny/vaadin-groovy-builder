@@ -37,7 +37,7 @@ class VaadinComponents {
      * @param block runs the block with the button as a receiver.
      */
     @NotNull
-    static Button button(HasComponents self, @Nullable String text = null, @Nullable Component icon = null,
+    static Button button(@NotNull HasComponents self, @Nullable String text = null, @Nullable Component icon = null,
                          @DelegatesTo(value = Button, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new Button(text, icon), block)
     }
@@ -52,7 +52,7 @@ class VaadinComponents {
      * @param block runs the block with the button as a receiver.
      */
     @NotNull
-    static Button iconButton(HasComponents self, @NotNull Component icon,
+    static Button iconButton(@NotNull HasComponents self, @NotNull Component icon,
                              @DelegatesTo(value = Button, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         button(self, null, icon) {
             addThemeVariants(ButtonVariant.LUMO_ICON)
@@ -65,7 +65,7 @@ class VaadinComponents {
     /**
      * Sets the button as primary. It effectively adds the {@link ButtonVariant#LUMO_PRIMARY} theme variant.
      */
-    static void setPrimary(Button self) {
+    static void setPrimary(@NotNull Button self) {
         self.addThemeVariants(ButtonVariant.LUMO_PRIMARY)
     }
 
@@ -74,7 +74,7 @@ class VaadinComponents {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static Checkbox checkbox(HasComponents self, @Nullable String label = null,
+    static Checkbox checkbox(@NotNull HasComponents self, @Nullable String label = null,
                              @DelegatesTo(value = Checkbox, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new Checkbox(label), block)
     }
@@ -84,7 +84,7 @@ class VaadinComponents {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static <ITEM> ComboBox<ITEM> comboBox(HasComponents self,
+    static <ITEM> ComboBox<ITEM> comboBox(@NotNull HasComponents self,
                                     @NotNull Class<ITEM> itemClass,
                                     @Nullable String label = null,
                                     @DelegatesTo(type = "com.vaadin.flow.component.combobox.ComboBox<ITEM>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
@@ -99,7 +99,7 @@ class VaadinComponents {
      * and it will appear in the popup.
      */
     @NotNull
-    static <ITEM> Select<ITEM> select(HasComponents self,
+    static <ITEM> Select<ITEM> select(@NotNull HasComponents self,
                                 @NotNull Class<ITEM> itemClass,
                                 @Nullable String label = null,
                                 @DelegatesTo(type = "com.vaadin.flow.component.select.Select<ITEM>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
@@ -113,7 +113,7 @@ class VaadinComponents {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static DatePicker datePicker(HasComponents self,
+    static DatePicker datePicker(@NotNull HasComponents self,
                                  @Nullable String label = null,
                                  @DelegatesTo(value = DatePicker, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new DatePicker(label), block)
@@ -124,7 +124,7 @@ class VaadinComponents {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static Dialog dialog(HasComponents self,
+    static Dialog dialog(@NotNull HasComponents self,
                          @DelegatesTo(value = Dialog, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new Dialog(), block)
     }
@@ -134,7 +134,7 @@ class VaadinComponents {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static PasswordField passwordField(HasComponents self, @Nullable String label = null,
+    static PasswordField passwordField(@NotNull HasComponents self, @Nullable String label = null,
                                        @DelegatesTo(value = PasswordField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new PasswordField(label), block)
     }
@@ -144,7 +144,7 @@ class VaadinComponents {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static SplitLayout splitLayout(HasComponents self,
+    static SplitLayout splitLayout(@NotNull HasComponents self,
                                    @DelegatesTo(value = SplitLayout, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new SplitLayout(), block)
     }
@@ -154,7 +154,7 @@ class VaadinComponents {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static TextField textField(HasComponents self, @Nullable String label = null,
+    static TextField textField(@NotNull HasComponents self, @Nullable String label = null,
                                @DelegatesTo(value = TextField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new TextField(label), block)
     }
@@ -164,7 +164,7 @@ class VaadinComponents {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static EmailField emailField(HasComponents self,
+    static EmailField emailField(@NotNull HasComponents self,
                                  @Nullable String label = null,
                                  @DelegatesTo(value = EmailField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new EmailField(label), block)
@@ -176,33 +176,33 @@ class VaadinComponents {
      * of possible alternative themes for the button.
      */
     @NotNull
-    static NumberField numberField(HasComponents self,
+    static NumberField numberField(@NotNull HasComponents self,
                                    @Nullable String label = null,
                                    @DelegatesTo(value = NumberField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new NumberField(label), block)
     }
 
     @NotNull
-    static TextArea textArea(HasComponents self,
+    static TextArea textArea(@NotNull HasComponents self,
                              @Nullable String label = null,
                              @DelegatesTo(value = TextArea, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new TextArea(label), block)
     }
 
     @NotNull
-    static Tabs tabs(HasComponents self,
+    static Tabs tabs(@NotNull HasComponents self,
                      @DelegatesTo(value = Tabs, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new Tabs(), block)
     }
 
     @NotNull
-    static Tab tab(Tabs self, @Nullable String label = null,
+    static Tab tab(@NotNull Tabs self, @Nullable String label = null,
                     @DelegatesTo(value = Tab, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new Tab(label), block)
     }
 
     @NotNull
-    static <T> CheckboxGroup<T> checkboxGroup(HasComponents self,
+    static <T> CheckboxGroup<T> checkboxGroup(@NotNull HasComponents self,
                                               @DelegatesTo(type = "com.vaadin.flow.component.checkbox.CheckboxGroup<T>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new CheckboxGroup<T>(), block)
     }
@@ -211,7 +211,7 @@ class VaadinComponents {
      * Creates a <a href="https://vaadin.com/components/vaadin-time-picker">[Time Picker]</a> field.
      */
     @NotNull
-    static TimePicker timePicker(HasComponents self, @Nullable String label = null,
+    static TimePicker timePicker(@NotNull HasComponents self, @Nullable String label = null,
                                  @DelegatesTo(value = TimePicker, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new TimePicker(label), block)
     }
@@ -224,7 +224,7 @@ class VaadinComponents {
      * Only available starting with Vaadin 14.1.
      */
     @NotNull
-    static IntegerField integerField(HasComponents self, @Nullable String label = null,
+    static IntegerField integerField(@NotNull HasComponents self, @Nullable String label = null,
                                      @DelegatesTo(value = IntegerField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new IntegerField(label), block)
     }
@@ -237,7 +237,7 @@ class VaadinComponents {
      * Only available starting with Vaadin 14.1.
      */
     @NotNull
-    static BigDecimalField bigDecimalField(HasComponents self, @Nullable String label = null,
+    static BigDecimalField bigDecimalField(@NotNull HasComponents self, @Nullable String label = null,
                                            @DelegatesTo(value = BigDecimalField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new BigDecimalField(label), block)
     }
@@ -260,5 +260,14 @@ class VaadinComponents {
     static MenuBar menuBar(@NotNull HasComponents self,
                            @DelegatesTo(value = MenuBar, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new MenuBar(), block)
+    }
+
+    /**
+     * Creates a [TabSheet] component which shows both the list of tabs, and the tab contents itself.
+     */
+    @NotNull
+    static TabSheet tabSheet(@NotNull HasComponents self,
+                             @DelegatesTo(value = TabSheet, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        init(self, new TabSheet(), block)
     }
 }
