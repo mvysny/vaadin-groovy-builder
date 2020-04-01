@@ -9,6 +9,8 @@ import com.vaadin.flow.component.checkbox.CheckboxGroup
 import com.vaadin.flow.component.combobox.ComboBox
 import com.vaadin.flow.component.datepicker.DatePicker
 import com.vaadin.flow.component.dialog.Dialog
+import com.vaadin.flow.component.listbox.ListBox
+import com.vaadin.flow.component.listbox.MultiSelectListBox
 import com.vaadin.flow.component.menubar.MenuBar
 import com.vaadin.flow.component.select.Select
 import com.vaadin.flow.component.splitlayout.SplitLayout
@@ -71,7 +73,7 @@ class VaadinComponents {
 
     /**
      * Creates a <a href="https://vaadin.com/elements/vaadin-checkbox/">Vaadin Checkbox</a>. See the HTML Examples link for a list
-     * of possible alternative themes for the button.
+     * of possible alternative themes.
      */
     @NotNull
     static Checkbox checkbox(@NotNull HasComponents self, @Nullable String label = null,
@@ -81,7 +83,7 @@ class VaadinComponents {
 
     /**
      * Creates a <a href="https://vaadin.com/elements/vaadin-combo-box">Vaadin Combo Box</a>. See the HTML Examples link for a list
-     * of possible alternative themes for the button.
+     * of possible alternative themes.
      */
     @NotNull
     static <ITEM> ComboBox<ITEM> comboBox(@NotNull HasComponents self,
@@ -93,7 +95,7 @@ class VaadinComponents {
 
     /**
      * Creates a <a href="https://vaadin.com/components/vaadin-select">Vaadin Select</a>. See the HTML Examples link for a list
-     * of possible alternative themes for the button.
+     * of possible alternative themes.
      * <p></p>
      * The difference between combobox and select is that select isn't lazy, but you can add any child component into the select
      * and it will appear in the popup.
@@ -110,7 +112,7 @@ class VaadinComponents {
 
     /**
      * Creates a <a href="https://vaadin.com/elements/vaadin-date-picker">[Vaadin Date Picker]</a>. See the HTML Examples link for a list
-     * of possible alternative themes for the button.
+     * of possible alternative themes.
      */
     @NotNull
     static DatePicker datePicker(@NotNull HasComponents self,
@@ -121,7 +123,7 @@ class VaadinComponents {
 
     /**
      * Creates a <a href="https://vaadin.com/elements/vaadin-dialog">[Vaadin Dialog]</a>. See the HTML Examples link for a list
-     * of possible alternative themes for the button.
+     * of possible alternative themes.
      */
     @NotNull
     static Dialog dialog(@NotNull HasComponents self,
@@ -131,7 +133,7 @@ class VaadinComponents {
 
     /**
      * Creates a <a href="https://vaadin.com/elements/vaadin-text-field">[Password Field]</a>. See the HTML Examples link for a list
-     * of possible alternative themes for the button.
+     * of possible alternative themes.
      */
     @NotNull
     static PasswordField passwordField(@NotNull HasComponents self, @Nullable String label = null,
@@ -141,7 +143,7 @@ class VaadinComponents {
 
     /**
      * Creates a <a href="https://vaadin.com/elements/vaadin-split-layout">[Split Layout]</a>. See the HTML Examples link for a list
-     * of possible alternative themes for the button.
+     * of possible alternative themes.
      */
     @NotNull
     static SplitLayout splitLayout(@NotNull HasComponents self,
@@ -151,7 +153,7 @@ class VaadinComponents {
 
     /**
      * Creates a <a href="https://vaadin.com/elements/vaadin-text-field">[Text Field]</a>. See the HTML Examples link for a list
-     * of possible alternative themes for the button.
+     * of possible alternative themes.
      */
     @NotNull
     static TextField textField(@NotNull HasComponents self, @Nullable String label = null,
@@ -161,7 +163,7 @@ class VaadinComponents {
 
     /**
      * Creates a <a href="https://vaadin.com/components/vaadin-text-field">[Email Field]</a>. See the HTML Examples link for a list
-     * of possible alternative themes for the button.
+     * of possible alternative themes.
      */
     @NotNull
     static EmailField emailField(@NotNull HasComponents self,
@@ -173,7 +175,7 @@ class VaadinComponents {
     /**
      * Creates a <a href="https://vaadin.com/components/vaadin-number-field/java-examples/number-field">[Number Field]</a>.
      * See the HTML Examples link for a list
-     * of possible alternative themes for the button.
+     * of possible alternative themes.
      */
     @NotNull
     static NumberField numberField(@NotNull HasComponents self,
@@ -202,9 +204,10 @@ class VaadinComponents {
     }
 
     @NotNull
-    static <T> CheckboxGroup<T> checkboxGroup(@NotNull HasComponents self,
-                                              @DelegatesTo(type = "com.vaadin.flow.component.checkbox.CheckboxGroup<T>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        init(self, new CheckboxGroup<T>(), block)
+    static <ITEM> CheckboxGroup<ITEM> checkboxGroup(@NotNull HasComponents self,
+                                              @NotNull Class<ITEM> itemClass,
+                                              @DelegatesTo(type = "com.vaadin.flow.component.checkbox.CheckboxGroup<ITEM>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        init(self, new CheckboxGroup<ITEM>(), block)
     }
 
     /**
@@ -219,7 +222,7 @@ class VaadinComponents {
     /**
      * Creates a <a href="https://vaadin.com/components/vaadin-number-field/java-examples/number-field">[Integer Field]</a>.
      * See the HTML Examples link for a list
-     * of possible alternative themes for the button.
+     * of possible alternative themes.
      * <p></p>
      * Only available starting with Vaadin 14.1.
      */
@@ -232,7 +235,7 @@ class VaadinComponents {
     /**
      * Creates a <a href="https://vaadin.com/components/vaadin-number-field/java-examples/number-field">[BigDecimal Field]</a>.
      * See the HTML Examples link for a list
-     * of possible alternative themes for the button.
+     * of possible alternative themes.
      * <p></p>
      * Only available starting with Vaadin 14.1.
      */
@@ -269,5 +272,33 @@ class VaadinComponents {
     static TabSheet tabSheet(@NotNull HasComponents self,
                              @DelegatesTo(value = TabSheet, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new TabSheet(), block)
+    }
+
+    /**
+     * Creates a <a href="https://vaadin.com/components/vaadin-list-box">[Vaadin List Box]</a>. See the HTML Examples link for a list
+     * of possible alternative themes.
+     * <p></p>
+     * Unfortunately no label support for now: https://github.com/vaadin/vaadin-list-box-flow/issues/75
+     */
+    @NotNull
+    static <ITEM> ListBox<ITEM> listBox(
+            @NotNull HasComponents self,
+            @NotNull Class<ITEM> itemClass,
+            @DelegatesTo(type = "com.vaadin.flow.component.listbox.ListBox<ITEM>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        init(self, new ListBox<ITEM>(), block)
+    }
+
+    /**
+     * Creates a multi-select <a href="https://vaadin.com/components/vaadin-list-box">[Vaadin List Box]</a>. See the HTML Examples link for a list
+     * of possible alternative themes.
+     * <p></p>
+     * Unfortunately no label support for now: https://github.com/vaadin/vaadin-list-box-flow/issues/75
+     */
+    @NotNull
+    static <ITEM> MultiSelectListBox<ITEM> multiSelectListBox(
+            @NotNull HasComponents self,
+            @NotNull Class<ITEM> itemClass,
+            @DelegatesTo(type = "com.vaadin.flow.component.listbox.MultiSelectListBox<ITEM>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        init(self, new MultiSelectListBox<ITEM>(), block)
     }
 }

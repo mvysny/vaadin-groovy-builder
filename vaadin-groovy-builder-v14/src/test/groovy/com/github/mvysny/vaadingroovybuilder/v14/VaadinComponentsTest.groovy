@@ -44,10 +44,12 @@ class VaadinComponentsTest {
             tabs {
                 tab{}
             }
-            checkboxGroup{}
+            checkboxGroup(String){}
             timePicker{}
             integerField{}
             bigDecimalField{}
+            listBox(String){}
+            multiSelectListBox(String){}
         }
     }
 
