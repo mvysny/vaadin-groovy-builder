@@ -38,7 +38,7 @@ class BinderUtils {
      * such person can no longer log in from his PC unless he explicitly types in the space.
      */
     @NotNull
-    static <BEAN> Binder.BindingBuilder<BEAN, String> trimmingConverter(Binder.BindingBuilder<BEAN, String> self) {
+    static <BEAN> Binder.BindingBuilder<BEAN, String> trimmingConverter(@NotNull Binder.BindingBuilder<BEAN, String> self) {
         self.withConverter(new Converter<String, String>() {
             @Override
             Result<String> convertToModel(String value, ValueContext context) {
@@ -55,18 +55,18 @@ class BinderUtils {
     }
 
     @NotNull
-    static <BEAN> Binder.BindingBuilder<BEAN, Integer> toInt(Binder.BindingBuilder<BEAN, String> self) {
+    static <BEAN> Binder.BindingBuilder<BEAN, Integer> toInt(@NotNull Binder.BindingBuilder<BEAN, String> self) {
         self.withConverter(new StringToIntegerConverter(karibuDslI18n.apply("cantConvertToInteger")))
     }
 
     @NotNull
-    static <BEAN> Binder.BindingBuilder<BEAN, Integer> toInt2(Binder.BindingBuilder<BEAN, Double> self) {
+    static <BEAN> Binder.BindingBuilder<BEAN, Integer> toInt2(@NotNull Binder.BindingBuilder<BEAN, Double> self) {
         self.withConverter(new DoubleToIntegerConverter())
     }
 
     @NotNull
     static <BEAN> Binder.BindingBuilder<BEAN, Double> toDouble(
-            Binder.BindingBuilder<BEAN, String> self,
+            @NotNull Binder.BindingBuilder<BEAN, String> self,
             @NotNull String errorMessage = karibuDslI18n.apply("cantConvertToDecimal")
     ) {
         self.withConverter(new StringToDoubleConverter(errorMessage))
@@ -74,60 +74,60 @@ class BinderUtils {
 
     @NotNull
     static <BEAN> Binder.BindingBuilder<BEAN, Long> toLong(
-            Binder.BindingBuilder<BEAN, String> self,
+            @NotNull Binder.BindingBuilder<BEAN, String> self,
             @NotNull String errorMessage = karibuDslI18n.apply("cantConvertToInteger")
     ) {
         self.withConverter(new StringToLongConverter(errorMessage))
     }
 
     @NotNull
-    static <BEAN> Binder.BindingBuilder<BEAN, Long> toLong2(Binder.BindingBuilder<BEAN, Double> self) {
+    static <BEAN> Binder.BindingBuilder<BEAN, Long> toLong2(@NotNull Binder.BindingBuilder<BEAN, Double> self) {
         self.withConverter(new DoubleToLongConverter())
     }
 
     @NotNull
     static <BEAN> Binder.BindingBuilder<BEAN, BigDecimal> toBigDecimal(
-            Binder.BindingBuilder<BEAN, String> self,
+            @NotNull Binder.BindingBuilder<BEAN, String> self,
             @NotNull String errorMessage = karibuDslI18n.apply("cantConvertToDecimal")
     ) {
         self.withConverter(new StringToBigDecimalConverter(errorMessage))
     }
 
     @NotNull
-    static <BEAN> Binder.BindingBuilder<BEAN, BigDecimal> toBigDecimal2(Binder.BindingBuilder<BEAN, Double> self) {
+    static <BEAN> Binder.BindingBuilder<BEAN, BigDecimal> toBigDecimal2(@NotNull Binder.BindingBuilder<BEAN, Double> self) {
         self.withConverter(new DoubleToBigDecimalConverter())
     }
 
     @NotNull
     static <BEAN> Binder.BindingBuilder<BEAN, BigInteger> toBigInteger(
-            Binder.BindingBuilder<BEAN, String> self,
+            @NotNull Binder.BindingBuilder<BEAN, String> self,
             @NotNull String errorMessage = karibuDslI18n.apply("cantConvertToInteger")
     ) {
         self.withConverter(new StringToBigIntegerConverter(errorMessage))
     }
 
     @NotNull
-    static <BEAN> Binder.BindingBuilder<BEAN, BigInteger> toBigInteger2(Binder.BindingBuilder<BEAN, Double> self) {
+    static <BEAN> Binder.BindingBuilder<BEAN, BigInteger> toBigInteger2(@NotNull Binder.BindingBuilder<BEAN, Double> self) {
         self.withConverter(new DoubleToBigIntegerConverter())
     }
 
     @NotNull
-    static <BEAN> Binder.BindingBuilder<BEAN, Date> toDate(Binder.BindingBuilder<BEAN, LocalDate> self) {
+    static <BEAN> Binder.BindingBuilder<BEAN, Date> toDate(@NotNull Binder.BindingBuilder<BEAN, LocalDate> self) {
         self.withConverter(new LocalDateToDateConverter(TimeZoneUtils.getBrowserTimeZone()))
     }
 
     @NotNull
-    static <BEAN> Binder.BindingBuilder<BEAN, Date> toDate2(Binder.BindingBuilder<BEAN, LocalDateTime> self) {
+    static <BEAN> Binder.BindingBuilder<BEAN, Date> toDate2(@NotNull Binder.BindingBuilder<BEAN, LocalDateTime> self) {
         self.withConverter(new LocalDateTimeToDateConverter(TimeZoneUtils.getBrowserTimeZone()))
     }
 
     @NotNull
-    static <BEAN> Binder.BindingBuilder<BEAN, Instant> toInstant(Binder.BindingBuilder<BEAN, LocalDate> self) {
+    static <BEAN> Binder.BindingBuilder<BEAN, Instant> toInstant(@NotNull Binder.BindingBuilder<BEAN, LocalDate> self) {
         self.withConverter(new LocalDateToInstantConverter())
     }
 
     @NotNull
-    static <BEAN> Binder.BindingBuilder<BEAN, Instant> toInstant2(Binder.BindingBuilder<BEAN, LocalDateTime> self) {
+    static <BEAN> Binder.BindingBuilder<BEAN, Instant> toInstant2(@NotNull Binder.BindingBuilder<BEAN, LocalDateTime> self) {
         self.withConverter(new LocalDateTimeToInstantConverter())
     }
 
@@ -140,7 +140,7 @@ class BinderUtils {
      * ```
      */
     static <BEAN, FIELDVALUE> Binder.BindingBuilder<BEAN, FIELDVALUE> bind(
-            final HasValue<? extends HasValue.ValueChangeEvent<FIELDVALUE>, FIELDVALUE> self,
+            @NotNull final HasValue<? extends HasValue.ValueChangeEvent<FIELDVALUE>, FIELDVALUE> self,
             @NotNull Binder<BEAN> binder
     ) {
         def builder = binder.forField(self)
@@ -152,7 +152,7 @@ class BinderUtils {
 
     @NotNull
     static <BEAN> Binder.BindingBuilder<BEAN, String> validateNotBlank(
-            Binder.BindingBuilder<BEAN, String> self,
+            @NotNull Binder.BindingBuilder<BEAN, String> self,
             @NotNull String errorMessage = "must not be blank"
     ) {
         self.withValidator(new StringNotBlankValidator(errorMessage))
@@ -160,7 +160,7 @@ class BinderUtils {
 
     @NotNull
     static <BEAN> Binder.BindingBuilder<BEAN, String> validEmail(
-            Binder.BindingBuilder<BEAN, String> self,
+            @NotNull Binder.BindingBuilder<BEAN, String> self,
             @NotNull String errorMessage = "must be a valid email address"
     ) {
         self.withValidator(new EmailValidator(errorMessage))
@@ -168,7 +168,7 @@ class BinderUtils {
 
     @NotNull
     static <T extends Comparable, BEAN> Binder.BindingBuilder<BEAN, T> inRange(
-            Binder.BindingBuilder<BEAN, T> self,
+            @NotNull Binder.BindingBuilder<BEAN, T> self,
             @NotNull Range<T> range,
             @NotNull String errorMessage = "must be in $range"
     ) {
