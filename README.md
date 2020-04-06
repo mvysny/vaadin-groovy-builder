@@ -19,8 +19,11 @@ The full documentation:
 * Unfortunately there is no support for Vaadin 8 and lower
 * [Vaadin-Groovy-Builder Vaadin Platform (Vaadin 14+) tutorial](vaadin-groovy-builder-v14)
 
+> Note: For Kotlin Vaadin DSL please see the [Karibu-DSL](https://github.com/mvysny/karibu-dsl) library.
+
 ## Example Project
 
+See [Vaadin Groovy Builder Example](https://github.com/mvysny/vaadin-groovy-builder-example).
 Code example:
 
 ```groovy
@@ -42,8 +45,6 @@ class MainView extends GComposite {
     }
 }
 ```
-
-See [Vaadin Groovy Builder Example](https://github.com/mvysny/vaadin-groovy-builder-example).
 
 # License
 
