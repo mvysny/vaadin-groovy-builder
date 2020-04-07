@@ -116,4 +116,15 @@ class BinderUtilsTest {
         expect(123.0d) { form.testBI.value }
         expect(77.11d) { form.testBD.value }
     }
+
+    @Test void testGuessIsReadOnly() {
+        Binder binder = new Binder<Person>(Person)
+        expect(false) { binder.guessIsReadOnly() }
+        new Form2(binder)
+        expect(false) { binder.guessIsReadOnly() }
+        binder.setReadOnly(true)
+        expect(true) { binder.guessIsReadOnly() }
+        binder.setReadOnly(false)
+        expect(false) { binder.guessIsReadOnly() }
+    }
 }

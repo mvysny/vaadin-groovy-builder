@@ -20,6 +20,7 @@ import com.vaadin.flow.data.validator.EmailValidator
 import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
 
+import java.lang.reflect.Method
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -173,5 +174,17 @@ class BinderUtils {
             @NotNull String errorMessage = "must be in $range"
     ) {
         self.withValidator(new GroovyRangeValidator(range, errorMessage))
+    }
+
+    /**
+     * Guesses whether the binder has been configured with read-only.
+     *
+     * Since Binder doesn't remember whether it is read-only, we have to guess.
+     */
+    static boolean guessIsReadOnly(@NotNull Binder<?> self) {
+        Method bindingsGetter = Binder.class.getDeclaredMethod("getBindings")
+        bindingsGetter.setAccessible(true)
+        Collection<Binder.Binding<?, ?>> bindings = bindingsGetter.invoke(self) as Collection<Binder.Binding<?, ?>>;
+        return bindings.any { it.setter != null && it.isReadOnly() }
     }
 }
