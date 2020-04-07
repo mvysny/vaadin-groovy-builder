@@ -16,7 +16,7 @@ defaultTasks("clean", "build")
 
 allprojects {
     group = "com.github.mvysny.vaadin-groovy-builder"
-    version = "0.0.5"
+    version = "0.0.6-SNAPSHOT"
 
     repositories {
         mavenCentral()
