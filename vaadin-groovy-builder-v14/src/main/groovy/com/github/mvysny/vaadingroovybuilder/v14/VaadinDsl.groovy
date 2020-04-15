@@ -24,7 +24,7 @@ class VaadinDsl {
      * @param block optional block to run over the component, allowing you to add children to the [component]
      */
     @NotNull
-    static <C extends Component> C init(final HasComponents self,
+    static <C extends Component> C init(@NotNull final HasComponents self,
                                         @DelegatesTo.Target @NotNull C component,
                                         @DelegatesTo(strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         self.add(component)

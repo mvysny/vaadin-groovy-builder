@@ -6,9 +6,10 @@ import com.vaadin.flow.data.binder.ValueContext
 import com.vaadin.flow.data.converter.Converter
 import groovy.transform.CompileStatic
 import groovy.transform.TupleConstructor
+import org.jetbrains.annotations.NotNull
+import org.jetbrains.annotations.Nullable
 
 import java.time.Instant
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 
@@ -22,12 +23,12 @@ class LocalDateTimeToInstantConverter implements Converter<LocalDateTime, Instan
     ZoneId zoneId = TimeZoneUtils.browserTimeZone
 
     @Override
-    Result<Instant> convertToModel(LocalDateTime value, ValueContext context) {
+    Result<Instant> convertToModel(@Nullable LocalDateTime value, @NotNull ValueContext context) {
         return Result.ok(value?.atZone(zoneId)?.toInstant())
     }
 
     @Override
-    LocalDateTime convertToPresentation(Instant value, ValueContext context) {
+    LocalDateTime convertToPresentation(@Nullable Instant value, @NotNull ValueContext context) {
         return value?.atZone(zoneId)?.toLocalDateTime()
     }
 }

@@ -7,6 +7,7 @@ import groovy.transform.CompileStatic
 import groovy.transform.ToString
 import groovy.transform.TupleConstructor
 import org.jetbrains.annotations.NotNull
+import org.jetbrains.annotations.Nullable
 
 @CompileStatic
 @ToString
@@ -21,7 +22,7 @@ class GroovyRangeValidator<T extends Comparable> implements Validator<T> {
     }
 
     @Override
-    ValidationResult apply(T value, ValueContext context) {
+    ValidationResult apply(@Nullable T value, @NotNull ValueContext context) {
         value != null && !range.contains(value) ? ValidationResult.error(errorMessage) : ValidationResult.ok()
     }
 }

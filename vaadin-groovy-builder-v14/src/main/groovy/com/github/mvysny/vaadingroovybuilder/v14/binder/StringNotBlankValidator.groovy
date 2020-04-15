@@ -6,15 +6,18 @@ import com.vaadin.flow.data.binder.ValueContext
 import groovy.transform.CompileStatic
 import groovy.transform.ToString
 import groovy.transform.TupleConstructor
+import org.jetbrains.annotations.NotNull
+import org.jetbrains.annotations.Nullable
 
 @CompileStatic
 @TupleConstructor
 @ToString
 class StringNotBlankValidator implements Validator<String> {
+    @NotNull
     String errorMessage = "must not be blank"
 
     @Override
-    ValidationResult apply(String value, ValueContext context) {
+    ValidationResult apply(@Nullable String value, @NotNull ValueContext context) {
         value == null || value.isAllWhitespace() ? ValidationResult.error(errorMessage) : ValidationResult.ok()
     }
 }

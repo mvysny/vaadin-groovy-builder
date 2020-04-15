@@ -1,8 +1,8 @@
 package com.github.mvysny.vaadingroovybuilder.v14
 
+import com.vaadin.flow.function.SerializableFunction
 import groovy.transform.CompileStatic
 import groovy.transform.EqualsAndHashCode
-import groovy.transform.ToString
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
@@ -16,7 +16,7 @@ import java.lang.reflect.Method
  */
 @CompileStatic
 @EqualsAndHashCode(includes = ["self", "propertyName"])
-class Getter implements Serializable {
+class Getter implements SerializableFunction<Object, Object> {
     @NotNull final Class<?> self
     @NotNull final String propertyName
 
@@ -45,6 +45,11 @@ class Getter implements Serializable {
         return getter
     }
 
+    /**
+     * Returns the value of the property for given bean.
+     * @param bean the bean, not null.
+     * @return the value, may be null.
+     */
     @Nullable
     Object get(@NotNull Object bean) {
         getGetter().invoke(bean)
@@ -52,6 +57,11 @@ class Getter implements Serializable {
 
     @Override
     String toString() {
-        return "Getter{$getter}"
+        return "Getter{${getGetter()}}"
+    }
+
+    @Override
+    Object apply(Object o) {
+        get(o)
     }
 }

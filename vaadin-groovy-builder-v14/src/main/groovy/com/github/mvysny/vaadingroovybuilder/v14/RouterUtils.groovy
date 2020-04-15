@@ -19,7 +19,7 @@ import static com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl.init
 class RouterUtils {
     @NotNull
     static RouterLink routerLink(
-            HasComponents self,
+            @NotNull HasComponents self,
             @Nullable VaadinIcon icon = null,
             @Nullable String text = null,
             @NotNull Class<? extends Component> viewType,
@@ -33,7 +33,7 @@ class RouterUtils {
 
     @NotNull
     static <T, C extends Component & HasUrlParameter<T>> RouterLink routerLink(
-            HasComponents self,
+            @NotNull HasComponents self,
             @Nullable VaadinIcon icon = null,
             @Nullable String text = null,
             @NotNull Class<? extends C> viewType,
@@ -48,7 +48,7 @@ class RouterUtils {
 
     @NotNull
     static RouterLink routerLink(
-            HasComponents self,
+            @NotNull HasComponents self,
             @Nullable VaadinIcon icon = null,
             @Nullable String text = null,
             @DelegatesTo(value = RouterLink, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
@@ -77,7 +77,7 @@ class RouterUtils {
     /**
      * Set the [navigationTarget] for this link.
      */
-    static void setRoute(RouterLink self, @NotNull Class<? extends Component> navigationTarget) {
+    static void setRoute(@NotNull RouterLink self, @NotNull Class<? extends Component> navigationTarget) {
         self.setRoute(getRouter(), navigationTarget)
     }
     /**
@@ -87,7 +87,7 @@ class RouterUtils {
      * @param C navigation target type
      */
     static <T, C extends Component & HasUrlParameter<T>> void setRoute(
-            RouterLink self,
+            @NotNull RouterLink self,
             @NotNull Class<? extends C> navigationTarget,
             @Nullable T parameter) {
         self.setRoute(getRouter(), navigationTarget, parameter)
@@ -97,7 +97,7 @@ class RouterUtils {
      * Returns the navigated-to view class.
      */
     @NotNull
-    static Class<? extends Component> getViewClass(AfterNavigationEvent self) {
+    static Class<? extends Component> getViewClass(@NotNull AfterNavigationEvent self) {
         (self.activeChain.first() as Component).getClass()
     }
 
@@ -106,7 +106,7 @@ class RouterUtils {
      * @param router router to use, defaults to [UI.getRouter]/[VaadinService.router].
      */
     @Nullable
-    static Class<? extends Component> getViewClass(Location self, @NotNull Router router = getRouter()) {
+    static Class<? extends Component> getViewClass(@NotNull Location self, @NotNull Router router = getRouter()) {
         def params = new HashMap<String, String[]>()
         for (Map.Entry<String, List<String>> entry : self.queryParameters.parameters.entrySet()) {
             params[entry.key] = entry.value.toArray(new String[0]) as String[]

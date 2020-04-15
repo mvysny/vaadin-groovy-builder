@@ -42,7 +42,8 @@ class Utils {
         value
     }
 
-    private static final Map<String, String> messages = ["cantConvertToInteger": "Can't convert to integer",
+    // public, so that customized karibuDslI18n can still fall back to the default set of messages.
+    static final Map<String, String> messages = ["cantConvertToInteger": "Can't convert to integer",
             "cantConvertToDecimal": "Can't convert to decimal number",
             "from": "From:",
             "to": "To:",
