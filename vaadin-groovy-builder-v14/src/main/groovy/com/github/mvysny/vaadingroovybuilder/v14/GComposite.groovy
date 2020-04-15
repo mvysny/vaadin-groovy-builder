@@ -8,6 +8,8 @@ import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
+import java.util.stream.Stream
+
 import static com.github.mvysny.vaadingroovybuilder.v14.Utils.*
 
 /**
@@ -48,8 +50,35 @@ abstract class GComposite extends Composite<Component> {
     @Nullable private Component root = null
 
     @Override @NotNull
-    protected Component initContent() {
+    protected final Component initContent() {
         checkNotNull(root) { "The content has not yet been initialized, please call the ui() function in the constructor" }
+    }
+
+    /**
+     * You can alternatively specify the content straight in the constructor if it is known upfront.
+     * @param content
+     */
+    protected GComposite(@Nullable Component content = null) {
+        super()
+        root = content
+    }
+
+    // prevent accidental override
+    @Override @NotNull
+    final Component getContent() {
+        super.getContent()
+    }
+
+    // prevent accidental override
+    @Override
+    final Element getElement() {
+        super.getElement()
+    }
+
+    // prevent accidental override
+    @Override
+    Stream<Component> getChildren() {
+        super.getChildren()
     }
 
     /**

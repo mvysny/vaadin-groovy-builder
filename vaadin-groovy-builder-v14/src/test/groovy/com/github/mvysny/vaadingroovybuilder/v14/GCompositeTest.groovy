@@ -16,7 +16,7 @@ import static com.github.mvysny.vaadingroovybuilder.v14.TestUtils.*
  * so that developers prefer [composition over inheritance](https://reactjs.org/docs/composition-vs-inheritance.html).
  */
 @CompileStatic
-class ButtonBar extends GComposite {
+final class ButtonBar extends GComposite {
     private final root = ui {
         // create the component UI here; maybe even attach very simple listeners here
         horizontalLayout {
@@ -39,6 +39,12 @@ class ButtonBar extends GComposite {
     private void cancelClicked() {}
 }
 
+final class MyButton extends GComposite {
+    MyButton() {
+        super(new Button("Click me!"))
+    }
+}
+
 @CompileStatic
 class GCompositeTest {
     @BeforeEach
@@ -50,7 +56,8 @@ class GCompositeTest {
     @Test
     void "lookup"() {
         UI.getCurrent().add(new ButtonBar())
-        _get(Button) { caption = "ok" }
+        _expectOne(ButtonBar)
+        _expectOne(Button) { caption = "ok" }
     }
 
     @Test
@@ -64,5 +71,12 @@ class GCompositeTest {
         expectThrows(IllegalStateException, "The content has not yet been initialized") {
             UI.getCurrent().add(new GComposite() {})
         }
+    }
+
+    @Test
+    void provideContentsInConstructor() {
+        UI.current.add(new MyButton())
+        _expectOne(MyButton)
+        _expectOne(Button) { caption = "Click me!" }
     }
 }
