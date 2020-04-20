@@ -123,6 +123,7 @@ final class TabSheet extends GComposite implements HasStyle, HasSize {
     void setTabContents(@NotNull Tab tab, @Nullable Component newContents) {
         checkOurTab(tab)
         tabsToComponents[tab] = newContents
+        tabsToComponentProvider.remove(tab)
         update()
     }
 
