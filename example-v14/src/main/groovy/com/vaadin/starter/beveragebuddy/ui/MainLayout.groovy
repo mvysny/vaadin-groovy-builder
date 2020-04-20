@@ -51,6 +51,10 @@ class MainLayout extends GComposite implements RouterLayout, PageConfigurator {
                         addClassName("main-layout__nav-item")
                         highlightCondition = HighlightConditions.sameLocation()
                     }
+                    routerLink(VaadinIcon.TABLE, "Components", ComponentsShowcase) {
+                        addClassName("main-layout__nav-item")
+                        highlightCondition = HighlightConditions.sameLocation()
+                    }
                 }
             }
         }

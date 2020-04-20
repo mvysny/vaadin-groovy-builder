@@ -1,8 +1,6 @@
 package com.github.mvysny.vaadingroovybuilder.v14
 
-import com.github.mvysny.vaadingroovybuilder.v14.html.HtmlUtils
 import com.github.mvysny.vaadingroovybuilder.v14.layout.Layouts
-import com.github.mvysny.vaadingroovybuilder.v14.layout.VerticalLayoutContent
 import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.ComponentEventListener
 import com.vaadin.flow.component.HasComponents
@@ -20,13 +18,13 @@ import org.jetbrains.annotations.Nullable
 
 import static com.github.mvysny.vaadingroovybuilder.v14.Utils.*
 import static com.github.mvysny.vaadingroovybuilder.v14.html.HtmlUtils.div
-import static com.github.mvysny.vaadingroovybuilder.v14.layout.Layouts.verticalLayout
+import static com.github.mvysny.vaadingroovybuilder.v14.layout.Layouts.*
 
 /**
  * A TabSheet - shows both the [Tabs] component and the tab contents.
  */
 @CompileStatic
-class TabSheet extends GComposite implements HasStyle, HasSize {
+final class TabSheet extends GComposite implements HasStyle, HasSize {
     @NotNull
     private Tabs tabsComponent
     @NotNull
@@ -48,6 +46,9 @@ class TabSheet extends GComposite implements HasStyle, HasSize {
 
             tabsComponent = VaadinComponents.tabs(delegate) {}
             tabsContainer = div(delegate) {
+                setWidthFull()
+                // when TabSheet's height is defined, the following rules allow the container to grow or shrink as necessary.
+                setExpand(delegate, true); setFlexShrink(delegate, 1); setMinHeight("0px")
                 element.classList.add("tabsheet-container")
             }
         }
@@ -227,6 +228,11 @@ class TabSheet extends GComposite implements HasStyle, HasSize {
         }
     }
 
+    /**
+     * Adds a listener fired when the current tab changes (both by user or programatically).
+     * @param listener the listener, not null.
+     * @return registration used to remove the listener.
+     */
     @NotNull
     Registration addSelectedChangeListener(@NotNull ComponentEventListener<Tabs.SelectedChangeEvent> listener) {
         tabsComponent.addSelectedChangeListener(listener)
