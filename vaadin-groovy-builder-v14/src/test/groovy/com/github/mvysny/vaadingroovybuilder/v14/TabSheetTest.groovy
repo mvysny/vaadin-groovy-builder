@@ -3,6 +3,7 @@ package com.github.mvysny.vaadingroovybuilder.v14
 import com.github.mvysny.kaributesting.v10.MockVaadin
 import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.button.Button
+import com.vaadin.flow.component.html.Label
 import com.vaadin.flow.component.html.Span
 import com.vaadin.flow.component.tabs.Tab
 import groovy.transform.CompileStatic
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.Test
 
 import static com.github.mvysny.kaributesting.v10.groovy.LocatorG.*
 import static kotlin.test.AssertionsKt.expect
+import static org.junit.jupiter.api.Assertions.fail
 
 @CompileStatic
 class TabSheetTest {
@@ -210,5 +212,31 @@ class TabSheetTest {
             }
         }
         expect(tab1) { th.findTabContaining(nested) }
+    }
+
+    @Test
+    void addFirstLazyTabImmediatelyInvokesClosure() {
+        def th = UI.current.tabSheet {}
+        def producedLabel = new Label("baz")
+        th.addLazyTab("foo") { producedLabel }
+        expect(producedLabel) { th.selectedTab.contents }
+    }
+
+    @Test
+    void addSecondLazyTabDelaysClosure() {
+        def th = UI.current.tabSheet {}
+        def producedLabel = new Label("baz")
+        boolean allowInvoking = false
+        def tab1 = th.addTab("bar")
+        def tab2 = th.addLazyTab("foo") {
+            if (!allowInvoking) fail("Should not invoke")
+            producedLabel
+        }
+        expect(tab1) { th.selectedTab }
+        allowInvoking = true
+
+        th.selectedTab = tab2
+        expect(tab2) { th.selectedTab }
+        expect(producedLabel) { th.selectedTab.contents }
     }
 }

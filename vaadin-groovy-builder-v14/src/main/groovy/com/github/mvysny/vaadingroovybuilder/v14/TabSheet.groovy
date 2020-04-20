@@ -35,6 +35,11 @@ final class TabSheet extends GComposite implements HasStyle, HasSize {
      */
     private final Map<Tab, Component> tabsToComponents = new HashMap<>()
 
+    /**
+     * Maps [Tab] to the provider of the contents of the tab.
+     */
+    private final Map<Tab, Closure<? extends Component>> tabsToComponentProvider = new HashMap<>()
+
     @NotNull
     private final def root = ui {
         verticalLayout(delegate, false, false) {
@@ -48,7 +53,8 @@ final class TabSheet extends GComposite implements HasStyle, HasSize {
             tabsContainer = div(delegate) {
                 setWidthFull()
                 // when TabSheet's height is defined, the following rules allow the container to grow or shrink as necessary.
-                setExpand(delegate, true); setFlexShrink(delegate, 1); setMinHeight("0px")
+                setExpand(delegate, true); setFlexShrink(delegate, 1);
+                setMinHeight("0px")
                 element.classList.add("tabsheet-container")
             }
         }
@@ -70,6 +76,7 @@ final class TabSheet extends GComposite implements HasStyle, HasSize {
             Element getElement() {
                 throw new UnsupportedOperationException("Not expected to be called")
             }
+
             @Override
             void add(@NotNull Component... components) {
                 require(components.size() < 2) { "Too many components to add - tab can only host one! ${components.toList()}" }
@@ -98,6 +105,19 @@ final class TabSheet extends GComposite implements HasStyle, HasSize {
     }
 
     /**
+     * Adds a new tab to the tab host, with optional [label]. The tab contents is
+     * constructed lazily when the tab is first shown.
+     */
+    @NotNull
+    Tab addLazyTab(@Nullable String label = null, @NotNull Closure<? extends Component> contentsProvider) {
+        Tab tab = VaadinComponents.tab(tabsComponent, label) {}
+        tabsToComponents.put(tab, null)
+        tabsToComponentProvider[tab] = contentsProvider
+        update()
+        return tab
+    }
+
+    /**
      * Sets the contents of given [tab] to [newContents].
      */
     void setTabContents(@NotNull Tab tab, @Nullable Component newContents) {
@@ -112,7 +132,7 @@ final class TabSheet extends GComposite implements HasStyle, HasSize {
      */
     @Nullable
     Tab findTabWithContents(@NotNull Component contents) {
-        tabsToComponents.entrySet().find { it.value == contents } ?.key
+        tabsToComponents.entrySet().find { it.value == contents }?.key
     }
 
     /**
@@ -120,7 +140,7 @@ final class TabSheet extends GComposite implements HasStyle, HasSize {
      */
     @Nullable
     Tab findTabContaining(@NotNull Component component) {
-        def contentComponents = tabsToComponents.values().findAll { it != null } .toSet()
+        def contentComponents = tabsToComponents.values().findAll { it != null }.toSet()
         Component contents = VaadinUtils.findAncestorOrSelf(component) { contentComponents.contains(it) }
         return contents == null ? null : findTabWithContents(contents)
     }
@@ -194,7 +214,22 @@ final class TabSheet extends GComposite implements HasStyle, HasSize {
     private void update() {
         Component currentTabComponent = tabsContainer.children.findFirst().orElse(null)
         Tab selectedTab1 = getSelectedTab()
-        Component newTabComponent = selectedTab1 == null ? null : tabsToComponents[selectedTab1]
+
+        Component newTabComponent
+        if (selectedTab1 == null) {
+            newTabComponent = null
+        } else {
+            newTabComponent = tabsToComponents[selectedTab1]
+            if (newTabComponent == null) {
+                def provider = tabsToComponentProvider[selectedTab1]
+                if (provider != null) {
+                    newTabComponent = provider()
+                    tabsToComponentProvider.remove(selectedTab1)
+                    tabsToComponents[selectedTab1] = newTabComponent
+                }
+            }
+        }
+
         if (currentTabComponent != newTabComponent) {
             tabsContainer.removeAll()
             if (newTabComponent != null) {
