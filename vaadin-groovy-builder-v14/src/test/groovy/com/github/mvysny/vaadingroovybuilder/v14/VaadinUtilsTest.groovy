@@ -6,8 +6,11 @@ import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.html.Div
 import com.vaadin.flow.component.html.Label
+import com.vaadin.flow.component.html.Span
 import com.vaadin.flow.component.orderedlayout.FlexLayout
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout
 import com.vaadin.flow.component.orderedlayout.VerticalLayout
+import com.vaadin.flow.dom.Element
 import groovy.transform.CompileStatic
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -147,5 +150,41 @@ class VaadinUtilsTest {
     @Test
     void add() {
         new VerticalLayout().add(new Button())
+    }
+
+    @Test
+    void testIsAttached() {
+        expect(true) { UI.getCurrent().isAttached() }
+        expect(false) { new Button("foo").isAttached() }
+        expect(true) {
+            def button = UI.getCurrent().button {}
+            button.isAttached()
+        }
+        UI.getCurrent().close()
+        expect(false) { UI.getCurrent().isAttached() }
+    }
+
+    @Test
+    void testInsertBeforeElement() {
+        def l = new Div().element
+        Element first = new Span("first").element
+        l.appendChild(first)
+        Element second = new Span("second").element
+        l.insertBefore(second, first)
+        expect("second, first") { l.children.toList().collect { it.text } .join(", ") }
+        l.insertBefore(new Span("third").element, first)
+        expect("second, third, first") { l.children.toList().collect { it.text } .join(", ") }
+    }
+
+    @Test
+    void testInsertBeforeComponent() {
+        def l = new HorizontalLayout()
+        def first = new Span("first")
+        l.addComponentAsFirst(first)
+        def second = new Span("second")
+        l.insertBefore(second, first)
+        expect("second, first") { l.children.toList().collect { it._text } .join(", ") }
+        l.insertBefore(new Span("third"), first)
+        expect("second, third, first") { l.children.toList().collect { it._text } .join(", ") }
     }
 }

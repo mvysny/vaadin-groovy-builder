@@ -18,6 +18,7 @@ import java.util.stream.Stream
 
 import static com.github.mvysny.vaadingroovybuilder.v14.Utils.checkNotNull
 import static com.github.mvysny.vaadingroovybuilder.v14.Utils.require
+import static java.util.Objects.requireNonNull
 
 /**
  * A collection of basic Vaadin utility extension functions.
@@ -264,7 +265,11 @@ class VaadinUtils {
      */
     static boolean isAttached(@NotNull Component self) {
         // see https://github.com/vaadin/flow/issues/7911
-        self instanceof UI || self.getUI().isPresent()
+        def ui = self.getUI().orElse(null)
+        if (ui == null) {
+            return false
+        }
+        return !ui.isClosing()
     }
 
     /**
@@ -297,5 +302,30 @@ class VaadinUtils {
 
     static void setContents(@NotNull Tab self, @Nullable Component contents) {
         getOwnerTabSheet(self).setTabContents(self, contents)
+    }
+
+    /**
+     * Inserts [newNode] as a child, right before an [existingNode].
+     */
+    static void insertBefore(@NotNull Element self, @NotNull Element newNode, @NotNull Element existingNode) {
+        Element parent = existingNode.parent
+        requireNonNull(parent) { "$existingNode has no parent element" }
+        require(parent == self) { "$existingNode is not nested in $self" }
+        self.insertChild(self.indexOfChild(existingNode), newNode)
+    }
+
+    /**
+     * Inserts this component as a child, right before an [existing] one.
+     * <p></p>
+     * In case the specified component has already been added to another parent,
+     * it will be removed from there and added to this one.
+     */
+    static void insertBefore(@NotNull HasOrderedComponents<?> self,
+                             @NotNull Component newComponent,
+                             @NotNull Component existing) {
+        Component parent = existing.parent.orElse(null)
+        requireNonNull(parent) { "$existing has no parent" }
+        require(parent == self) { "$existing is not nested in $self" }
+        self.addComponentAtIndex(self.indexOf(existing), newComponent)
     }
 }
