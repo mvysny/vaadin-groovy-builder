@@ -29,14 +29,16 @@ class LayoutsTest {
 
     @Test
     void "flexGrow works even when the component is not yet attached to parent"() {
-        new Button().flexGrow = 1.0
+        new Button().flexGrow = 1d
     }
 
     @Test
     void "setting flexGrow works"() {
         def button = new Button()
-        button.flexGrow = 1.0
+        button.flexGrow = 1d
         expect("1.0") { button.element.style.get("flexGrow") }
+        button.flexGrow = 0d
+        expect("0.0") { button.element.style.get("flexGrow") }
     }
 
     @Test
@@ -47,26 +49,39 @@ class LayoutsTest {
     }
 
     @Test
-    void "setting flexGrow to 0 removes the style"() {
+    void "setting flexGrow to null removes the style"() {
         def button = new Button()
         button.element.style.set("flexGrow", "25")
-        button.flexGrow = 0.0
+        button.flexGrow = null
         expect(null) { button.element.style.get("flexGrow") }
     }
 
     @Test
-    void "by default component has flexGrow of 0"() {
-        expect(0d) { new Button().flexGrow }
+    void testExpand() {
+        def button = new Button()
+        expect(false) { button.isExpand() }
+        button.setExpand(true)
+        expect(true) { button.isExpand() }
+        button.setExpand(false)
+        expect(false) { button.isExpand() }
+    }
+
+    @Test
+    void "by default component has flexGrow of null"() {
+        expect(null) { new Button().flexGrow }
     }
 
     @Test void "flexShrink"() {
         def button = new Button()
-        expect(1.0d) { button.flexShrink }
-        button.flexShrink = 0.0d
+        expect(null) { button.flexShrink }
+        button.flexShrink = 0d
         expect("0.0") { button.element.style.get("flexShrink") }
-        expect(0.0d) { button.flexShrink }
-        button.flexShrink = 1.0d
+        expect(0d) { button.flexShrink }
+        button.flexShrink = 1d
         expect(1.0d) { button.flexShrink }
+        expect("1.0") { button.element.style.get("flexShrink") }
+        button.flexShrink = null
+        expect(null) { button.flexShrink }
         expect(null) { button.element.style.get("flexShrink") }
     }
 

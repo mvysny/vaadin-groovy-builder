@@ -83,13 +83,20 @@ class Layouts {
      * <p></p>
      * Warning: in case of {@link Grid.Column} it returns/sets the value of {@link Grid.Column#setFlexGrow(int)}.
      */
-    static void setFlexGrow(@NotNull Component self, double flexGrow) {
+    static void setFlexGrow(@NotNull Component self, @Nullable Double flexGrow) {
         if (self instanceof Grid.Column) {
-            (self as Grid.Column).flexGrow = flexGrow.toInteger()
+            if (flexGrow == null) {
+                self.element.removeProperty("flexGrow")
+            } else {
+                (self as Grid.Column).flexGrow = flexGrow.toInteger()
+            }
         }
-        if (flexGrow == 0d) {
+        if (flexGrow == null) {
             self.element.style.remove("flexGrow")
-        } else if (flexGrow > 0) {
+        } else if (flexGrow >= 0) {
+            // don't rely on the default flex-grow value of 0:
+            // it could have been changed by a CSS to something else, and we might need
+            // to enforce it back to zero for this element.
             self.element.style.set("flexGrow", flexGrow.toString())
         } else {
             throw new IllegalArgumentException("Flex grow property cannot be negative: $flexGrow")
@@ -99,12 +106,13 @@ class Layouts {
     /**
      * See {@link #setFlexGrow}.
      */
-    static double getFlexGrow(@NotNull Component self) {
+    @Nullable
+    static Double getFlexGrow(@NotNull Component self) {
         if (self instanceof Grid.Column) {
             return (self as Grid.Column).flexGrow.toDouble()
         }
         String value = self.element.style.get("flexGrow")
-        return value == null || value.isAllWhitespace() ? 0d : value.toDouble()
+        return value == null || value.isAllWhitespace() ? null : value.toDouble()
     }
 
     /**
@@ -112,7 +120,8 @@ class Layouts {
      * setting {@link #setFlexGrow} to 1.0; see {@link #setFlexGrow} for more information.
      */
     static boolean isExpand(@NotNull Component self) {
-        return getFlexGrow(self) > 0
+        def flexGrow = getFlexGrow(self)
+        flexGrow != null && flexGrow > 0
     }
 
     static void setExpand(@NotNull Component self, boolean isExpand) {
@@ -126,17 +135,16 @@ class Layouts {
      * <p>
      * Get more information at <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/flex-shrink">[flex-shrink]</a>
      */
-    static void setFlexShrink(@NotNull Component self, double flexShrink) {
-        if (flexShrink == 1.0d) {
-            self.element.style.remove("flexShrink")
-        } else {
-            self.element.style.set("flexShrink", flexShrink.toString())
-        }
+    static void setFlexShrink(@NotNull Component self, @Nullable Double flexShrink) {
+        // don't rely on the default flex-shrink value of 1:
+        // it could have been changed by a CSS to something else, and we might need
+        // to enforce it back to 1 for this element.
+        self.element.style.set("flexShrink", flexShrink?.toString())
     }
 
-    static double getFlexShrink(@NotNull Component self) {
-        Double flexShrink = self.element.style.get("flexShrink")?.toDouble()
-        return flexShrink == null ? 1.0d : flexShrink
+    @Nullable
+    static Double getFlexShrink(@NotNull Component self) {
+        self.element.style.get("flexShrink")?.toDouble()
     }
 
     /**
