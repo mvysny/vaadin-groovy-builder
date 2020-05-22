@@ -16,7 +16,6 @@ import com.vaadin.flow.component.select.Select
 import com.vaadin.flow.component.splitlayout.SplitLayout
 import com.vaadin.flow.component.tabs.Tab
 import com.vaadin.flow.component.tabs.Tabs
-import com.vaadin.flow.component.textfield.*
 import com.vaadin.flow.component.timepicker.TimePicker
 import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
@@ -132,16 +131,6 @@ class VaadinComponents {
     }
 
     /**
-     * Creates a <a href="https://vaadin.com/elements/vaadin-text-field">[Password Field]</a>. See the HTML Examples link for a list
-     * of possible alternative themes.
-     */
-    @NotNull
-    static PasswordField passwordField(@NotNull HasComponents self, @Nullable String label = null,
-                                       @DelegatesTo(value = PasswordField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        init(self, new PasswordField(label), block)
-    }
-
-    /**
      * Creates a <a href="https://vaadin.com/elements/vaadin-split-layout">[Split Layout]</a>. See the HTML Examples link for a list
      * of possible alternative themes.
      */
@@ -149,46 +138,6 @@ class VaadinComponents {
     static SplitLayout splitLayout(@NotNull HasComponents self,
                                    @DelegatesTo(value = SplitLayout, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new SplitLayout(), block)
-    }
-
-    /**
-     * Creates a <a href="https://vaadin.com/elements/vaadin-text-field">[Text Field]</a>. See the HTML Examples link for a list
-     * of possible alternative themes.
-     */
-    @NotNull
-    static TextField textField(@NotNull HasComponents self, @Nullable String label = null,
-                               @DelegatesTo(value = TextField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        init(self, new TextField(label), block)
-    }
-
-    /**
-     * Creates a <a href="https://vaadin.com/components/vaadin-text-field">[Email Field]</a>. See the HTML Examples link for a list
-     * of possible alternative themes.
-     */
-    @NotNull
-    static EmailField emailField(@NotNull HasComponents self,
-                                 @Nullable String label = null,
-                                 @DelegatesTo(value = EmailField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        init(self, new EmailField(label), block)
-    }
-
-    /**
-     * Creates a <a href="https://vaadin.com/components/vaadin-number-field/java-examples/number-field">[Number Field]</a>.
-     * See the HTML Examples link for a list
-     * of possible alternative themes.
-     */
-    @NotNull
-    static NumberField numberField(@NotNull HasComponents self,
-                                   @Nullable String label = null,
-                                   @DelegatesTo(value = NumberField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        init(self, new NumberField(label), block)
-    }
-
-    @NotNull
-    static TextArea textArea(@NotNull HasComponents self,
-                             @Nullable String label = null,
-                             @DelegatesTo(value = TextArea, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        init(self, new TextArea(label), block)
     }
 
     @NotNull
@@ -217,32 +166,6 @@ class VaadinComponents {
     static TimePicker timePicker(@NotNull HasComponents self, @Nullable String label = null,
                                  @DelegatesTo(value = TimePicker, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new TimePicker(label), block)
-    }
-
-    /**
-     * Creates a <a href="https://vaadin.com/components/vaadin-number-field/java-examples/number-field">[Integer Field]</a>.
-     * See the HTML Examples link for a list
-     * of possible alternative themes.
-     * <p></p>
-     * Only available starting with Vaadin 14.1.
-     */
-    @NotNull
-    static IntegerField integerField(@NotNull HasComponents self, @Nullable String label = null,
-                                     @DelegatesTo(value = IntegerField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        init(self, new IntegerField(label), block)
-    }
-
-    /**
-     * Creates a <a href="https://vaadin.com/components/vaadin-number-field/java-examples/number-field">[BigDecimal Field]</a>.
-     * See the HTML Examples link for a list
-     * of possible alternative themes.
-     * <p></p>
-     * Only available starting with Vaadin 14.1.
-     */
-    @NotNull
-    static BigDecimalField bigDecimalField(@NotNull HasComponents self, @Nullable String label = null,
-                                           @DelegatesTo(value = BigDecimalField, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        init(self, new BigDecimalField(label), block)
     }
 
     /**
