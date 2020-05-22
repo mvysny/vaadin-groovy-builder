@@ -9,4 +9,5 @@ out
 target
 node_modules
 webpack.generated.js
-example-v10/node
+example-v10/pnpmfile.js
+
