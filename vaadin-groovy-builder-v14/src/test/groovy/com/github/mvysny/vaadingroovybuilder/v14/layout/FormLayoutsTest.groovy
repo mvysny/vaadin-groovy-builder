@@ -24,8 +24,8 @@ class FormLayoutsTest {
             formItem("Name:") { textField{} }
         }
         expect("""└── FormLayout[]
-    └── GFormItem[]
-        ├── Label[text='Name:']
+    └── GFormItem[caption='Name:']
+        ├── Label[slot='label', text='Name:']
         └── TextField[value='']""") { PrettyPrintTreeKt.toPrettyTree(layout).trim() }
     }
 }

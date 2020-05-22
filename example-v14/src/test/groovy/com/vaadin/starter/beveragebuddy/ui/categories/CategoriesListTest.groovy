@@ -58,7 +58,7 @@ class CategoriesListTest extends AbstractAppTest {
         CategoryService.INSTANCE.saveCategory(cat)
         UI.getCurrent().page.reload()
         Grid<Category> grid = _get(Grid)
-        grid.expectRow(0, "Beers", "0", "Button[text='Edit', icon='vaadin:edit']")
+        grid.expectRow(0, "Beers", "0", "Button[caption='Edit', icon='vaadin:edit']")
         grid._clickRenderer(0, "edit")
 
         // make sure that the "Edit Category" dialog is opened
@@ -71,7 +71,7 @@ class CategoriesListTest extends AbstractAppTest {
         CategoryService.INSTANCE.saveCategory(cat)
         UI.getCurrent().page.reload()
         Grid<Category> grid = _get(Grid)
-        grid.expectRow(0, "Beers", "0", "Button[text='Edit', icon='vaadin:edit']")
+        grid.expectRow(0, "Beers", "0", "Button[caption='Edit', icon='vaadin:edit']")
         _get(CategoriesList).gridContextMenu._clickItemWithCaption("Edit", cat)
 
         // make sure that the "Edit Category" dialog is opened
@@ -84,7 +84,7 @@ class CategoriesListTest extends AbstractAppTest {
         CategoryService.INSTANCE.saveCategory(cat)
         UI.getCurrent().page.reload()
         Grid<Category> grid = _get(Grid)
-        grid.expectRow(0, "Beers", "0", "Button[text='Edit', icon='vaadin:edit']")
+        grid.expectRow(0, "Beers", "0", "Button[caption='Edit', icon='vaadin:edit']")
         _get(CategoriesList).gridContextMenu._clickItemWithCaption("Delete", cat)
         expect([]) { CategoryService.INSTANCE.findAll() }
         _get(Grid).expectRows(0)
