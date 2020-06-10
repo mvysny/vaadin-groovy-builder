@@ -28,7 +28,6 @@ class IronListUtilsTest {
     @Test
     void "serialization"() {
         IronList<Person> il = new IronList<Person>()
-        il.setRenderer { it.toString() }
         il.cloneBySerialization()
     }
 }
