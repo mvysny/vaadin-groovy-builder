@@ -22,7 +22,7 @@ class IronListUtilsTest {
     void "iron list dsl - basic properties"() {
         IronList<String> il = UI.getCurrent().ironList {}
         il.refresh()
-        // todo assert that it has 0 items. Need support from Karibu-Testing
+        il.expectRows(0)
     }
 
     @Test
