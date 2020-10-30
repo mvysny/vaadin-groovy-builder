@@ -1,6 +1,5 @@
 import com.jfrog.bintray.gradle.BintrayExtension
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.jetbrains.dokka.gradle.DokkaTask
 import java.util.*
 
 plugins {
@@ -20,6 +19,7 @@ allprojects {
 
     repositories {
         mavenCentral()
+        jcenter()  // because of gretty-runner-jetty94
         maven { setUrl("https://maven.vaadin.com/vaadin-prereleases/") }
     }
 
