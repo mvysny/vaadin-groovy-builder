@@ -8,8 +8,8 @@ plugins {
     id("org.gretty") version "3.0.3" apply(false)
     id("com.jfrog.bintray") version "1.8.3"
     `maven-publish`
-    id("org.jetbrains.dokka") version "0.9.17"
-    id("com.vaadin") version "0.8.0" apply(false)
+    id("org.jetbrains.dokka") version "1.4.0"
+    id("com.vaadin") version "0.14.3.7" apply(false)
 }
 
 defaultTasks("clean", "build")
@@ -59,17 +59,13 @@ subprojects {
 
         val sourceJar = task("sourceJar", Jar::class) {
             dependsOn(tasks["classes"])
-            classifier = "sources"
+            archiveClassifier.set("sources")
             from(sourceSets.main.get().allSource)
         }
 
         val javadocJar = task("javadocJar", Jar::class) {
-            val javadoc = tasks["dokka"] as DokkaTask
-            javadoc.outputFormat = "javadoc"
-            javadoc.outputDirectory = "$buildDir/javadoc"
-            dependsOn(javadoc)
-            classifier = "javadoc"
-            from(javadoc.outputDirectory)
+            from(tasks["dokkaJavadoc"])
+            archiveClassifier.set("javadoc")
         }
 
         publishing {
