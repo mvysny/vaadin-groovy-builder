@@ -8,19 +8,25 @@ import com.vaadin.flow.component.checkbox.Checkbox
 import com.vaadin.flow.component.checkbox.CheckboxGroup
 import com.vaadin.flow.component.combobox.ComboBox
 import com.vaadin.flow.component.datepicker.DatePicker
+import com.vaadin.flow.component.datetimepicker.DateTimePicker
 import com.vaadin.flow.component.dialog.Dialog
 import com.vaadin.flow.component.listbox.ListBox
 import com.vaadin.flow.component.listbox.MultiSelectListBox
 import com.vaadin.flow.component.menubar.MenuBar
+import com.vaadin.flow.component.orderedlayout.Scroller
 import com.vaadin.flow.component.select.Select
 import com.vaadin.flow.component.splitlayout.SplitLayout
 import com.vaadin.flow.component.tabs.Tab
 import com.vaadin.flow.component.tabs.Tabs
 import com.vaadin.flow.component.timepicker.TimePicker
+import com.vaadin.flow.dom.Element
 import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
+import static com.github.mvysny.vaadingroovybuilder.v14.Utils.check
+import static com.github.mvysny.vaadingroovybuilder.v14.Utils.checkNotNull
+import static com.github.mvysny.vaadingroovybuilder.v14.Utils.require
 import static com.github.mvysny.vaadingroovybuilder.v14.VaadinDsl.init
 
 /**
@@ -223,5 +229,55 @@ class VaadinComponents {
             @NotNull Class<ITEM> itemClass,
             @DelegatesTo(type = "com.vaadin.flow.component.listbox.MultiSelectListBox<ITEM>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         init(self, new MultiSelectListBox<ITEM>(), block)
+    }
+
+    @NotNull
+    static DateTimePicker dateTimePicker(@NotNull HasComponents self,
+                                         @Nullable String label = null,
+                                         @DelegatesTo(value = DateTimePicker, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        def picker = new DateTimePicker()
+        picker.label = label
+        return VaadinDsl.init(self, picker, block)
+    }
+
+    /**
+     * Use as follows:
+     * <pre>
+     * scroller {
+     *   content {
+     *     div {
+     *       width = "200px"; height = "200px"; element.styles.add("background-color", "red")
+     *     }
+     *   }
+     * }
+     * </pre>
+     */
+    @NotNull
+    static Scroller scroller(@NotNull HasComponents self,
+                             @DelegatesTo(value = Scroller, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        return VaadinDsl.init(self, new Scroller(), block)
+    }
+
+    @Nullable
+    static <T> T content(@NotNull Scroller self,
+                         @DelegatesTo(value = HasComponents, strategy = Closure.DELEGATE_FIRST) @NotNull Closure<T> block) {
+        self.element.removeAllChildren()
+        block.delegate = new HasComponents() {
+            @Override Element getElement() {
+                throw new UnsupportedOperationException("Not expected to be called")
+            }
+            @Override void add(Component... components) {
+                require(components.length < 2) { "Too many components to add - scroller can only host one! ${components.toList()}" }
+                Component component = VaadinUtils.firstOrNull(components)
+                if (component != null) {
+                    check(self.element.childCount == 0) { "The scroller can only host one component at most" }
+                    self.content = component
+                }
+            }
+        }
+        block.resolveStrategy = Closure.DELEGATE_FIRST
+        T result = block()
+        checkNotNull(self.content) { "`block` must add exactly one component to the scroller" }
+        return result
     }
 }

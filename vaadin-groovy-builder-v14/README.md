@@ -5,10 +5,11 @@
 Compatibility chart:
 
 | Vaadin-Groovy Builder version | Supports |
-|------------------------|----------|
-| 0.0.x | Vaadin 14+ |
+|-------------------------------|----------|
+| 0.0.8                         | Vaadin 14.2 and lower |
+| 0.0.9 (not yet released)      | Vaadin 14.3+ |
 
-> Note: 0.0.x works with Vaadin 13 as well, with some limitations
+> Note: 0.0.8 works with Vaadin 13 as well, with some limitations
   as outlined in [Issue #19](https://github.com/mvysny/karibu-dsl/issues/19).
 
 ## Using in your projects
