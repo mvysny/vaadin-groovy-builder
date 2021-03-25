@@ -15,7 +15,7 @@ import static com.github.mvysny.vaadingroovybuilder.v14.Utils.require
 @CompileStatic
 class CategoryService {
     private CategoryService() {
-        StaticData.BEVERAGES.values().toSet().forEach { String name -> saveCategory(new Category(null, name)) }
+        reset()
     }
 
     public static final CategoryService INSTANCE = new CategoryService()
@@ -75,7 +75,9 @@ class CategoryService {
      * @throws IllegalStateException    if not exactly one category matches the given name
      */
     Category findCategoryOrThrow(String filter) {
-        Objects.requireNonNull(findCategoryByName(filter))
+        Objects.requireNonNull(findCategoryByName(filter)) {
+            "No category with name $filter. Available categories: ${categories.values().collect {it.name }}".toString()
+        }
     }
 
     /**
@@ -135,7 +137,8 @@ class CategoryService {
         findCategories("")
     }
 
-    void deleteAll() {
+    void reset() {
         categories.clear()
+        StaticData.BEVERAGES.values().toSet().forEach { String name -> saveCategory(new Category(null, name)) }
     }
 }
