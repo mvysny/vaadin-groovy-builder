@@ -32,6 +32,7 @@ class AbstractAppTest {
     }
 
     // it's a good practice to clear up the db before every test, to start every test with a predefined state.
+    @BeforeEach
     @AfterEach
-    void cleanupDb() { ReviewService.INSTANCE.deleteAll(); CategoryService.INSTANCE.reset() }
+    void cleanupDb() { ReviewService.INSTANCE.deleteAll(); CategoryService.INSTANCE.deleteAll() }
 }

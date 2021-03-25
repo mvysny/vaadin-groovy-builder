@@ -138,7 +138,11 @@ class CategoryService {
     }
 
     void reset() {
-        categories.clear()
+        deleteAll()
         StaticData.BEVERAGES.values().toSet().forEach { String name -> saveCategory(new Category(null, name)) }
+    }
+
+    void deleteAll() {
+        categories.clear()
     }
 }

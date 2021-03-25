@@ -190,17 +190,28 @@ class GridUtils {
         return (renderer as ComponentRenderer<? extends Component, ?>).createComponent(null) as Component
     }
 
-    @NotNull
-    private static final Class<?> gridSorterComponentRendererClass = Class.forName("com.vaadin.flow.component.grid.GridSorterComponentRenderer")
+    @Nullable
+    private static final Class<?> gridSorterComponentRendererClass
+    static {
+        try {
+            gridSorterComponentRendererClass = Class.forName("com.vaadin.flow.component.grid.GridSorterComponentRenderer")
+        } catch (ClassNotFoundException ex) {
+            // Vaadin 18.0.3+ and Vaadin 14.5.0+ doesn't contain this class anymore and simply uses ComponentRenderer
+            gridSorterComponentRendererClass = null
+        }
+    }
 
     @Nullable
     static Component getComponent(@NotNull HeaderRow.HeaderCell self) {
         def renderer = getRenderer(self)
-        if (!gridSorterComponentRendererClass.isInstance(renderer)) {
-            return null
+        if (gridSorterComponentRendererClass != null && gridSorterComponentRendererClass.isInstance(renderer)) {
+            def componentField = gridSorterComponentRendererClass.getDeclaredField("component")
+            componentField.setAccessible(true)
+            return componentField.get(renderer) as Component
         }
-        def componentField = gridSorterComponentRendererClass.getDeclaredField("component")
-        componentField.setAccessible(true)
-        return componentField.get(renderer) as Component
+        if (renderer instanceof ComponentRenderer) {
+            return ((ComponentRenderer) renderer).createComponent(null)
+        }
+        return null
     }
 }
