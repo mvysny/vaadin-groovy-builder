@@ -83,7 +83,7 @@ class RouterTest {
 
     @Test
     void "routerLinks - parametrized target with missing param"() {
-        expectThrows(IllegalArgumentException, "requires a parameter and can not be resolved") {
+        expectThrows(IllegalArgumentException, "requires a parameter") {
             UI.getCurrent().routerLink(null, "foo", TestingParametrizedView){}
         }
     }
