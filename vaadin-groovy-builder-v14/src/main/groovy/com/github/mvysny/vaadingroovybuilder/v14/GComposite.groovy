@@ -51,7 +51,7 @@ abstract class GComposite extends Composite<Component> {
 
     @Override @NotNull
     protected final Component initContent() {
-        checkNotNull<Component>(root) { "The content has not yet been initialized, please call the ui() function in the constructor" }
+        checkNotNull(root) { "The content has not yet been initialized, please call the ui() function in the constructor" }
     }
 
     /**
