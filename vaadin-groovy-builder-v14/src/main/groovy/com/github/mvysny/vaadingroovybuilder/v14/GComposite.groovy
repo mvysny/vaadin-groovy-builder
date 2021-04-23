@@ -51,7 +51,7 @@ abstract class GComposite extends Composite<Component> {
 
     @Override @NotNull
     protected final Component initContent() {
-        checkNotNull(root) { "The content has not yet been initialized, please call the ui() function in the constructor" }
+        checkNotNull<Component>(root) { "The content has not yet been initialized, please call the ui() function in the constructor" }
     }
 
     /**
@@ -77,7 +77,7 @@ abstract class GComposite extends Composite<Component> {
 
     // prevent accidental override
     @Override
-    Stream<Component> getChildren() {
+    final Stream<Component> getChildren() {
         super.getChildren()
     }
 
