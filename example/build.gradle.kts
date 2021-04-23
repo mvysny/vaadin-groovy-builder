@@ -29,7 +29,3 @@ dependencies {
     testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10-groovy:${properties["kaributesting_version"]}")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:${properties["junit_version"]}")
 }
-
-vaadin {
-    pnpmEnable = true
-}

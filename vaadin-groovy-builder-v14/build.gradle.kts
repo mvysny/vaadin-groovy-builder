@@ -3,7 +3,7 @@ dependencies {
     // BUG! exception in phase 'class generation' in source unit '*' unsupported Target TYPE_USE
     // Use Groovy 2.5.7+ in order to compile this on Java 11+
     // However, Groovy 2.5.7 contains some bugs which make the tests fail. Use 2.5.10.
-    compile("org.codehaus.groovy:groovy:2.5.10")
+    api("org.codehaus.groovy:groovy:2.5.10")
 
     // testing
     testImplementation("org.junit.jupiter:junit-jupiter-engine:${properties["junit_version"]}")
@@ -31,10 +31,10 @@ dependencies {
     compileOnly("javax.servlet:javax.servlet-api:3.1.0")
 
     // IDEA language injections
-    compile("com.intellij:annotations:12.0")
+    api("com.intellij:annotations:12.0")
 
     // always include support for bean validation
-    compile("javax.validation:validation-api:2.0.1.Final")  // so that the BeanFieldGroup will perform JSR303 validations
+    api("javax.validation:validation-api:2.0.1.Final")  // so that the BeanFieldGroup will perform JSR303 validations
     implementation("org.hibernate.validator:hibernate-validator:${properties["hibernate_validator_version"]}") {
         exclude(module = "jakarta.validation-api")
     }
