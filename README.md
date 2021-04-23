@@ -46,6 +46,10 @@ class MainView extends GComposite {
 }
 ```
 
+There is also an embedded example project attached to this repository. This allows
+us to test new builder features right away. Please see the [example](example) project
+for more details.
+
 # License
 
 Licensed under the [MIT License](https://opensource.org/licenses/MIT).
