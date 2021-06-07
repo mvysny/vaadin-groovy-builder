@@ -5,6 +5,7 @@ import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.html.Span
 import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.component.orderedlayout.Scroller
+import com.vaadin.flow.data.binder.Binder
 import groovy.transform.CompileStatic
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -53,8 +54,14 @@ class VaadinComponentsTest {
             timePicker{}
             integerField{}
             bigDecimalField{}
-            listBox(String){}
-            multiSelectListBox(String){}
+            listBox(String) {
+                bind(new Binder<String>(String))
+                setItems("a", "b", "c")
+            }
+            multiSelectListBox(String) {
+                bind(new Binder<String>(String))
+                setItems("a", "b", "c")
+            }
             dateTimePicker {}
         }
     }
