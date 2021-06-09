@@ -1,11 +1,11 @@
 package com.vaadin.starter.beveragebuddy.ui.reviews
 
+import com.github.mvysny.vaadingroovybuilder.v14.GComposite
 import com.vaadin.flow.component.grid.Grid
 import com.vaadin.flow.component.grid.GridVariant
 import com.vaadin.flow.component.html.H3
 import com.vaadin.flow.component.html.Span
 import com.vaadin.flow.component.notification.Notification
-import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.data.renderer.ComponentRenderer
 import com.vaadin.flow.function.SerializableFunction
 import com.vaadin.flow.function.SerializableRunnable
@@ -24,7 +24,7 @@ import groovy.transform.CompileStatic
 @Route(value = "", layout = MainLayout)
 @PageTitle("Review List")
 @CompileStatic
-class ReviewsList extends VerticalLayout {
+class ReviewsList extends GComposite {
 
     private Toolbar t
     private H3 header
@@ -33,35 +33,38 @@ class ReviewsList extends VerticalLayout {
             { Review review -> save(review) },
             { Review review -> delete(review) })
 
-    ReviewsList() {
-        setPadding(false)
-        content { align(stretch, top) }
-        t = toolbar("New review") {
-            onSearch = { updateList() }
-            onCreate = { editDialog.createNew() }
-        }
-        header = h3 {
-            setId("header")
-        }
-        reviewsGrid = grid(Review) {
-            setExpand(true)
-            addClassName("reviews")
-            addThemeVariants(GridVariant.LUMO_NO_ROW_BORDERS, GridVariant.LUMO_NO_BORDER)
-            addColumn(new ComponentRenderer<ReviewItem, Review>(new SerializableFunction<Review, ReviewItem>() {
-                @Override
-                ReviewItem apply(Review review) {
-                    def item = new ReviewItem(review)
-                    item.onEdit = new SerializableRunnable() {
-                        @Override
-                        void run() {
-                            editDialog.edit(ReviewService.INSTANCE.get(review.id))
+    private final root = ui {
+        verticalLayout(false) {
+            content { align(stretch, top) }
+            t = toolbar("New review") {
+                onSearch = { updateList() }
+                onCreate = { editDialog.createNew() }
+            }
+            header = h3 {
+                setId("header")
+            }
+            reviewsGrid = grid(Review) {
+                setExpand(true)
+                addClassName("reviews")
+                addThemeVariants(GridVariant.LUMO_NO_ROW_BORDERS, GridVariant.LUMO_NO_BORDER)
+                addColumn(new ComponentRenderer<ReviewItem, Review>(new SerializableFunction<Review, ReviewItem>() {
+                    @Override
+                    ReviewItem apply(Review review) {
+                        def item = new ReviewItem(review)
+                        item.onEdit = new SerializableRunnable() {
+                            @Override
+                            void run() {
+                                editDialog.edit(ReviewService.INSTANCE.get(review.id))
+                            }
                         }
+                        item
                     }
-                    item
-                }
-            }))
+                }))
+            }
         }
+    }
 
+    ReviewsList() {
         updateList()
     }
 
