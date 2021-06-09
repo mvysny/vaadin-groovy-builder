@@ -1,6 +1,6 @@
 package com.vaadin.starter.beveragebuddy.ui.categories
 
-import com.github.mvysny.vaadingroovybuilder.v14.GridUtils
+
 import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.button.ButtonVariant
 import com.vaadin.flow.component.grid.Grid
@@ -34,7 +34,7 @@ import groovy.transform.CompileStatic
 class CategoriesList extends VerticalLayout {
 
     private H3 header
-    private Toolbar toolbar
+    private Toolbar t
     private Grid<Category> categoryGrid
     // can't retrieve GridContextMenu from Grid: https://github.com/vaadin/vaadin-grid-flow/issues/523
     GridContextMenu<Object> gridContextMenu
@@ -55,9 +55,7 @@ class CategoriesList extends VerticalLayout {
     CategoriesList() {
         setPadding(false)
         content { align(stretch, top) }
-        toolbar = new Toolbar("New category")
-        add(toolbar)
-        toolbar.with {
+        t = toolbar("New category") {
             onSearch = new SerializableConsumer<String>() {
                 @Override
                 void accept(String category) {
@@ -123,9 +121,9 @@ class CategoriesList extends VerticalLayout {
     }
 
     private void updateView() {
-        def categories = CategoryService.INSTANCE.findCategories(toolbar.searchText)
-        if (!toolbar.searchText.isBlank()) {
-            header.text = "Search for “${toolbar.searchText}”"
+        def categories = CategoryService.INSTANCE.findCategories(t.searchText)
+        if (!t.searchText.isBlank()) {
+            header.text = "Search for “${t.searchText}”"
         } else {
             header.text = "Categories"
         }

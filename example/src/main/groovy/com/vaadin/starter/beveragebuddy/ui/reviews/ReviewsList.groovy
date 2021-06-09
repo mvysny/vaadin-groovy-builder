@@ -27,30 +27,17 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class ReviewsList extends VerticalLayout {
 
-    private Toolbar toolbar
+    private Toolbar t
     private H3 header
     private Grid<Review> reviewsGrid
     private final ReviewEditorDialog editDialog = new ReviewEditorDialog(
-            new SerializableConsumer<Review>()
-            {
-                @Override
-                void accept(Review review) {
-                    save(review)
-                }
-            },
-            new SerializableConsumer<Review>() {
-                @Override
-                void accept(Review review) {
-                    delete(review)
-                }
-            })
+            { Review review -> save(review) },
+            { Review review -> delete(review) })
 
     ReviewsList() {
         setPadding(false)
         content { align(stretch, top) }
-        toolbar = new Toolbar("New review")
-        add(toolbar)
-        toolbar.with {
+        t = toolbar("New review") {
             onSearch = new SerializableConsumer<String>() {
                 @Override
                 void accept(String s) {
@@ -104,12 +91,12 @@ class ReviewsList extends VerticalLayout {
     }
 
     private void updateList() {
-        List<Review> reviews = ReviewService.INSTANCE.findReviews(toolbar.searchText)
-        if (toolbar.searchText.isBlank()) {
+        List<Review> reviews = ReviewService.INSTANCE.findReviews(t.searchText)
+        if (t.searchText.isBlank()) {
             header.text = "Reviews"
             header.add(new Span("${reviews.size()} in total"))
         } else {
-            header.text = "Search for “${toolbar.searchText}”"
+            header.text = "Search for “${t.searchText}”"
             header.add(new Span("${reviews.size()} results"))
         }
         reviewsGrid.setItems(reviews)

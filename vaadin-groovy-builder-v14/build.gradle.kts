@@ -1,9 +1,5 @@
 dependencies {
-    // use Groovy 2.5.0+ otherwise compiling classes with javax.validation annotations will fail with
-    // BUG! exception in phase 'class generation' in source unit '*' unsupported Target TYPE_USE
-    // Use Groovy 2.5.7+ in order to compile this on Java 11+
-    // However, Groovy 2.5.7 contains some bugs which make the tests fail. Use 2.5.10.
-    api("org.codehaus.groovy:groovy:2.5.10")
+    api("org.codehaus.groovy:groovy:${properties["groovy_version"]}")
 
     // testing
     testImplementation("org.junit.jupiter:junit-jupiter-engine:${properties["junit_version"]}")

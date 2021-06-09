@@ -34,7 +34,7 @@ class TreeIterator<T> implements Iterator<T> {
     T next() {
         if (!hasNext()) throw new NoSuchElementException()
         final T result = queue.remove()
-        children.apply(result).forEachRemaining { queue.add(it) }
+        children.apply(result).forEachRemaining { T it -> queue.add(it) }
         return result
     }
 }
