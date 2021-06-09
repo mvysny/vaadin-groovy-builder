@@ -13,6 +13,7 @@ import com.vaadin.flow.router.PageTitle
 import com.vaadin.flow.router.Route
 import com.vaadin.starter.beveragebuddy.backend.Review
 import com.vaadin.starter.beveragebuddy.backend.ReviewService
+import com.vaadin.starter.beveragebuddy.ui.ComponentRenderers
 import com.vaadin.starter.beveragebuddy.ui.MainLayout
 import com.vaadin.starter.beveragebuddy.ui.Toolbar
 import groovy.transform.CompileStatic
@@ -47,19 +48,11 @@ class ReviewsList extends GComposite {
                 setExpand(true)
                 addClassName("reviews")
                 addThemeVariants(GridVariant.LUMO_NO_ROW_BORDERS, GridVariant.LUMO_NO_BORDER)
-                addColumn(new ComponentRenderer<ReviewItem, Review>(new SerializableFunction<Review, ReviewItem>() {
-                    @Override
-                    ReviewItem apply(Review review) {
-                        def item = new ReviewItem(review)
-                        item.onEdit = new SerializableRunnable() {
-                            @Override
-                            void run() {
-                                editDialog.edit(ReviewService.INSTANCE.get(review.id))
-                            }
-                        }
-                        item
-                    }
-                }))
+                addColumn(ComponentRenderers.create { Review review ->
+                    def item = new ReviewItem(review)
+                    item.onEdit = { editDialog.edit(ReviewService.INSTANCE.get(review.id)) }
+                    item
+                })
             }
         }
     }
