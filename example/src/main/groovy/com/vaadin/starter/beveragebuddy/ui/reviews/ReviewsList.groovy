@@ -7,7 +7,6 @@ import com.vaadin.flow.component.html.Span
 import com.vaadin.flow.component.notification.Notification
 import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.data.renderer.ComponentRenderer
-import com.vaadin.flow.function.SerializableConsumer
 import com.vaadin.flow.function.SerializableFunction
 import com.vaadin.flow.function.SerializableRunnable
 import com.vaadin.flow.router.PageTitle
@@ -38,18 +37,8 @@ class ReviewsList extends VerticalLayout {
         setPadding(false)
         content { align(stretch, top) }
         t = toolbar("New review") {
-            onSearch = new SerializableConsumer<String>() {
-                @Override
-                void accept(String s) {
-                    updateList()
-                }
-            }
-            onCreate = new SerializableRunnable() {
-                @Override
-                void run() {
-                    editDialog.createNew()
-                }
-            }
+            onSearch = { updateList() }
+            onCreate = { editDialog.createNew() }
         }
         header = h3 {
             setId("header")

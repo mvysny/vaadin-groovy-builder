@@ -11,9 +11,7 @@ import com.vaadin.flow.component.icon.Icon
 import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.component.notification.Notification
 import com.vaadin.flow.data.renderer.ComponentRenderer
-import com.vaadin.flow.function.SerializableConsumer
 import com.vaadin.flow.function.SerializableFunction
-import com.vaadin.flow.function.SerializableRunnable
 import com.vaadin.flow.function.ValueProvider
 import com.vaadin.flow.router.PageTitle
 import com.vaadin.flow.router.Route
@@ -49,18 +47,8 @@ class CategoriesList extends GComposite {
             content { align(stretch, top) }
 
             t = toolbar("New category") {
-                onSearch = new SerializableConsumer<String>() {
-                    @Override
-                    void accept(String category) {
-                        updateView()
-                    }
-                }
-                onCreate = new SerializableRunnable() {
-                    @Override
-                    void run() {
-                        editorDialog.createNew()
-                    }
-                }
+                onSearch = { updateView() }
+                onCreate = { editorDialog.createNew() }
             }
             header = h3 {}
             categoryGrid = grid(Category) {
