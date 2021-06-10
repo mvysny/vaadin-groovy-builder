@@ -45,7 +45,8 @@ import static com.github.mvysny.vaadingroovybuilder.v14.Utils.*
  *   private void cancelClicked() {}
  * }
  * </pre>
- * Implements {@link HasSize} since that's what you probably always want.
+ * Implements {@link HasSize} since you almost always need to control the
+ * component size when placing into a parent layout.
  */
 @CompileStatic
 abstract class GComposite extends Composite<Component> implements HasSize {
