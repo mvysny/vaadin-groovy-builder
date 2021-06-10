@@ -3,6 +3,7 @@ package com.github.mvysny.vaadingroovybuilder.v14
 import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.Composite
 import com.vaadin.flow.component.HasComponents
+import com.vaadin.flow.component.HasSize
 import com.vaadin.flow.dom.Element
 import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
@@ -44,9 +45,10 @@ import static com.github.mvysny.vaadingroovybuilder.v14.Utils.*
  *   private void cancelClicked() {}
  * }
  * </pre>
+ * Implements {@link HasSize} since that's what you probably always want.
  */
 @CompileStatic
-abstract class GComposite extends Composite<Component> {
+abstract class GComposite extends Composite<Component> implements HasSize {
     @Nullable private Component root = null
 
     @Override @NotNull
@@ -55,11 +57,12 @@ abstract class GComposite extends Composite<Component> {
     }
 
     /**
-     * You can alternatively specify the content straight in the constructor if it is known upfront.
-     * @param content
+     * The constructor.
+     * @param content You can optionally specify the content straight in the constructor if it is known upfront.
+     * Defaults to null: in such case the content is expected to
+     * be provided either via {@link #ui} or {@link #initContent()}.
      */
     protected GComposite(@Nullable Component content = null) {
-        super()
         root = content
     }
 
