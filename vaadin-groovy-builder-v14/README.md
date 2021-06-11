@@ -151,6 +151,23 @@ To alter the layout further, call the following properties on children:
 Please read the [Vaadin 10 server-side layouting for Vaadin 8 and Android developers](http://mavi.logdown.com/posts/6855605) for a tutorial on how to
 use `VerticalLayout`/`HorizontalLayout`.
 
+### Forms
+
+Please see [Creating Forms](https://www.vaadinonkotlin.eu/forms-v10.html) tutorial
+for more information.
+
+### FormLayout
+
+To set the colspan for child fields:
+
+```groovy
+formLayout {
+  textArea {
+    setColspan(delegate, 2)
+  }
+}
+```
+
 ### Writing your own components
 
 Usually one writes custom components by extending the `GComposite` class. Please read the [Creating a Component](https://vaadin.com/docs/v10/flow/creating-components/tutorial-component-composite.html) for more details.
