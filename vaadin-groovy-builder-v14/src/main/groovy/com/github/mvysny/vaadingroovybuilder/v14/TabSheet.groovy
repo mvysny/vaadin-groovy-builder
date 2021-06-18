@@ -21,7 +21,21 @@ import static com.github.mvysny.vaadingroovybuilder.v14.html.HtmlUtils.div
 import static com.github.mvysny.vaadingroovybuilder.v14.layout.Layouts.*
 
 /**
- * A TabSheet - shows both the [Tabs] component and the tab contents.
+ * A TabSheet - shows both the {@link Tabs} component and the tab contents.
+ * <p></p>
+ * You can add and populate tabs in two ways:
+ * <ul><li>eagerly, by calling either {@link TabSheet#tab()} or {@link TabSheet#addTab(java.lang.String)} function,</li>
+ * <li>lazily, by calling {@link TabSheet#addLazyTab(groovy.lang.Closure)}</li></ul>
+ * Example code:
+ * <pre>
+ * tabSheet {
+ *   tab("DSL-style tab") {
+ *     span("Hello")
+ *   }
+ *   addTab("Old-school style", Span("Hi"))
+ *   addLazyTab("Populated when first selected") { Span("Lazy") }
+ * }
+ * </pre>
  */
 @CompileStatic
 final class TabSheet extends GComposite implements HasStyle, HasSize {
@@ -65,7 +79,18 @@ final class TabSheet extends GComposite implements HasStyle, HasSize {
     }
 
     /**
-     * Adds a new tab to the tab host, with optional [label] and optional contents.
+     * Adds a new tab to the tab host, with optional <code>label</code> and optional <code>contents</code>.
+     * <p></p>
+     * Example:
+     * <pre>
+     * tabSheet {
+     *   tab("Hello") {
+     *     verticalLayout {
+     *       span("Hello, world!") {}
+     *     }
+     *   }
+     * }
+     * </pre>
      */
     @NotNull
     Tab tab(@Nullable String label = null,
@@ -94,7 +119,12 @@ final class TabSheet extends GComposite implements HasStyle, HasSize {
     }
 
     /**
-     * Adds a new tab to the tab host, with optional [label] and optional contents.
+     * Adds a new tab to the tab host, with optional <code>label</code> and optional <code>contents</code>.
+     * <p></p>
+     * You can either provide the tab contents eagerly, or you can populate the tab
+     * later on, by calling {@link #setTabContents(com.vaadin.flow.component.tabs.Tab, com.vaadin.flow.component.Component)} or
+     * {@link VaadinUtils#getContents(com.vaadin.flow.component.tabs.Tab)}. To make the tab populate itself automatically when it's shown
+     * for the first time, use {@link #addLazyTab}.
      */
     @NotNull
     Tab addTab(@Nullable String label = null, @Nullable Component contents = null) {
@@ -106,7 +136,7 @@ final class TabSheet extends GComposite implements HasStyle, HasSize {
 
     /**
      * Adds a new tab to the tab host, with optional [label]. The tab contents is
-     * constructed lazily when the tab is first shown.
+     * constructed lazily when the tab is selected for the first time.
      */
     @NotNull
     Tab addLazyTab(@Nullable String label = null, @NotNull Closure<? extends Component> contentsProvider) {
