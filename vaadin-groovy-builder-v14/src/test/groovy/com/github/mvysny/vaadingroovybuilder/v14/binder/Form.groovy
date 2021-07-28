@@ -2,6 +2,7 @@ package com.github.mvysny.vaadingroovybuilder.v14.binder
 
 import com.vaadin.flow.component.checkbox.Checkbox
 import com.vaadin.flow.component.datepicker.DatePicker
+import com.vaadin.flow.component.datetimepicker.DateTimePicker
 import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.component.textfield.TextArea
 import com.vaadin.flow.component.textfield.TextField
@@ -26,6 +27,7 @@ class Form extends VerticalLayout {
     TextField testBD
     TextField testBI
     DatePicker testInstant
+    DateTimePicker testCalendar
 
     Form(Binder<Person> binder) {
         this.binder = binder
@@ -67,6 +69,9 @@ class Form extends VerticalLayout {
         testInstant = datePicker("Created:") {
             bind(binder).toInstant().bind("created")
         }
+        testCalendar = dateTimePicker("Test Calendar:") {
+            bind(binder).toCalendar2().bind("testCalendar")
+        }
     }
 
     @CompileDynamic
@@ -75,6 +80,8 @@ class Form extends VerticalLayout {
         comment.value = ""
         dateOfBirth.value = null
         isAlive.value = false
+        testCalendar.value = null
+        testInstant.value = null
     }
 }
 

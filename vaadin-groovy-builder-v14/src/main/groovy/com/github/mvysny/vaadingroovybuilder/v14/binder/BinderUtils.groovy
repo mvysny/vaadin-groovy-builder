@@ -227,4 +227,22 @@ class BinderUtils {
         Collection<Binder.Binding<?, ?>> bindings = bindingsGetter.invoke(self) as Collection<Binder.Binding<?, ?>>;
         return bindings.any { it.setter != null && it.isReadOnly() }
     }
+
+    /**
+     * Converts {@link LocalDate} from {@link com.vaadin.flow.component.datepicker.DatePicker} to {@link Date}-typed bean field. Uses {@link TimeZoneUtils#getBrowserTimeZone()}.
+     */
+    @NotNull
+    static <BEAN> Binder.BindingBuilder<BEAN, Calendar> toCalendar(
+            @NotNull Binder.BindingBuilder<BEAN, LocalDate> self) {
+        toDate(self).withConverter(new DateToCalendarConverter())
+    }
+
+    /**
+     * Converts {@link LocalDateTime} from {@link com.vaadin.flow.component.datetimepicker.DateTimePicker} to {@link Date}-typed bean field. Uses {@link TimeZoneUtils#getBrowserTimeZone()}.
+     */
+    @NotNull
+    static <BEAN> Binder.BindingBuilder<BEAN, Calendar> toCalendar2(
+            @NotNull Binder.BindingBuilder<BEAN, LocalDateTime> self) {
+        toDate2(self).withConverter(new DateToCalendarConverter())
+    }
 }

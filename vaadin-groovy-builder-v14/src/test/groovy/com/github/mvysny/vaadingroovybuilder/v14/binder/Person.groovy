@@ -45,4 +45,6 @@ class Person implements Serializable {
     BigInteger testBI
 
     Instant created
+
+    Calendar testCalendar
 }

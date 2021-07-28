@@ -11,7 +11,9 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.chrono.ChronoZonedDateTime
 
 import static kotlin.test.AssertionsKt.expect
 
@@ -66,11 +68,20 @@ class BinderUtilsTest {
         form.testBD.value = "77.11"
         form.testBoolean.value = true
         form.testInstant.value = LocalDate.of(2015, 1, 25)
+        form.testCalendar.value = LocalDateTime.of(2015, 1, 25, 6, 10, 20)
         def person = new Person()
         expect(true) { binder.writeBeanIfValid(person) }
         def instant = LocalDate.of(2015, 1, 25).atStartOfDay(ZoneId.of("UTC")).toInstant()
+        Calendar cal = toCalendar(LocalDateTime.of(2015, 1, 25, 6, 10, 20).atZone(ZoneId.of("UTC")))
         expect(new Person("Zaphod Beeblebrox", LocalDate.of(2010, 1, 25), false, true, "some comment",
-                25.5d, 5, 555L, new BigDecimal("77.11"), new BigInteger("123"), instant)) { person }
+                25.5d, 5, 555L, new BigDecimal("77.11"), new BigInteger("123"), instant, cal)) { person }
+    }
+
+    private static Calendar toCalendar(ChronoZonedDateTime czdt) {
+        def date = Date.from(czdt.toInstant())
+        def cal = Calendar.getInstance()
+        cal.time = date
+        cal
     }
 
     @Test void "ValidatingBindings"() {
