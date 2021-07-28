@@ -60,6 +60,11 @@ class BinderUtils {
         self.withConverter(new StringToIntegerConverter(karibuDslI18n.apply("cantConvertToInteger")))
     }
 
+    /**
+     * Converts {@link Double} from {@link com.vaadin.flow.component.textfield.NumberField} to {@link Integer}-typed bean field.
+     * <p></p>
+     * It's probably better to use {@link com.vaadin.flow.component.textfield.IntegerField} directly instead.
+     */
     @NotNull
     static <BEAN> Binder.BindingBuilder<BEAN, Integer> toInt2(@NotNull Binder.BindingBuilder<BEAN, Double> self) {
         self.withConverter(new DoubleToIntegerConverter())
@@ -81,9 +86,22 @@ class BinderUtils {
         self.withConverter(new StringToLongConverter(errorMessage))
     }
 
+    /**
+     * Converts {@link Double} from {@link com.vaadin.flow.component.textfield.NumberField} to Long-typed bean field.
+     * <p></p>
+     * It's probably better to use {@link com.vaadin.flow.component.textfield.IntegerField} and int-to-long conversion instead.
+     */
     @NotNull
     static <BEAN> Binder.BindingBuilder<BEAN, Long> toLong2(@NotNull Binder.BindingBuilder<BEAN, Double> self) {
         self.withConverter(new DoubleToLongConverter())
+    }
+
+    /**
+     * Converts {@link Integer} from {@link com.vaadin.flow.component.textfield.IntegerField} to Long-typed bean field.
+     */
+    @NotNull
+    static <BEAN> Binder.BindingBuilder<BEAN, Long> toLong1(@NotNull Binder.BindingBuilder<BEAN, Integer> self) {
+        self.withConverter(new IntToLongConverter())
     }
 
     @NotNull
@@ -94,6 +112,11 @@ class BinderUtils {
         self.withConverter(new StringToBigDecimalConverter(errorMessage))
     }
 
+    /**
+     * Converts {@link Double} from {@link com.vaadin.flow.component.textfield.NumberField} to {@link BigDecimal}-typed bean field.
+     * <p></p>
+     * It's probably better to use {@link com.vaadin.flow.component.textfield.BigDecimalField} directly instead.
+     */
     @NotNull
     static <BEAN> Binder.BindingBuilder<BEAN, BigDecimal> toBigDecimal2(@NotNull Binder.BindingBuilder<BEAN, Double> self) {
         self.withConverter(new DoubleToBigDecimalConverter())
@@ -107,26 +130,43 @@ class BinderUtils {
         self.withConverter(new StringToBigIntegerConverter(errorMessage))
     }
 
+    /**
+     * Converts {@link Double} from {@link com.vaadin.flow.component.textfield.NumberField} to {@link BigInteger}-typed bean field.
+     */
     @NotNull
     static <BEAN> Binder.BindingBuilder<BEAN, BigInteger> toBigInteger2(@NotNull Binder.BindingBuilder<BEAN, Double> self) {
         self.withConverter(new DoubleToBigIntegerConverter())
     }
 
+    /**
+     * Converts {@link LocalDate} from {@link com.vaadin.flow.component.datepicker.DatePicker} to {@link Date}-typed bean field. Uses {@link TimeZoneUtils#getBrowserTimeZone()}.
+     */
     @NotNull
     static <BEAN> Binder.BindingBuilder<BEAN, Date> toDate(@NotNull Binder.BindingBuilder<BEAN, LocalDate> self) {
         self.withConverter(new LocalDateToDateConverter(TimeZoneUtils.getBrowserTimeZone()))
     }
 
+    /**
+     * Converts {@link LocalDateTime} from {@link com.vaadin.flow.component.datetimepicker.DateTimePicker} to {@link Date}-typed bean field. Uses {@link TimeZoneUtils#getBrowserTimeZone()}.
+     */
     @NotNull
     static <BEAN> Binder.BindingBuilder<BEAN, Date> toDate2(@NotNull Binder.BindingBuilder<BEAN, LocalDateTime> self) {
         self.withConverter(new LocalDateTimeToDateConverter(TimeZoneUtils.getBrowserTimeZone()))
     }
 
+    /**
+     * A converter that converts from {@link java.time.LocalDate} {@link com.vaadin.flow.component.datepicker.DatePicker}
+     * to {@link Instant} bean field.
+     */
     @NotNull
     static <BEAN> Binder.BindingBuilder<BEAN, Instant> toInstant(@NotNull Binder.BindingBuilder<BEAN, LocalDate> self) {
         self.withConverter(new LocalDateToInstantConverter())
     }
 
+    /**
+     * A converter that converts from {@link LocalDateTime} {@link com.vaadin.flow.component.datetimepicker.DateTimePicker}
+     * to {@link Instant} bean field.
+     */
     @NotNull
     static <BEAN> Binder.BindingBuilder<BEAN, Instant> toInstant2(@NotNull Binder.BindingBuilder<BEAN, LocalDateTime> self) {
         self.withConverter(new LocalDateTimeToInstantConverter())

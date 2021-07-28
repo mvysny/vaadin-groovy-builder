@@ -14,12 +14,15 @@ import java.time.LocalDate
 import java.time.ZoneId
 
 /**
- * A converter that converts between [LocalDate] and [Instant].
- * @property zoneId the time zone id to use.
+ * A converter that converts from {@link java.time.LocalDate} {@link com.vaadin.flow.component.datepicker.DatePicker}
+ * to {@link Instant} bean field.
  */
 @TupleConstructor
 @CompileStatic
 class LocalDateToInstantConverter implements Converter<LocalDate, Instant> {
+    /**
+     * the time zone id to use, defaults to {@link TimeZoneUtils#getBrowserTimeZone()}
+     */
     ZoneId zoneId = TimeZoneUtils.browserTimeZone
 
     @Override

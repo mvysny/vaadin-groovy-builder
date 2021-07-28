@@ -1,6 +1,7 @@
 package com.github.mvysny.vaadingroovybuilder.v14.binder
 
 import com.github.mvysny.kaributesting.v10.MockVaadin
+import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.data.binder.BeanValidationBinder
 import com.vaadin.flow.data.binder.Binder
@@ -115,6 +116,21 @@ class BinderUtilsTest {
         expect(555.0d) { form.testLong.value }
         expect(123.0d) { form.testBI.value }
         expect(77.11d) { form.testBD.value }
+    }
+
+    @Test void "intToLong"() {
+        def binder = new Binder<Person>(Person)
+        def field = UI.getCurrent().integerField("Test Long") {
+            bind(binder).toLong1().bind("testLong")
+        }
+        binder.bean = new Person()
+        expect(null) { field._value }
+        field._value = 25
+        expect(25L) { binder.bean.testLong }
+        def person = new Person()
+        person.testLong = 555L
+        binder.readBean(person)
+        expect(555) { field._value }
     }
 
     @Test void testGuessIsReadOnly() {

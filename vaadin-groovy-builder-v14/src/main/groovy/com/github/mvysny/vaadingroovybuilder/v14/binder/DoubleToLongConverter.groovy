@@ -7,6 +7,11 @@ import groovy.transform.CompileStatic
 import org.jetbrains.annotations.NotNull
 import org.jetbrains.annotations.Nullable
 
+/**
+ * Converts {@link Double} from {@link com.vaadin.flow.component.textfield.NumberField} to Long-typed bean field.
+ * <p></p>
+ * It's probably better to use {@link com.vaadin.flow.component.textfield.IntegerField} and int-to-long conversion instead.
+ */
 @CompileStatic
 class DoubleToLongConverter implements Converter<Double, Long> {
     @Override
