@@ -237,7 +237,7 @@ class VaadinComponents {
                                          @DelegatesTo(value = DateTimePicker, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
         def picker = new DateTimePicker()
         picker.label = label
-        return VaadinDsl.init(self, picker, block)
+        return init(self, picker, block)
     }
 
     /**
@@ -255,7 +255,7 @@ class VaadinComponents {
     @NotNull
     static Scroller scroller(@NotNull HasComponents self,
                              @DelegatesTo(value = Scroller, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
-        return VaadinDsl.init(self, new Scroller(), block)
+        return init(self, new Scroller(), block)
     }
 
     @Nullable
