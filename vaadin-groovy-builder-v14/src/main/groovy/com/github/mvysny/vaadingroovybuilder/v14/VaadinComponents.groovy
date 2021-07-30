@@ -14,6 +14,8 @@ import com.vaadin.flow.component.listbox.ListBox
 import com.vaadin.flow.component.listbox.MultiSelectListBox
 import com.vaadin.flow.component.menubar.MenuBar
 import com.vaadin.flow.component.orderedlayout.Scroller
+import com.vaadin.flow.component.progressbar.ProgressBar
+import com.vaadin.flow.component.radiobutton.RadioButtonGroup
 import com.vaadin.flow.component.select.Select
 import com.vaadin.flow.component.splitlayout.SplitLayout
 import com.vaadin.flow.component.tabs.Tab
@@ -279,5 +281,38 @@ class VaadinComponents {
         T result = block()
         checkNotNull(self.content) { "`block` must add exactly one component to the scroller" }
         return result
+    }
+
+    @NotNull
+    static ProgressBar progressBar(
+            @NotNull HasComponents self,
+            double min = 0.0,
+            double max = 1.0,
+            double value = min,
+            boolean indeterminate = false,
+            @DelegatesTo(value = ProgressBar, strategy = Closure.DELEGATE_FIRST) @NotNull Closure block
+    ) {
+        def bar = new ProgressBar(min, max, value)
+        bar.indeterminate = indeterminate
+        return init(self, bar, block)
+    }
+
+    /**
+     * Creates a multi-select <a href="https://vaadin.com/components/vaadin-list-box">[Vaadin List Box]</a>. See the HTML Examples link for a list
+     * of possible alternative themes.
+     * <p></p>
+     * Unfortunately no label support for now: https://github.com/vaadin/vaadin-list-box-flow/issues/75
+     */
+    @NotNull
+    static <ITEM> RadioButtonGroup<ITEM> radioButtonGroup(
+            @NotNull HasComponents self,
+            @NotNull Class<ITEM> itemClass,
+            @Nullable String label = null,
+            @DelegatesTo(type = "com.vaadin.flow.component.radiobutton.RadioButtonGroup<ITEM>", strategy = Closure.DELEGATE_FIRST) @NotNull Closure block) {
+        def group = new RadioButtonGroup<ITEM>()
+        if (label != null) {
+            group.label = label
+        }
+        init(self, group, block)
     }
 }

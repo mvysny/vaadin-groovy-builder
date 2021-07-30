@@ -12,7 +12,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 import static kotlin.test.AssertionsKt.expect
-import static kotlin.test.AssertionsKt.expect
 
 /**
  * @author mavi
@@ -63,6 +62,7 @@ class VaadinComponentsTest {
                 setItems("a", "b", "c")
             }
             dateTimePicker {}
+            radioButtonGroup(String) {}
         }
     }
 
