@@ -4,7 +4,7 @@ import java.util.*
 plugins {
     id("java-library")
     groovy
-    id("org.gretty") version "3.0.4"
+    id("org.gretty") version "3.0.6"
     `maven-publish`
     id("com.vaadin") version "0.14.6.0" apply(false)
     signing
@@ -18,7 +18,6 @@ allprojects {
 
     repositories {
         mavenCentral()
-        jcenter()  // because of gretty-runner-jetty94
     }
 
     tasks {
