@@ -24,7 +24,7 @@ dependencies {
                 "org.webjars.bowergithub.vaadin", "org.webjars.bowergithub.webcomponents")
                 .forEach { exclude(group = it) }
     }
-    compileOnly("javax.servlet:javax.servlet-api:3.1.0")
+    compileOnly("javax.servlet:javax.servlet-api:4.0.1")
 
     // IDEA language injections
     api("com.intellij:annotations:12.0")

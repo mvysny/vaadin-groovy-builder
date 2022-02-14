@@ -1,5 +1,6 @@
 package com.github.mvysny.vaadingroovybuilder.v14
 
+import com.github.mvysny.kaributesting.v10.BasicUtilsKt
 import com.github.mvysny.kaributesting.v10.MockVaadin
 import com.vaadin.flow.component.Text
 import com.vaadin.flow.component.UI
@@ -160,7 +161,7 @@ class VaadinUtilsTest {
             def button = UI.getCurrent().button {}
             button.isAttached()
         }
-        UI.getCurrent().close()
+        BasicUtilsKt._close(UI.getCurrent())
         expect(false) { UI.getCurrent().isAttached() }
     }
 

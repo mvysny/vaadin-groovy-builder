@@ -51,9 +51,9 @@ class GridUtilsTest {
             addColumnForProperty("alive") {}
             addColumnForProperty("dateOfBirth") {}
         }
-        expect("Full Name") { GridKt.getHeader2(grid.getColumnByKey("fullName")) }
-        expect("Alive") { GridKt.getHeader2(grid.getColumnByKey("alive")) }
-        expect("Date Of Birth") { GridKt.getHeader2(grid.getColumnByKey("dateOfBirth")) }
+        expect("Full Name") { grid.getColumnByKey("fullName").getHeader2() }
+        expect("Alive") { grid.getColumnByKey("alive").getHeader2() }
+        expect("Date Of Birth") { grid.getColumnByKey("dateOfBirth").getHeader2() }
     }
 
     @Test
