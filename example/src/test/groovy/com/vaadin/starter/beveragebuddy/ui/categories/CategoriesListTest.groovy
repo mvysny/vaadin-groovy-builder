@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test
 
 import static com.github.mvysny.kaributesting.v10.NotificationsKt.*
 import static com.github.mvysny.kaributesting.v10.groovy.LocatorG.*
-import static kotlin.test.AssertionsKt.expect
+import static org.junit.jupiter.api.Assertions.*
 
 @CompileStatic
 class CategoriesListTest extends AbstractAppTest {
@@ -31,7 +31,7 @@ class CategoriesListTest extends AbstractAppTest {
 
         // now the "Categories" list should be displayed. Look up the Grid and assert on its contents.
         def grid = _get(Grid)
-        expect(1) { grid.dataProvider._size() }
+        assertEquals(1, grid.dataProvider._size())
     }
 
     @Test void "create new category"() {
@@ -48,7 +48,7 @@ class CategoriesListTest extends AbstractAppTest {
         expectNotifications("Category successfully added.")
 
         _expectNone(EditorDialogFrame)     // expect the dialog to close
-        expect(["Beer"]) { CategoryService.INSTANCE.findAll().collect { it.name } }
+        assertEquals(["Beer"], CategoryService.INSTANCE.findAll().collect { it.name })
     }
 
     @Test void "edit existing category"() {
@@ -61,7 +61,7 @@ class CategoriesListTest extends AbstractAppTest {
 
         // make sure that the "Edit Category" dialog is opened
         _expectOne(EditorDialogFrame)
-        expect(cat.name) { _get(TextField) { caption = "Category Name" } ._value }
+        assertEquals(cat.name, _get(TextField) { caption = "Category Name" } ._value)
     }
 
     @Test void "edit existing category via context menu"() {
@@ -74,7 +74,7 @@ class CategoriesListTest extends AbstractAppTest {
 
         // make sure that the "Edit Category" dialog is opened
         _expectOne(EditorDialogFrame)
-        expect(cat.name) { _get(TextField) { caption = "Category Name" } ._value }
+        assertEquals(cat.name, _get(TextField) { caption = "Category Name" } ._value)
     }
 
     @Test void "delete existing category via context menu"() {
@@ -84,7 +84,7 @@ class CategoriesListTest extends AbstractAppTest {
         Grid<Category> grid = _get(Grid)
         grid.expectRow(0, "Beers", "0", "Button[text='Edit', icon='vaadin:edit', @class='review__edit', @theme='tertiary']")
         _get(CategoriesList).gridContextMenu._clickItemWithCaption("Delete", cat)
-        expect([]) { CategoryService.INSTANCE.findAll() }
+        assertEquals([], CategoryService.INSTANCE.findAll())
         _get(Grid).expectRows(0)
     }
 }
