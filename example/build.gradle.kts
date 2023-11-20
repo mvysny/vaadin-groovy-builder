@@ -2,22 +2,21 @@
 // Original project: https://github.com/vaadin/beverage-starter-flow
 
 plugins {
-    id("org.gretty")
-    war
+    java
     id("com.vaadin")
-}
-
-gretty {
-    contextPath = "/"
-    servletContainer = "jetty9.4"
+    application
 }
 
 dependencies {
     implementation(project(":example-components"))
-    providedCompile("javax.servlet:javax.servlet-api:3.1.0")
     implementation("org.slf4j:slf4j-simple:${properties["slf4j_version"]}")
+    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:10.5")
 
     // testing
     testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10-groovy:${properties["kaributesting_version"]}")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:${properties["junit_version"]}")
+}
+
+application {
+    mainClass = "com.vaadin.starter.beveragebuddy.Main"
 }

@@ -4,7 +4,6 @@ import java.util.*
 plugins {
     id("java-library")
     groovy
-    id("org.gretty") version "3.0.6"
     `maven-publish`
     id("com.vaadin") version "0.14.10.4" apply(false)
     signing

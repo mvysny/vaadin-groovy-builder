@@ -1,7 +1,7 @@
 # Vaadin 14 Groovy Builder Example App / Archetype
 
 A port of [Vaadin Beverage Buddy](https://github.com/mvysny/beverage-buddy-vok)
-to Groovy.
+to Groovy. Runs on [Vaadin Boot](https://github.com/mvysny/vaadin-boot).
 
 # Preparing Environment
 
@@ -18,17 +18,15 @@ Also make sure that you have Java 8 (or higher) JDK installed.
 To quickly start the app, just type this into your terminal:
 
 ```bash
-./gradlew clean build example:appRun
+./gradlew clean build example:run
 ```
 
-Gradle will automatically download an embedded servlet container (Jetty) and will run your app in it. Your app will be running on
+Gradle will automatically download all dependencies will run your app in it. Your app will be running on
 [http://localhost:8080](http://localhost:8080).
 
 We suggest you use [Intellij IDEA](https://www.jetbrains.com/idea/download)
-to edit the project files. The Community edition is enough to run the server
-via Gretty's `./gradlew appRun`. The Ultimate edition will allow you to run the
-project in Tomcat - this is the recommended
-option for a real development.
+to edit the project files; the Community edition is enough for all development purposes.
+From your IDE, simply run the `Main.main()` function.
 
 ## Supported Modes
 
@@ -54,15 +52,17 @@ install it for you automatically.
 
 To compile the entire project in production mode, run `./gradlew -Pvaadin.productionMode`.
 
-To run the application in development mode, run `./gradlew clean build example:appRun` and open [http://localhost:8080/](http://localhost:8080/).
+To run the application in development mode, run `./gradlew clean build example:run` and open [http://localhost:8080/](http://localhost:8080/).
 
-To produce a deployable production-mode WAR:
+To produce a runnable production-mode app:
 - run `./gradlew -Pvaadin.productionMode`
 - You will find the WAR file in `example/build/libs/*.war`
 - To revert your environment back to development mode, just run `./gradlew` or `./gradlew vaadinPrepareFrontend`
   (omit the `-Pvaadin.productionMode`) switch.
 
 This will allow you to quickly start the example app and allow you to do some basic modifications.
+
+Note that the app doesn't build to WAR, but builds into a self-contained runnable app instead.
 
 ## Development with Intellij IDEA Ultimate
 
