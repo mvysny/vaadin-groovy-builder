@@ -1,6 +1,3 @@
-// The Beverage Buddy sample project ported to Kotlin.
-// Original project: https://github.com/vaadin/beverage-starter-flow
-
 dependencies {
     api(project(":vaadin-groovy-builder-v14"))
     // Vaadin 14
