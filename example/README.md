@@ -21,11 +21,11 @@ To quickly start the app, just type this into your terminal:
 ./gradlew clean build example:run
 ```
 
-Gradle will automatically download all dependencies will run your app in it. Your app will be running on
+Gradle will automatically download all dependencies and will run your app. Your app will be running on
 [http://localhost:8080](http://localhost:8080).
 
 We suggest you use [Intellij IDEA](https://www.jetbrains.com/idea/download)
-to edit the project files; the Community edition is enough for all development purposes.
+to develop the project further; the Community edition is enough for all development purposes.
 From your IDE, simply run the `Main.main()` function.
 
 ## Supported Modes
