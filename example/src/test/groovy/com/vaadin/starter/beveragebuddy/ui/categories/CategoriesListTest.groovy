@@ -56,7 +56,7 @@ class CategoriesListTest extends AbstractAppTest {
         CategoryService.INSTANCE.saveCategory(cat)
         UI.getCurrent().page.reload()
         Grid<Category> grid = _get(Grid)
-        grid.expectRow(0, "Beers", "0", "Button[caption='Edit', icon='vaadin:edit', @class='review__edit', @theme='tertiary']")
+        grid.expectRow(0, "Beers", "0", "Button[text='Edit', icon='vaadin:edit', @class='review__edit', @theme='tertiary']")
         grid._clickRenderer(0, "edit")
 
         // make sure that the "Edit Category" dialog is opened
@@ -69,7 +69,7 @@ class CategoriesListTest extends AbstractAppTest {
         CategoryService.INSTANCE.saveCategory(cat)
         UI.getCurrent().page.reload()
         Grid<Category> grid = _get(Grid)
-        grid.expectRow(0, "Beers", "0", "Button[caption='Edit', icon='vaadin:edit', @class='review__edit', @theme='tertiary']")
+        grid.expectRow(0, "Beers", "0", "Button[text='Edit', icon='vaadin:edit', @class='review__edit', @theme='tertiary']")
         _get(CategoriesList).gridContextMenu._clickItemWithCaption("Edit", cat)
 
         // make sure that the "Edit Category" dialog is opened
@@ -82,7 +82,7 @@ class CategoriesListTest extends AbstractAppTest {
         CategoryService.INSTANCE.saveCategory(cat)
         UI.getCurrent().page.reload()
         Grid<Category> grid = _get(Grid)
-        grid.expectRow(0, "Beers", "0", "Button[caption='Edit', icon='vaadin:edit', @class='review__edit', @theme='tertiary']")
+        grid.expectRow(0, "Beers", "0", "Button[text='Edit', icon='vaadin:edit', @class='review__edit', @theme='tertiary']")
         _get(CategoriesList).gridContextMenu._clickItemWithCaption("Delete", cat)
         expect([]) { CategoryService.INSTANCE.findAll() }
         _get(Grid).expectRows(0)
