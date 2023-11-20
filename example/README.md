@@ -56,28 +56,10 @@ To run the application in development mode, run `./gradlew clean build example:r
 
 To produce a runnable production-mode app:
 - run `./gradlew -Pvaadin.productionMode`
-- You will find the WAR file in `example/build/libs/*.war`
+- You will find the app zip file in the `example/build/distributions/` folder.
 - To revert your environment back to development mode, just run `./gradlew` or `./gradlew vaadinPrepareFrontend`
   (omit the `-Pvaadin.productionMode`) switch.
 
 This will allow you to quickly start the example app and allow you to do some basic modifications.
 
 Note that the app doesn't build to WAR, but builds into a self-contained runnable app instead.
-
-## Development with Intellij IDEA Ultimate
-
-The easiest way (and the recommended way) to develop Karibu-DSL-based web applications is to use Intellij IDEA Ultimate.
-It includes support for launching your project in any servlet container (Tomcat is recommended)
-and allows you to debug the code, modify the code and hot-redeploy the code into the running Tomcat
-instance, without having to restart Tomcat.
-
-1. First, download Tomcat and register it into your Intellij IDEA properly: https://www.jetbrains.com/help/idea/2017.1/defining-application-servers-in-intellij-idea.html
-2. Then just open this project in Intellij, simply by selecting `File / Open...` and click on the
-   `build.gradle` file. When asked, select "Open as Project".
-2. You can then create a launch configuration which will launch this example app in Tomcat with Intellij: just
-   scroll to the end of this tutorial: https://kotlinlang.org/docs/tutorials/httpservlets.html
-3. Start your newly created launch configuration in Debug mode. This way, you can modify the code
-   and press `Ctrl+F9` to hot-redeploy the code. This only redeploys java code though, to
-   redeploy resources just press `Ctrl+F10` and select "Update classes and resources"
-   
-Or watch the [Debugging Vaadin Apps With Intellij video](https://www.youtube.com/watch?v=M0Q7D03bYXc).
